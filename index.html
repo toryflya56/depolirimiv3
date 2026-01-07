@@ -8,26 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-    <!-- 
-      ENTERPRISE CSP (Content Security Policy)
-      - mitigates XSS, Clickjacking, and Data Injection.
-      - 'nonce-rAnd0m' is a placeholder. In a real CI/CD, this is generated dynamically per request.
-    -->
-    <meta 
-      http-equiv="Content-Security-Policy" 
-      content="
-        default-src 'self'; 
-        script-src 'self' https://esm.sh https://cdn.tailwindcss.com 'unsafe-inline'; 
-        style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; 
-        font-src https://fonts.gstatic.com; 
-        img-src 'self' https://picsum.photos https://api.dicebear.com https://images.unsplash.com data:; 
-        connect-src 'self' https://esm.sh;
-        object-src 'none';
-        base-uri 'self';
-        upgrade-insecure-requests;
-      "
-    >
-    
     <!-- Privacy & Referrer Control -->
     <meta name="referrer" content="strict-origin-when-cross-origin">
 
@@ -63,43 +43,7 @@
     
     <!-- Typography -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="/src/index.css">
-
-    <!-- 
-      DEPENDENCY MAP (Pinned Versions)
-      Prevents supply-chain attacks via unverified updates.
-    -->
-    <script type="importmap">
-    {
-      "imports": {
-        "react/": "https://esm.sh/react@19.2.3/",
-        "react": "https://esm.sh/react@19.2.3",
-        "react-dom/": "https://esm.sh/react-dom@19.2.3/",
-        "react-router-dom": "https://esm.sh/react-router-dom@6.22.3",
-        "lucide-react": "https://esm.sh/lucide-react@0.562.0"
-      }
-    }
-    </script>
-
-    <!-- Tailwind Config (Runtime for Dev - Should be compiled in Prod) -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              sans: ['Inter', 'sans-serif'],
-              serif: ['Playfair Display', 'serif'],
-            },
-            colors: {
-              cyber: { DEFAULT: '#00E0FF', hover: '#00B8CC', dim: 'rgba(0, 224, 255, 0.1)' },
-              deep: { 950: '#02040a', 900: '#080c1b', 800: '#0f172a' }
-            }
-          }
-        }
-      }
-    </script>
+<link rel="stylesheet" href="/src/index.css">
   </head>
   <body>
     <!-- Accessibility: Skip Link -->
@@ -117,11 +61,6 @@
         <p>Please enable JavaScript to access the LIRIMI Booking Experience.</p>
       </div>
     </noscript>
-
-    <!-- 
-      APP ENTRY POINT 
-      Aligned with Enterprise Structure: index.tsx
-    -->
-    <script type="module" src="./index.tsx"></script>
+    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

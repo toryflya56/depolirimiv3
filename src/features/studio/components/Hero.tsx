@@ -33,7 +33,7 @@ export const Hero: React.FC = () => {
       <div 
         className="absolute inset-0 z-0 opacity-20"
         style={{
-          backgroundImage: 'url(https://images.unsplash.com/photo-1585747833206-ec47d676f441?auto=format&fit=crop&q=80)',
+          backgroundImage: 'url(https://picsum.photos/1920/1080)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
@@ -128,7 +128,6 @@ export const Hero: React.FC = () => {
               </div>
               <div>
                 <p className="text-2xl font-bold text-white">24/7</p>
-                <p className="text-sm text-gray-400">Online Booking</p>
               </div>
             </div>
 
