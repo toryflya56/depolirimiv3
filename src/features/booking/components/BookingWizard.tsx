@@ -1,268 +1,558 @@
-import React, { useState, useEffect } from 'react';
-import { Calendar, Clock, User, CheckCircle, ChevronLeft, ChevronRight } from 'lucide-react';
-import { Service, Appointment, AppointmentStatus } from '../../../types';
-import { SERVICES } from '../../catalog/data';
+import React, { useState } from 'react';
+import { Calendar, Clock, User, CheckCircle, ArrowRight, ArrowLeft } from 'lucide-react';
 import { Button } from '../../../components/ui/Button';
-import { formatPrice, cn } from '../../../lib/utils';
-import { ServiceCard } from '../../catalog/components/ServiceCard';
+import { formatCurrency, isValidEmail, isValidPhone, sanitizeHTML } from '../../../lib/utils';
+import { cn } from '../../../lib/utils';
 
-// LOGIC: Mock Time Slots Generator (Business Logic)
-const generateTimeSlots = () => {
-  return ['10:00', '11:00', '12:00', '13:30', '14:30', '15:30', '16:30', '17:30', '18:30'];
+// ==========================================
+// TYPE DEFINITIONS
+// ==========================================
+
+interface Service {
+  id: string;
+  name: string;
+  duration: number;
+  price: number;
+}
+
+interface BookingData {
+  serviceId: string | null;
+  date: string;
+  time: string;
+  customerName: string;
+  customerEmail: string;
+  customerPhone: string;
+  notes: string;
+}
+
+type WizardStep = 1 | 2 | 3 | 4;
+
+// ==========================================
+// MOCK DATA
+// ==========================================
+
+const SERVICES: Service[] = [
+  { id: 'signature-cut', name: 'Signature Cut', duration: 45, price: 65 },
+  { id: 'royal-shave', name: 'Royal Shave', duration: 40, price: 55 },
+  { id: 'beard-sculpting', name: 'Beard Sculpting', duration: 30, price: 40 },
+  { id: 'executive-package', name: 'Executive Package', duration: 90, price: 140 }
+];
+
+// Generate next 14 days of available dates
+const generateAvailableDates = (): string[] => {
+  const dates: string[] = [];
+  const today = new Date();
+  
+  for (let i = 1; i <= 14; i++) {
+    const date = new Date(today);
+    date.setDate(today.getDate() + i);
+    dates.push(date.toISOString().split('T')[0]);
+  }
+  
+  return dates;
 };
 
-type BookingStep = 'service' | 'datetime' | 'details' | 'confirmation';
+// Generate time slots (10 AM - 7 PM, 30-min intervals)
+const generateTimeSlots = (): string[] => {
+  const slots: string[] = [];
+  for (let hour = 10; hour <= 19; hour++) {
+    for (let minute of [0, 30]) {
+      if (hour === 19 && minute === 30) break; // Stop at 7:00 PM
+      const time = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
+      slots.push(time);
+    }
+  }
+  return slots;
+};
+
+const AVAILABLE_DATES = generateAvailableDates();
+const TIME_SLOTS = generateTimeSlots();
+
+// ==========================================
+// COMPONENT
+// ==========================================
 
 export const BookingWizard: React.FC = () => {
-  // STATE MANAGEMENT
-  const [step, setStep] = useState<BookingStep>('service');
-  const [selectedService, setSelectedService] = useState<Service | null>(null);
-  const [selectedDate, setSelectedDate] = useState<string>('');
-  const [selectedTime, setSelectedTime] = useState<string>('');
-  const [formData, setFormData] = useState({ name: '', email: '', phone: '' });
+  const [currentStep, setCurrentStep] = useState<WizardStep>(1);
+  const [bookingData, setBookingData] = useState<BookingData>({
+    serviceId: null,
+    date: '',
+    time: '',
+    customerName: '',
+    customerEmail: '',
+    customerPhone: '',
+    notes: ''
+  });
+
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // SCROLL TO TOP on step change
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [step]);
+  // ==========================================
+  // VALIDATION
+  // ==========================================
 
-  // VALIDATION LOGIC
-  const canAdvance = () => {
-    if (step === 'service') return !!selectedService;
-    if (step === 'datetime') return !!selectedDate && !!selectedTime;
-    if (step === 'details') return formData.name && formData.email && formData.phone;
-    return false;
+  const validateStep = (step: WizardStep): boolean => {
+    const newErrors: Record<string, string> = {};
+
+    if (step === 1 && !bookingData.serviceId) {
+      newErrors.service = 'Please select a service';
+    }
+
+    if (step === 2) {
+      if (!bookingData.date) newErrors.date = 'Please select a date';
+      if (!bookingData.time) newErrors.time = 'Please select a time';
+    }
+
+    if (step === 3) {
+      if (!bookingData.customerName.trim()) {
+        newErrors.name = 'Name is required';
+      }
+      if (!bookingData.customerEmail.trim()) {
+        newErrors.email = 'Email is required';
+      } else if (!isValidEmail(bookingData.customerEmail)) {
+        newErrors.email = 'Invalid email format';
+      }
+      if (!bookingData.customerPhone.trim()) {
+        newErrors.phone = 'Phone is required';
+      } else if (!isValidPhone(bookingData.customerPhone)) {
+        newErrors.phone = 'Invalid phone format';
+      }
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
+  // ==========================================
+  // NAVIGATION HANDLERS
+  // ==========================================
+
   const handleNext = () => {
-    if (step === 'service') setStep('datetime');
-    else if (step === 'datetime') setStep('details');
-    else if (step === 'details') handleSubmit();
+    if (validateStep(currentStep)) {
+      setCurrentStep((prev) => Math.min(prev + 1, 4) as WizardStep);
+    }
   };
 
   const handleBack = () => {
-    if (step === 'datetime') setStep('service');
-    else if (step === 'details') setStep('datetime');
+    setCurrentStep((prev) => Math.max(prev - 1, 1) as WizardStep);
+    setErrors({});
   };
 
   const handleSubmit = async () => {
+    if (!validateStep(3)) return;
+
     setIsSubmitting(true);
-    // Simulate API Call
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    setStep('confirmation');
-    setIsSubmitting(false);
+
+    try {
+      // ENTERPRISE TODO: Replace with actual API call
+      await new Promise(resolve => setTimeout(resolve, 2000));
+
+      console.log('Booking submitted:', {
+        ...bookingData,
+        customerName: sanitizeHTML(bookingData.customerName),
+        customerEmail: sanitizeHTML(bookingData.customerEmail),
+        customerPhone: sanitizeHTML(bookingData.customerPhone),
+        notes: sanitizeHTML(bookingData.notes)
+      });
+
+      setCurrentStep(4);
+    } catch (error) {
+      console.error('Booking error:', error);
+      setErrors({ submit: 'Booking failed. Please try again.' });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
-  // --- RENDER HELPERS ---
+  // ==========================================
+  // HELPERS
+  // ==========================================
 
-  const renderProgress = () => {
-    const steps = ['Service', 'Date & Time', 'Details', 'Done'];
-    const currentIdx = ['service', 'datetime', 'details', 'confirmation'].indexOf(step);
+  const selectedService = SERVICES.find(s => s.id === bookingData.serviceId);
 
-    return (
-      <div className="flex justify-between mb-12 relative max-w-2xl mx-auto">
-        {/* Progress Bar Background */}
-        <div className="absolute top-1/2 left-0 w-full h-1 bg-white/10 -translate-y-1/2 rounded-full z-0" />
-        
-        {/* Active Progress Line */}
-        <div 
-          className="absolute top-1/2 left-0 h-1 bg-cyber -translate-y-1/2 rounded-full z-0 transition-all duration-500" 
-          style={{ width: `${(currentIdx / 3) * 100}%` }}
-        />
-
-        {steps.map((label, idx) => (
-          <div key={label} className="relative z-10 flex flex-col items-center gap-2">
-            <div className={cn(
-              "w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300 border-2",
-              idx <= currentIdx 
-                ? "bg-deep-950 border-cyber text-cyber shadow-[0_0_10px_rgba(0,224,255,0.4)]" 
-                : "bg-deep-900 border-white/10 text-gray-500"
-            )}>
-              {idx + 1}
-            </div>
-            <span className={cn(
-              "text-xs uppercase tracking-wider font-medium transition-colors",
-              idx <= currentIdx ? "text-white" : "text-gray-600"
-            )}>
-              {label}
-            </span>
-          </div>
-        ))}
-      </div>
-    );
+  const formatDate = (dateString: string): string => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', { 
+      weekday: 'long', 
+      month: 'long', 
+      day: 'numeric' 
+    });
   };
 
-  // STEP 1: SERVICE SELECTION
-  if (step === 'service') {
-    return (
-      <div className="animate-fade-in">
-        {renderProgress()}
-        <div className="text-center mb-12">
-          <h2 className="text-3xl text-white font-serif mb-4">Select a Service</h2>
-          <p className="text-gray-400">Choose your preferred grooming experience.</p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {SERVICES.map((svc) => (
-            <div 
-              key={svc.id}
-              onClick={() => setSelectedService(svc)}
-              className={cn(
-                "cursor-pointer transition-all duration-300 rounded-3xl overflow-hidden border-2 relative group",
-                selectedService?.id === svc.id 
-                  ? "border-cyber shadow-[0_0_30px_rgba(0,224,255,0.2)] scale-105 bg-deep-900" 
-                  : "border-transparent opacity-80 hover:opacity-100 hover:border-white/10 hover:bg-deep-900/50"
-              )}
-            >
-              <div className="h-40 overflow-hidden">
-                <img src={svc.image} alt={svc.title} className="w-full h-full object-cover" />
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl text-white font-bold mb-2">{svc.title}</h3>
-                <div className="flex justify-between items-center">
-                  <span className="text-cyber font-serif font-bold">{formatPrice(svc.price)}</span>
-                  <span className="text-gray-500 text-sm">{svc.durationMin} min</span>
+  const formatTime = (timeString: string): string => {
+    const [hours, minutes] = timeString.split(':');
+    const hour = parseInt(hours);
+    const ampm = hour >= 12 ? 'PM' : 'AM';
+    const displayHour = hour > 12 ? hour - 12 : hour;
+    return `${displayHour}:${minutes} ${ampm}`;
+  };
+
+  // ==========================================
+  // STEP INDICATORS
+  // ==========================================
+
+  const steps = [
+    { num: 1, label: 'Service', icon: Calendar },
+    { num: 2, label: 'Date & Time', icon: Clock },
+    { num: 3, label: 'Details', icon: User },
+    { num: 4, label: 'Confirm', icon: CheckCircle }
+  ];
+
+  // ==========================================
+  // RENDER
+  // ==========================================
+
+  return (
+    <div className="w-full">
+      
+      {/* Progress Indicator */}
+      <div className="mb-12">
+        <div className="flex items-center justify-between max-w-3xl mx-auto">
+          {steps.map((step, idx) => {
+            const Icon = step.icon;
+            const isActive = currentStep === step.num;
+            const isCompleted = currentStep > step.num;
+            
+            return (
+              <React.Fragment key={step.num}>
+                <div className="flex flex-col items-center gap-2">
+                  <div
+                    className={cn(
+                      'w-12 h-12 rounded-full flex items-center justify-center border-2 transition-all',
+                      isActive && 'border-cyber bg-cyber/10 text-cyber scale-110',
+                      isCompleted && 'border-cyber bg-cyber text-deep-950',
+                      !isActive && !isCompleted && 'border-white/20 text-gray-500'
+                    )}
+                  >
+                    <Icon size={20} />
+                  </div>
+                  <span
+                    className={cn(
+                      'text-xs font-semibold transition-colors',
+                      (isActive || isCompleted) ? 'text-cyber' : 'text-gray-500'
+                    )}
+                  >
+                    {step.label}
+                  </span>
                 </div>
-              </div>
-              {selectedService?.id === svc.id && (
-                <div className="absolute top-4 right-4 bg-cyber text-deep-950 p-1 rounded-full shadow-lg">
-                  <CheckCircle size={20} />
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-        <div className="mt-12 flex justify-end">
-          <Button onClick={handleNext} disabled={!selectedService} size="lg">Next Step</Button>
+                
+                {idx < steps.length - 1 && (
+                  <div
+                    className={cn(
+                      'flex-1 h-0.5 mx-2 transition-colors',
+                      currentStep > step.num ? 'bg-cyber' : 'bg-white/10'
+                    )}
+                  />
+                )}
+              </React.Fragment>
+            );
+          })}
         </div>
       </div>
-    );
-  }
 
-  // STEP 2: DATE & TIME
-  if (step === 'datetime') {
-    return (
-      <div className="animate-fade-in">
-        {renderProgress()}
-        <div className="text-center mb-12">
-          <h2 className="text-3xl text-white font-serif mb-4">Schedule Appointment</h2>
-          <p className="text-gray-400">Availability for {selectedService?.title}</p>
-        </div>
+      {/* Step Content */}
+      <div className="min-h-[400px]">
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl mx-auto">
-          {/* Mock Calendar Input */}
-          <div className="space-y-4">
-            <label className="text-white font-medium block">Select Date</label>
-            <input 
-              type="date" 
-              className="w-full bg-deep-900 border border-white/10 p-4 rounded-xl text-white focus:border-cyber outline-none"
-              onChange={(e) => setSelectedDate(e.target.value)}
-              min={new Date().toISOString().split('T')[0]}
-            />
-          </div>
+        {/* STEP 1: Service Selection */}
+        {currentStep === 1 && (
+          <div className="space-y-6">
+            <div className="text-center mb-8">
+              <h3 className="text-2xl font-serif font-bold text-white mb-2">
+                Choose Your Service
+              </h3>
+              <p className="text-gray-400">Select the experience you'd like</p>
+            </div>
 
-          {/* Time Slots */}
-          <div className="space-y-4">
-            <label className="text-white font-medium block">Select Time</label>
-            <div className="grid grid-cols-3 gap-3">
-              {generateTimeSlots().map((time) => (
+            <div className="grid md:grid-cols-2 gap-4">
+              {SERVICES.map((service) => (
                 <button
-                  key={time}
-                  onClick={() => setSelectedTime(time)}
+                  key={service.id}
+                  onClick={() => {
+                    setBookingData(prev => ({ ...prev, serviceId: service.id }));
+                    setErrors({});
+                  }}
                   className={cn(
-                    "py-3 rounded-lg border text-sm font-medium transition-all",
-                    selectedTime === time 
-                      ? "bg-cyber text-deep-950 border-cyber font-bold" 
-                      : "bg-deep-900 text-gray-400 border-white/10 hover:border-white/30"
+                    'text-left p-6 rounded-xl border-2 transition-all hover:scale-105',
+                    bookingData.serviceId === service.id
+                      ? 'border-cyber bg-cyber/10'
+                      : 'border-white/10 hover:border-white/30'
                   )}
                 >
-                  {time}
+                  <h4 className="text-white font-bold text-lg mb-2">{service.name}</h4>
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-gray-400">{service.duration} minutes</span>
+                    <span className="text-cyber text-xl font-bold">
+                      {formatCurrency(service.price)}
+                    </span>
+                  </div>
                 </button>
               ))}
             </div>
+
+            {errors.service && (
+              <p className="text-red-400 text-sm text-center">{errors.service}</p>
+            )}
           </div>
-        </div>
+        )}
 
-        <div className="mt-12 flex justify-between max-w-4xl mx-auto">
-          <Button variant="ghost" onClick={handleBack} icon={<ChevronLeft size={16} />}>Back</Button>
-          <Button onClick={handleNext} disabled={!selectedDate || !selectedTime} size="lg">Next Step</Button>
-        </div>
-      </div>
-    );
-  }
+        {/* STEP 2: Date & Time Selection */}
+        {currentStep === 2 && (
+          <div className="space-y-8">
+            <div className="text-center mb-8">
+              <h3 className="text-2xl font-serif font-bold text-white mb-2">
+                Pick Your Slot
+              </h3>
+              <p className="text-gray-400">Choose a date and time that works for you</p>
+            </div>
 
-  // STEP 3: DETAILS
-  if (step === 'details') {
-    return (
-      <div className="animate-fade-in">
-        {renderProgress()}
-        <div className="text-center mb-12">
-          <h2 className="text-3xl text-white font-serif mb-4">Your Details</h2>
-          <p className="text-gray-400">Finalize your booking securely.</p>
-        </div>
+            {/* Date Picker */}
+            <div>
+              <label className="block text-white font-semibold mb-4">Select Date</label>
+              <div className="grid grid-cols-7 gap-2">
+                {AVAILABLE_DATES.map((date) => {
+                  const dateObj = new Date(date);
+                  const dayName = dateObj.toLocaleDateString('en-US', { weekday: 'short' });
+                  const dayNum = dateObj.getDate();
+                  
+                  return (
+                    <button
+                      key={date}
+                      onClick={() => {
+                        setBookingData(prev => ({ ...prev, date }));
+                        setErrors(prev => ({ ...prev, date: '' }));
+                      }}
+                      className={cn(
+                        'p-3 rounded-lg border transition-all hover:scale-105',
+                        bookingData.date === date
+                          ? 'border-cyber bg-cyber/10 text-cyber'
+                          : 'border-white/10 text-gray-400 hover:border-white/30'
+                      )}
+                    >
+                      <div className="text-xs">{dayName}</div>
+                      <div className="text-lg font-bold">{dayNum}</div>
+                    </button>
+                  );
+                })}
+              </div>
+              {errors.date && (
+                <p className="text-red-400 text-sm mt-2">{errors.date}</p>
+              )}
+            </div>
 
-        <div className="max-w-xl mx-auto bg-deep-900/50 p-8 rounded-3xl border border-white/5">
-          <div className="space-y-6">
-            <div className="space-y-2">
-              <label className="text-sm text-gray-400">Full Name</label>
-              <input 
-                type="text" 
-                value={formData.name}
-                onChange={(e) => setFormData({...formData, name: e.target.value})}
-                className="w-full bg-deep-950 border border-white/10 rounded-xl p-4 text-white focus:border-cyber outline-none"
+            {/* Time Picker */}
+            <div>
+              <label className="block text-white font-semibold mb-4">Select Time</label>
+              <div className="grid grid-cols-4 md:grid-cols-6 gap-2 max-h-64 overflow-y-auto custom-scrollbar">
+                {TIME_SLOTS.map((time) => (
+                  <button
+                    key={time}
+                    onClick={() => {
+                      setBookingData(prev => ({ ...prev, time }));
+                      setErrors(prev => ({ ...prev, time: '' }));
+                    }}
+                    className={cn(
+                      'p-3 rounded-lg border text-sm font-semibold transition-all hover:scale-105',
+                      bookingData.time === time
+                        ? 'border-cyber bg-cyber/10 text-cyber'
+                        : 'border-white/10 text-gray-400 hover:border-white/30'
+                    )}
+                  >
+                    {formatTime(time)}
+                  </button>
+                ))}
+              </div>
+              {errors.time && (
+                <p className="text-red-400 text-sm mt-2">{errors.time}</p>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* STEP 3: Customer Details */}
+        {currentStep === 3 && (
+          <div className="space-y-6 max-w-2xl mx-auto">
+            <div className="text-center mb-8">
+              <h3 className="text-2xl font-serif font-bold text-white mb-2">
+                Your Information
+              </h3>
+              <p className="text-gray-400">We'll use this to confirm your appointment</p>
+            </div>
+
+            <div>
+              <label htmlFor="customerName" className="block text-white font-semibold mb-2">
+                Full Name *
+              </label>
+              <input
+                type="text"
+                id="customerName"
+                value={bookingData.customerName}
+                onChange={(e) => {
+                  setBookingData(prev => ({ ...prev, customerName: e.target.value }));
+                  setErrors(prev => ({ ...prev, name: '' }));
+                }}
+                className={cn(
+                  'w-full px-4 py-3 bg-deep-900 border rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-cyber',
+                  errors.name ? 'border-red-500' : 'border-white/10'
+                )}
                 placeholder="John Doe"
               />
+              {errors.name && (
+                <p className="text-red-400 text-sm mt-1">{errors.name}</p>
+              )}
             </div>
-            <div className="space-y-2">
-              <label className="text-sm text-gray-400">Phone Number</label>
-              <input 
-                type="tel" 
-                value={formData.phone}
-                onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                className="w-full bg-deep-950 border border-white/10 rounded-xl p-4 text-white focus:border-cyber outline-none"
-                placeholder="+1 (555) 000-0000"
-              />
-            </div>
-            <div className="space-y-2">
-              <label className="text-sm text-gray-400">Email Address</label>
-              <input 
-                type="email" 
-                value={formData.email}
-                onChange={(e) => setFormData({...formData, email: e.target.value})}
-                className="w-full bg-deep-950 border border-white/10 rounded-xl p-4 text-white focus:border-cyber outline-none"
+
+            <div>
+              <label htmlFor="customerEmail" className="block text-white font-semibold mb-2">
+                Email Address *
+              </label>
+              <input
+                type="email"
+                id="customerEmail"
+                value={bookingData.customerEmail}
+                onChange={(e) => {
+                  setBookingData(prev => ({ ...prev, customerEmail: e.target.value }));
+                  setErrors(prev => ({ ...prev, email: '' }));
+                }}
+                className={cn(
+                  'w-full px-4 py-3 bg-deep-900 border rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-cyber',
+                  errors.email ? 'border-red-500' : 'border-white/10'
+                )}
                 placeholder="john@example.com"
+              />
+              {errors.email && (
+                <p className="text-red-400 text-sm mt-1">{errors.email}</p>
+              )}
+            </div>
+
+            <div>
+              <label htmlFor="customerPhone" className="block text-white font-semibold mb-2">
+                Phone Number *
+              </label>
+              <input
+                type="tel"
+                id="customerPhone"
+                value={bookingData.customerPhone}
+                onChange={(e) => {
+                  setBookingData(prev => ({ ...prev, customerPhone: e.target.value }));
+                  setErrors(prev => ({ ...prev, phone: '' }));
+                }}
+                className={cn(
+                  'w-full px-4 py-3 bg-deep-900 border rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-cyber',
+                  errors.phone ? 'border-red-500' : 'border-white/10'
+                )}
+                placeholder="(555) 123-4567"
+              />
+              {errors.phone && (
+                <p className="text-red-400 text-sm mt-1">{errors.phone}</p>
+              )}
+            </div>
+
+            <div>
+              <label htmlFor="notes" className="block text-white font-semibold mb-2">
+                Special Requests (Optional)
+              </label>
+              <textarea
+                id="notes"
+                value={bookingData.notes}
+                onChange={(e) => setBookingData(prev => ({ ...prev, notes: e.target.value }))}
+                rows={4}
+                className="w-full px-4 py-3 bg-deep-900 border border-white/10 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-cyber resize-none"
+                placeholder="Any specific requests or preferences..."
               />
             </div>
           </div>
-        </div>
+        )}
 
-        <div className="mt-12 flex justify-between max-w-xl mx-auto">
-          <Button variant="ghost" onClick={handleBack} icon={<ChevronLeft size={16} />}>Back</Button>
-          <Button 
-            onClick={handleSubmit} 
-            disabled={!canAdvance()} 
-            isLoading={isSubmitting} 
-            size="lg"
-            className="w-full ml-4"
+        {/* STEP 4: Confirmation */}
+        {currentStep === 4 && (
+          <div className="text-center space-y-8 max-w-2xl mx-auto">
+            <div className="w-20 h-20 bg-cyber/10 border-2 border-cyber rounded-full flex items-center justify-center mx-auto">
+              <CheckCircle className="text-cyber" size={40} />
+            </div>
+
+            <div>
+              <h3 className="text-3xl font-serif font-bold text-white mb-4">
+                Booking Confirmed!
+              </h3>
+              <p className="text-gray-400 text-lg">
+                We've sent a confirmation email to {bookingData.customerEmail}
+              </p>
+            </div>
+
+            <div className="bg-deep-900/50 border border-white/10 rounded-2xl p-8 text-left space-y-4">
+              <div className="flex justify-between border-b border-white/10 pb-4">
+                <span className="text-gray-400">Service:</span>
+                <span className="text-white font-bold">{selectedService?.name}</span>
+              </div>
+              <div className="flex justify-between border-b border-white/10 pb-4">
+                <span className="text-gray-400">Date:</span>
+                <span className="text-white font-bold">{formatDate(bookingData.date)}</span>
+              </div>
+              <div className="flex justify-between border-b border-white/10 pb-4">
+                <span className="text-gray-400">Time:</span>
+                <span className="text-white font-bold">{formatTime(bookingData.time)}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-gray-400">Price:</span>
+                <span className="text-cyber text-2xl font-bold">
+                  {formatCurrency(selectedService?.price || 0)}
+                </span>
+              </div>
+            </div>
+
+            <p className="text-gray-500 text-sm">
+              Please arrive 5 minutes early. Cancellations must be made 24 hours in advance.
+            </p>
+
+            <Button
+              as="button"
+              onClick={() => window.location.hash = '/'}
+              variant="outline"
+            >
+              Return to Home
+            </Button>
+          </div>
+        )}
+
+      </div>
+
+      {/* Navigation Buttons */}
+      {currentStep < 4 && (
+        <div className="flex justify-between mt-12 pt-8 border-t border-white/10">
+          <Button
+            as="button"
+            onClick={handleBack}
+            variant="ghost"
+            disabled={currentStep === 1}
+            icon={<ArrowLeft size={20} />}
+            iconPosition="left"
           >
-            Confirm Booking
+            Back
           </Button>
-        </div>
-      </div>
-    );
-  }
 
-  // STEP 4: SUCCESS
-  return (
-    <div className="animate-fade-in text-center py-12">
-      <div className="w-24 h-24 bg-green-500/10 rounded-full flex items-center justify-center mx-auto mb-8 border border-green-500/20">
-        <CheckCircle size={48} className="text-green-500" />
-      </div>
-      <h2 className="text-4xl font-serif text-white mb-4">Booking Confirmed!</h2>
-      <p className="text-gray-400 max-w-md mx-auto mb-12 text-lg">
-        Thank you, {formData.name}. Your appointment for <strong>{selectedService?.title}</strong> on <strong>{selectedDate}</strong> at <strong>{selectedTime}</strong> has been secured.
-      </p>
-      <Button to="/" variant="primary" size="lg">Return Home</Button>
+          {currentStep < 3 ? (
+            <Button
+              as="button"
+              onClick={handleNext}
+              icon={<ArrowRight size={20} />}
+              iconPosition="right"
+            >
+              Continue
+            </Button>
+          ) : (
+            <Button
+              as="button"
+              onClick={handleSubmit}
+              loading={isSubmitting}
+              icon={<CheckCircle size={20} />}
+              iconPosition="right"
+            >
+              Confirm Booking
+            </Button>
+          )}
+        </div>
+      )}
+
     </div>
   );
 };
