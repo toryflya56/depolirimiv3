@@ -1,23 +1,73 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Loader2, ChevronRight } from 'lucide-react';
 import { cn } from '../../lib/utils';
 
 // ==========================================
-// TYPES
+// TYPE DEFINITIONS
 // ==========================================
 
-type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost';
+type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger';
 type ButtonSize = 'sm' | 'md' | 'lg';
 
-interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface BaseButtonProps {
+  children: React.ReactNode;
   variant?: ButtonVariant;
   size?: ButtonSize;
-  isLoading?: boolean;
+  className?: string;
+  disabled?: boolean;
+  fullWidth?: boolean;
+  loading?: boolean;
   icon?: React.ReactNode;
-  href?: string; // If provided, renders as a generic <a>
-  to?: string;   // If provided, renders as a React Router <Link>
+  iconPosition?: 'left' | 'right';
 }
+
+interface ButtonAsButton extends BaseButtonProps {
+  as?: 'button';
+  type?: 'button' | 'submit' | 'reset';
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  to?: never;
+}
+
+interface ButtonAsLink extends BaseButtonProps {
+  as: 'link';
+  to: string;
+  onClick?: never;
+  type?: never;
+}
+
+type ButtonProps = ButtonAsButton | ButtonAsLink;
+
+// ==========================================
+// VARIANT STYLES (Tailwind Classes)
+// ==========================================
+
+const variantStyles: Record<ButtonVariant, string> = {
+  primary: 
+    'bg-cyber text-deep-950 hover:bg-cyber-hover shadow-lg shadow-cyber/20 ' +
+    'active:scale-95 disabled:bg-gray-600 disabled:text-gray-400 disabled:shadow-none',
+  
+  secondary: 
+    'bg-deep-800 text-white hover:bg-deep-900 border border-white/10 ' +
+    'active:scale-95 disabled:bg-gray-800 disabled:text-gray-500',
+  
+  outline: 
+    'bg-transparent text-cyber border-2 border-cyber hover:bg-cyber hover:text-deep-950 ' +
+    'active:scale-95 disabled:border-gray-600 disabled:text-gray-600',
+  
+  ghost: 
+    'bg-transparent text-white hover:bg-white/10 ' +
+    'active:scale-95 disabled:text-gray-600',
+  
+  danger: 
+    'bg-red-600 text-white hover:bg-red-700 shadow-lg shadow-red-600/20 ' +
+    'active:scale-95 disabled:bg-gray-600 disabled:text-gray-400',
+};
+
+const sizeStyles: Record<ButtonSize, string> = {
+  sm: 'px-4 py-2 text-sm',
+  md: 'px-6 py-3 text-base',
+  lg: 'px-8 py-4 text-lg',
+};
 
 // ==========================================
 // COMPONENT
@@ -25,79 +75,89 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 
 export const Button: React.FC<ButtonProps> = ({
   children,
-  className,
   variant = 'primary',
   size = 'md',
-  isLoading = false,
+  className = '',
+  disabled = false,
+  fullWidth = false,
+  loading = false,
   icon,
-  href,
-  to,
-  disabled,
+  iconPosition = 'left',
   ...props
 }) => {
-  // 1. Base Styles (Applied to all buttons)
-  const baseStyles = "inline-flex items-center justify-center font-bold tracking-wide transition-all duration-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyber/50 disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.98]";
-
-  // 2. Variants (The "Look")
-  const variants = {
-    primary: "bg-cyber text-deep-950 hover:bg-cyber-hover shadow-[0_0_15px_rgba(0,224,255,0.3)] hover:shadow-[0_0_25px_rgba(0,224,255,0.5)] border border-transparent",
-    secondary: "bg-deep-800 text-white hover:bg-deep-900 border border-cyber/20 hover:border-cyber/50",
-    outline: "bg-transparent text-cyber border border-cyber hover:bg-cyber/10",
-    ghost: "bg-transparent text-gray-400 hover:text-cyber hover:bg-white/5"
-  };
-
-  // 3. Sizes (The "Dimensions")
-  const sizes = {
-    sm: "text-sm px-4 py-2 gap-2",
-    md: "text-base px-6 py-3 gap-3",
-    lg: "text-lg px-8 py-4 gap-4"
-  };
-
-  // Merge classes safely
-  const combinedClassName = cn(
-    baseStyles, 
-    variants[variant], 
-    sizes[size], 
+  
+  // Base styles (common to all variants)
+  const baseStyles = cn(
+    'inline-flex items-center justify-center gap-2',
+    'font-semibold tracking-wide uppercase',
+    'rounded-lg transition-all duration-200',
+    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyber focus-visible:ring-offset-2 focus-visible:ring-offset-deep-950',
+    'disabled:cursor-not-allowed disabled:opacity-50',
+    variantStyles[variant],
+    sizeStyles[size],
+    fullWidth && 'w-full',
     className
   );
 
-  // Content Renderer (Text + Icons)
+  // Loading spinner component
+  const LoadingSpinner = () => (
+    <svg
+      className="animate-spin h-5 w-5"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+    >
+      <circle
+        className="opacity-25"
+        cx="12"
+        cy="12"
+        r="10"
+        stroke="currentColor"
+        strokeWidth="4"
+      />
+      <path
+        className="opacity-75"
+        fill="currentColor"
+        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+      />
+    </svg>
+  );
+
+  // Content wrapper (handles icon positioning)
   const content = (
     <>
-      {isLoading && <Loader2 className="animate-spin" size={size === 'sm' ? 14 : 18} />}
-      {!isLoading && icon && <span className="shrink-0">{icon}</span>}
+      {loading && <LoadingSpinner />}
+      {!loading && icon && iconPosition === 'left' && icon}
       <span>{children}</span>
-      {!isLoading && variant === 'primary' && !icon && (
-        <ChevronRight size={16} className="opacity-0 -ml-2 group-hover:opacity-100 group-hover:ml-0 transition-all" />
-      )}
+      {!loading && icon && iconPosition === 'right' && icon}
     </>
   );
 
-  // CASE 1: External Link or Anchor
-  if (href) {
-    return (
-      <a href={href} className={cn(combinedClassName, "group")} role="button">
-        {content}
-      </a>
-    );
-  }
+  // ==========================================
+  // RENDER: Link vs Button
+  // ==========================================
 
-  // CASE 2: Internal React Router Link
-  if (to) {
+  if (props.as === 'link') {
     return (
-      <Link to={to} className={cn(combinedClassName, "group")}>
+      <Link
+        to={props.to}
+        className={baseStyles}
+        aria-disabled={disabled || loading}
+        tabIndex={disabled || loading ? -1 : undefined}
+      >
         {content}
       </Link>
     );
   }
 
-  // CASE 3: Standard Button
   return (
     <button
-      className={cn(combinedClassName, "group")}
-      disabled={disabled || isLoading}
-      aria-busy={isLoading}
-      {...props}
+      type={props.type || 'button'}
+      onClick={props.onClick}
+      disabled={disabled || loading}
+      className={baseStyles}
+      aria-busy={loading}
     >
       {content}
     </button>
