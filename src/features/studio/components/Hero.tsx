@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ChevronDown, Scissors, Award, Clock } from 'lucide-react';
+import { ChevronDown, Calendar, ArrowRight } from 'lucide-react';
 import { Button } from '../../../components/ui/Button';
 import { APP_ROUTES } from '../../../lib/constants';
 
@@ -31,107 +31,56 @@ export const Hero: React.FC = () => {
 
       {/* BACKGROUND IMAGE: Barber Shop Ambiance */}
       <div 
-        className="absolute inset-0 z-0 opacity-20"
+        className="absolute inset-0 z-0 opacity-10"
         style={{
-          backgroundImage: 'url(https://picsum.photos/1920/1080)',
+          backgroundImage: 'url(https://images.unsplash.com/photo-1622288432454-2415494c3943?q=80&w=1974&auto=format&fit=crop)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
         }}
       >
         {/* Overlay Gradient for Text Readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-deep-950/90 via-deep-950/70 to-deep-950" />
+        <div className="absolute inset-0 bg-gradient-to-b from-deep-950/80 via-deep-950/60 to-deep-950" />
       </div>
 
       {/* CONTENT LAYER */}
-      <div className="container mx-auto px-4 relative z-10 text-center">
+      <div className={`container mx-auto px-4 relative z-10 flex items-center justify-center transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
         
-        {/* Main Headline */}
-        <div
-          className={`transition-all duration-1000 ${
-            isVisible 
-              ? 'opacity-100 translate-y-0' 
-              : 'opacity-0 translate-y-10'
-          }`}
-        >
-          {/* Overline Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyber/10 border border-cyber/20 mb-6">
-            <Scissors className="text-cyber" size={16} />
-            <span className="text-cyber text-sm font-semibold tracking-wider uppercase">
-              Premium Barbering Since 2024
-            </span>
-          </div>
-
-          {/* H1: Primary Headline */}
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif font-bold text-white mb-6 leading-tight">
-            Mastery in
-            <br />
-            <span className="text-cyber">Every Cut</span>
-          </h1>
-
-          {/* Subheadline */}
-          <p className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto mb-12 leading-relaxed">
-            Where traditional craftsmanship meets modern precision. 
-            Experience grooming elevated to an art form in the heart of Soho, NYC.
-          </p>
-
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
-            <Button 
-              as="link"
-              to={APP_ROUTES.BOOKING} 
-              size="lg"
-              variant="primary"
-              icon={<Scissors size={20} />}
-            >
-              Book Appointment
-            </Button>
-            <Button 
-              as="button"
-              onClick={handleScrollToServices}
-              size="lg"
-              variant="outline"
-            >
-              Explore Services
-            </Button>
-          </div>
-
-          {/* Trust Indicators (Social Proof) */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+        {/* Glassmorphism Card */}
+        <div className="bg-black/40 backdrop-blur-xl border border-white/10 rounded-3xl p-8 sm:p-12 text-center max-w-xl mx-auto">
             
-            {/* Indicator 1: Experience */}
-            <div className="flex flex-col items-center gap-3 p-6 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-cyber/30 transition-colors">
-              <div className="w-12 h-12 rounded-full bg-cyber/10 flex items-center justify-center">
-                <Award className="text-cyber" size={24} />
-              </div>
-              <div>
-                <p className="text-2xl font-bold text-white">15+</p>
-                <p className="text-sm text-gray-400">Years Combined Experience</p>
-              </div>
+            <div className="inline-block bg-white/10 text-cyber text-sm font-semibold px-4 py-1 rounded-full mb-6">EST. 2024</div>
+            
+            <h1 className="text-5xl md:text-6xl font-serif font-bold text-white mb-4 leading-tight">
+                Mastery in <span className="text-cyber">Every Cut</span>
+            </h1>
+            
+            <p className="text-gray-300 md:text-lg max-w-md mx-auto mb-8">
+                Experience the fusion of classic barbering and modern aesthetics. We don't just cut hair; we sculpt your confidence.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Button 
+                  as="link" 
+                  to={APP_ROUTES.BOOKING} 
+                  size="lg" 
+                  variant="primary" 
+                  icon={<Calendar size={20} />}
+                >
+                    Book Appointment
+                </Button>
+                <Button 
+                  as="button" 
+                  onClick={handleScrollToServices} 
+                  size="lg" 
+                  variant="outline"
+                >
+                  <span className="flex items-center gap-2">
+                    View Services
+                    <ArrowRight size={20} />
+                  </span>
+                </Button>
             </div>
-
-            {/* Indicator 2: Clients */}
-            <div className="flex flex-col items-center gap-3 p-6 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-cyber/30 transition-colors">
-              <div className="w-12 h-12 rounded-full bg-cyber/10 flex items-center justify-center">
-                <Scissors className="text-cyber" size={24} />
-              </div>
-              <div>
-                <p className="text-2xl font-bold text-white">5,000+</p>
-                <p className="text-sm text-gray-400">Satisfied Clients</p>
-              </div>
-            </div>
-
-            {/* Indicator 3: Response Time */}
-            <div className="flex flex-col items-center gap-3 p-6 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-cyber/30 transition-colors">
-              <div className="w-12 h-12 rounded-full bg-cyber/10 flex items-center justify-center">
-                <Clock className="text-cyber" size={24} />
-              </div>
-              <div>
-                <p className="text-2xl font-bold text-white">24/7</p>
-              </div>
-            </div>
-
-          </div>
         </div>
       </div>
 
