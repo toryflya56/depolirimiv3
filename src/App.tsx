@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { HashRouter, Routes, Route, useLocation, Outlet } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation, Outlet } from 'react-router-dom';
 import { Header } from './components/layout/Header';
 import { Footer } from './components/layout/Footer';
 import { HomePage } from './pages/HomePage';
@@ -52,22 +52,15 @@ const MainLayout = () => {
 
 const App: React.FC = () => {
   return (
-    <HashRouter>
+    <BrowserRouter>
       <ScrollToTop />
       <Routes>
-        {/* Main Layout Route */}
-        <Route element={<MainLayout />}>
-          
-          {/* Public Routes */}
-          <Route path={APP_ROUTES.home} element={<HomePage />} />
-          <Route path={APP_ROUTES.booking} element={<BookingPage />} />
-          
-          {/* Fallback Route (404) */}
-          <Route path="*" element={<HomePage />} />
-          
+        <Route path={APP_ROUTES.HOME} element={<MainLayout />}>
+          <Route index element={<HomePage />} />
+          <Route path={APP_ROUTES.BOOKING} element={<BookingPage />} />
         </Route>
       </Routes>
-    </HashRouter>
+    </BrowserRouter>
   );
 };
 
