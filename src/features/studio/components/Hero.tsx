@@ -1,93 +1,149 @@
-import React from 'react';
-import { Calendar, Scissors } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { ChevronDown, Scissors, Award, Clock } from 'lucide-react';
 import { Button } from '../../../components/ui/Button';
-import { APP_ROUTES, COMPANY_INFO } from '../../../lib/constants';
+import { APP_ROUTES } from '../../../lib/constants';
 
 export const Hero: React.FC = () => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  // Entrance Animation (Delayed for smooth page load)
+  useEffect(() => {
+    const timer = setTimeout(() => setIsVisible(true), 100);
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Smooth scroll to services section
+  const handleScrollToServices = () => {
+    const servicesSection = document.getElementById('services');
+    if (servicesSection) {
+      servicesSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
   return (
-    <section 
-      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20"
-      aria-label="Welcome to Lirimi Studio"
-    >
-      {/* 
-        LAYER 1: Background Image 
-        Using a high-quality Unsplash image that conveys "Premium Barber".
-        We use object-position to ensure the barber's focus is visible on mobile.
-      */}
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-deep-950">
+      
+      {/* BACKGROUND LAYER: Gradient Orbs */}
       <div className="absolute inset-0 z-0">
-        <img 
-          src="https://images.unsplash.com/photo-1503951914205-b27cf1254fd9?auto=format&fit=crop&q=80&w=1920" 
-          alt="Master Barber at work in a dimly lit, premium studio" 
-          className="w-full h-full object-cover object-center opacity-60"
-        />
-        {/* Gradient Overlay for Text Readability */}
-        <div className="absolute inset-0 bg-gradient-to-t from-deep-950 via-deep-950/80 to-deep-950/40" />
-        <div className="absolute inset-0 bg-gradient-to-r from-deep-950/90 via-transparent to-deep-950/90" />
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-cyber/10 rounded-full blur-[120px] animate-pulse" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-[120px] animate-pulse delay-1000" />
       </div>
 
-      {/* LAYER 2: Content */}
-      <div className="container mx-auto px-4 z-10 relative text-center">
+      {/* BACKGROUND IMAGE: Barber Shop Ambiance */}
+      <div 
+        className="absolute inset-0 z-0 opacity-20"
+        style={{
+          backgroundImage: 'url(https://images.unsplash.com/photo-1585747833206-ec47d676f441?auto=format&fit=crop&q=80)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+        }}
+      >
+        {/* Overlay Gradient for Text Readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-deep-950/90 via-deep-950/70 to-deep-950" />
+      </div>
+
+      {/* CONTENT LAYER */}
+      <div className="container mx-auto px-4 relative z-10 text-center">
         
-        {/* Est. Badge */}
-        <div className="inline-block mb-6 animate-fade-in opacity-0" style={{ animationDelay: '100ms', animationFillMode: 'forwards' }}>
-          <span className="px-4 py-1.5 rounded-full border border-cyber/30 bg-cyber/5 text-cyber text-sm font-bold tracking-[0.2em] uppercase backdrop-blur-md">
-            Est. {COMPANY_INFO.estYear}
-          </span>
-        </div>
-
-        {/* Main Headline (H1) */}
-        <h1 
-          className="text-5xl md:text-7xl lg:text-8xl font-serif text-white mb-8 tracking-tight animate-fade-in opacity-0"
-          style={{ animationDelay: '300ms', animationFillMode: 'forwards' }}
+        {/* Main Headline */}
+        <div
+          className={`transition-all duration-1000 ${
+            isVisible 
+              ? 'opacity-100 translate-y-0' 
+              : 'opacity-0 translate-y-10'
+          }`}
         >
-          Mastery in <br />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyber via-white to-cyber bg-[length:200%_auto] animate-slide-left">
-            Every Cut
-          </span>
-        </h1>
+          {/* Overline Badge */}
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyber/10 border border-cyber/20 mb-6">
+            <Scissors className="text-cyber" size={16} />
+            <span className="text-cyber text-sm font-semibold tracking-wider uppercase">
+              Premium Barbering Since 2024
+            </span>
+          </div>
 
-        {/* Subheadline */}
-        <p 
-          className="max-w-2xl mx-auto text-lg md:text-xl text-gray-300 mb-10 leading-relaxed animate-fade-in opacity-0"
-          style={{ animationDelay: '500ms', animationFillMode: 'forwards' }}
-        >
-          Experience the fusion of classic barbering and modern aesthetics. 
-          We don't just cut hair; we sculpt your confidence in the heart of {COMPANY_INFO.location.district}.
-        </p>
+          {/* H1: Primary Headline */}
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif font-bold text-white mb-6 leading-tight">
+            Mastery in
+            <br />
+            <span className="text-cyber">Every Cut</span>
+          </h1>
 
-        {/* Call to Action Buttons */}
-        <div 
-          className="flex flex-col md:flex-row items-center justify-center gap-4 animate-fade-in opacity-0"
-          style={{ animationDelay: '700ms', animationFillMode: 'forwards' }}
-        >
-          <Button 
-            to={APP_ROUTES.booking} 
-            size="lg" 
-            variant="primary"
-            icon={<Calendar size={20} />}
-            className="w-full md:w-auto min-w-[200px]"
-          >
-            Book Appointment
-          </Button>
-          
-          <Button 
-            href={APP_ROUTES.services} 
-            size="lg" 
-            variant="secondary"
-            icon={<Scissors size={20} />}
-            className="w-full md:w-auto min-w-[200px]"
-          >
-            View Services
-          </Button>
+          {/* Subheadline */}
+          <p className="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto mb-12 leading-relaxed">
+            Where traditional craftsmanship meets modern precision. 
+            Experience grooming elevated to an art form in the heart of Soho, NYC.
+          </p>
+
+          {/* CTA Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
+            <Button 
+              to={APP_ROUTES.booking} 
+              size="lg"
+              variant="primary"
+              icon={<Scissors size={20} />}
+            >
+              Book Appointment
+            </Button>
+            <Button 
+              as="button"
+              onClick={handleScrollToServices}
+              size="lg"
+              variant="outline"
+            >
+              Explore Services
+            </Button>
+          </div>
+
+          {/* Trust Indicators (Social Proof) */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+            
+            {/* Indicator 1: Experience */}
+            <div className="flex flex-col items-center gap-3 p-6 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-cyber/30 transition-colors">
+              <div className="w-12 h-12 rounded-full bg-cyber/10 flex items-center justify-center">
+                <Award className="text-cyber" size={24} />
+              </div>
+              <div>
+                <p className="text-2xl font-bold text-white">15+</p>
+                <p className="text-sm text-gray-400">Years Combined Experience</p>
+              </div>
+            </div>
+
+            {/* Indicator 2: Clients */}
+            <div className="flex flex-col items-center gap-3 p-6 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-cyber/30 transition-colors">
+              <div className="w-12 h-12 rounded-full bg-cyber/10 flex items-center justify-center">
+                <Scissors className="text-cyber" size={24} />
+              </div>
+              <div>
+                <p className="text-2xl font-bold text-white">5,000+</p>
+                <p className="text-sm text-gray-400">Satisfied Clients</p>
+              </div>
+            </div>
+
+            {/* Indicator 3: Response Time */}
+            <div className="flex flex-col items-center gap-3 p-6 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-cyber/30 transition-colors">
+              <div className="w-12 h-12 rounded-full bg-cyber/10 flex items-center justify-center">
+                <Clock className="text-cyber" size={24} />
+              </div>
+              <div>
+                <p className="text-2xl font-bold text-white">24/7</p>
+                <p className="text-sm text-gray-400">Online Booking</p>
+              </div>
+            </div>
+
+          </div>
         </div>
       </div>
 
-      {/* LAYER 3: Decorative Scroll Indicator */}
-      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce hidden md:block opacity-50">
-        <div className="w-6 h-10 border-2 border-cyber/30 rounded-full flex justify-center p-2">
-          <div className="w-1 h-2 bg-cyber rounded-full" />
-        </div>
-      </div>
+      {/* SCROLL INDICATOR (Animated Chevron) */}
+      <button
+        onClick={handleScrollToServices}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 text-white/60 hover:text-cyber transition-colors animate-bounce"
+        aria-label="Scroll to services section"
+      >
+        <ChevronDown size={32} />
+      </button>
+
     </section>
   );
 };
