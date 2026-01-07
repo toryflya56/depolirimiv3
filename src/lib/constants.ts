@@ -7,17 +7,17 @@ export const APP_ROUTES = {
 
 export const COMPANY_INFO = {
   name: "LIRIMI Barber Studio",
-  tagline: "Where style meets tradition",
+  tagline: "Mastery in Every Cut.",
   location: {
-    street: "123 Main Street",
-    district: "Downtown",
-    city: "Anytown",
-    state: "CA 12345",
+    street: "456 Grand Street",
+    city: "New York",
+    state: "NY",
+    zip: "10002",
     googleMapsUrl: "https://maps.app.goo.gl/u3ybYvPA1AT818E29"
   },
   contact: {
-    phone: "123-456-7890",
-    email: "contact@lirimi.com",
+    phone: "(212) 555-0123",
+    email: "bookings@lirimi.com",
   },
   social: {
     instagram: "https://instagram.com",
@@ -27,11 +27,8 @@ export const COMPANY_INFO = {
 };
 
 export const BUSINESS_HOURS = [
-  { day: 'Monday', hours: '9:00 AM - 7:00 PM' },
-  { day: 'Tuesday', hours: '9:00 AM - 7:00 PM' },
-  { day: 'Wednesday', hours: '9:00 AM - 7:00 PM' },
-  { day: 'Thursday', hours: '9:00 AM - 7:00 PM' },
-  { day: 'Friday', hours: '9:00 AM - 7:00 PM' },
-  { day: 'Saturday', hours: '10:00 AM - 5:00 PM' },
-  { day: 'Sunday', hours: 'Closed' },
+  { day: 'TUE–FRI', hours: '10AM–8PM' },
+  { day: 'SAT', hours: '9AM–6PM' },
+  { day: 'SUN', hours: '11AM–5PM' },
+  { day: 'MON', hours: 'Closed' },
 ];

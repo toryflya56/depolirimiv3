@@ -1,241 +1,85 @@
-import React, { useState } from 'react';
-import { Scissors, Sparkles, Brush, Crown, Check } from 'lucide-react';
-import { Button } from '../../../components/ui/Button';
-import { APP_ROUTES } from '../../../lib/constants';
+import React from 'react';
 import { formatCurrency } from '../../../lib/utils';
 import { Link } from 'react-router-dom';
-
-// ==========================================
-// TYPE DEFINITIONS
-// ==========================================
+import { APP_ROUTES } from '../../../lib/constants';
 
 interface Service {
   id: string;
   name: string;
   description: string;
-  duration: number; // minutes
   price: number;
-  icon: React.ReactNode;
-  features: string[];
-  popular?: boolean;
+  imageUrl: string;
 }
-
-// ==========================================
-// SERVICE CATALOG DATA
-// ==========================================
 
 const SERVICES: Service[] = [
   {
-    id: 'signature-cut',
-    name: 'Signature Cut',
-    description: 'Precision haircut with consultation, wash, and style. Our master barbers analyze your face shape and hair texture to deliver a cut that enhances your natural features.',
-    duration: 45,
-    price: 65,
-    icon: <Scissors className="text-cyber" size={28} />,
-    features: [
-      'Personalized consultation',
-      'Premium hair wash',
-      'Precision cutting technique',
-      'Hot towel treatment',
-      'Styling with premium products'
-    ],
-    popular: true
+    id: 'executive-cut',
+    name: 'The Executive Cut',
+    description: 'Precision scissor cut tailored to your head shape, finished with a hot towel styling.',
+    price: 55,
+    imageUrl: 'https://images.unsplash.com/photo-1599351431202-15b220857329?auto=format&fit=crop&q=80',
   },
   {
     id: 'royal-shave',
     name: 'Royal Shave',
-    description: 'Traditional hot towel shave with pre-shave oil, premium lather, and post-shave balm. Experience the lost art of straight razor mastery.',
-    duration: 40,
-    price: 55,
-    icon: <Crown className="text-cyber" size={28} />,
-    features: [
-      'Hot towel preparation',
-      'Pre-shave oil treatment',
-      'Straight razor technique',
-      'Post-shave moisturizer',
-      'Complimentary face massage'
-    ]
+    description: 'Traditional straight razor shave with pre-shave oil, hot foam, and cold towel finish.',
+    price: 45,
+    imageUrl: 'https://images.unsplash.com/photo-1621607512214-6f3594193d6a?auto=format&fit=crop&q=80',
   },
   {
     id: 'beard-sculpting',
     name: 'Beard Sculpting',
-    description: 'Expert beard trimming and shaping with oil conditioning. Whether you want a full beard, goatee, or designer stubble, we craft it perfectly.',
-    duration: 30,
-    price: 40,
-    icon: <Brush className="text-cyber" size={28} />,
-    features: [
-      'Beard analysis & consultation',
-      'Precision trimming',
-      'Edge detailing',
-      'Conditioning treatment',
-      'Styling guidance'
-    ]
+    description: 'Detailed beard trimming and shaping, including line-up and conditioning treatment.',
+    price: 35,
+    imageUrl: 'https://images.unsplash.com/photo-1617850849224-34c4a552def6?auto=format&fit=crop&q=80',
   },
-  {
-    id: 'executive-package',
-    name: 'Executive Package',
-    description: 'Complete grooming experience: haircut, shave, beard trim, and facial treatment. The ultimate transformation for the modern gentleman.',
-    duration: 90,
-    price: 140,
-    icon: <Sparkles className="text-cyber" size={28} />,
-    features: [
-      'Full signature haircut',
-      'Royal hot towel shave',
-      'Beard sculpting & conditioning',
-      'Deep cleansing facial',
-      'Scalp massage',
-      'Complimentary beverage'
-    ],
-    popular: true
-  }
 ];
 
-// ==========================================
-// COMPONENT
-// ==========================================
-
 export const ServicesSection: React.FC = () => {
-  const [selectedService, setSelectedService] = useState<string | null>(null);
-
   return (
-    <section id="services" className="py-24 bg-deep-950 scroll-mt-20">
+    <section id="services" className="py-20 bg-deep-950 scroll-mt-16">
       <div className="container mx-auto px-4">
         
-        {/* Section Header */}
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyber/10 border border-cyber/20 mb-4">
-            <Scissors className="text-cyber" size={16} />
-            <span className="text-cyber text-sm font-semibold tracking-wider uppercase">
-              Our Services
-            </span>
-          </div>
-          
+        <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-serif font-bold text-white mb-4">
-            Crafted Experiences
+            Our Expertise
           </h2>
-          
-          <div className="h-1 w-24 bg-cyber mx-auto rounded-full mb-6" />
-          
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-            From classic cuts to modern styles, each service is a testament to our dedication 
-            to the craft and your satisfaction.
-          </p>
         </div>
 
-        {/* Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-          
+        <div className="max-w-3xl mx-auto space-y-8">
           {SERVICES.map((service) => (
-            <article
-              key={service.id}
-              className={`
-                relative group cursor-pointer
-                bg-deep-900/50 backdrop-blur-sm 
-                border rounded-2xl overflow-hidden
-                transition-all duration-300 hover:scale-105
-                ${selectedService === service.id 
-                  ? 'border-cyber shadow-lg shadow-cyber/20' 
-                  : 'border-white/10 hover:border-cyber/50'
-                }
-              `}
-              onClick={() => setSelectedService(
-                selectedService === service.id ? null : service.id
-              )}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  e.preventDefault();
-                  setSelectedService(
-                    selectedService === service.id ? null : service.id
-                  );
-                }
-              }}
-              aria-expanded={selectedService === service.id}
-            >
-              
-              {/* Popular Badge */}
-              {service.popular && (
-                <div className="absolute top-4 right-4 z-10">
-                  <span className="px-3 py-1 bg-cyber text-deep-950 text-xs font-bold rounded-full uppercase tracking-wide">
-                    Popular
-                  </span>
+            <Link to={`${APP_ROUTES.BOOKING}?service=${service.id}`} key={service.id} className="block group">
+              <article className="bg-deep-900/40 rounded-2xl overflow-hidden border border-white/10 hover:border-cyber/50 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-2xl hover:shadow-cyber/10">
+                <div className="md:flex">
+
+                  <div className="md:w-1/2 relative overflow-hidden">
+                    <img 
+                      src={service.imageUrl}
+                      alt={`Image for ${service.name}`}
+                      className="w-full h-64 object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                  </div>
+
+                  <div className="md:w-1/2 p-6 flex flex-col justify-center relative">
+                    <div className="flex justify-between items-start mb-3">
+                        <h3 className="text-2xl font-serif font-bold text-white">
+                          {service.name}
+                        </h3>
+                        <span className="text-2xl font-bold text-cyber ml-4">
+                          {formatCurrency(service.price)}
+                        </span>
+                    </div>
+                    
+                    <p className="text-gray-400 text-sm leading-relaxed">
+                      {service.description}
+                    </p>
+                  </div>
+
                 </div>
-              )}
-
-              {/* Card Content */}
-              <div className="p-6">
-                
-                {/* Icon */}
-                <div className="w-14 h-14 rounded-xl bg-cyber/10 border border-cyber/20 flex items-center justify-center mb-4 group-hover:border-cyber/50 transition-colors">
-                  {service.icon}
-                </div>
-
-                {/* Service Name */}
-                <h3 className="text-xl font-bold text-white mb-2">
-                  {service.name}
-                </h3>
-
-                {/* Description */}
-                <p className="text-gray-400 text-sm mb-4 line-clamp-2">
-                  {service.description}
-                </p>
-
-                {/* Metadata: Duration & Price */}
-                <div className="flex items-center justify-between mb-4 pb-4 border-b border-white/10">
-                  <span className="text-gray-500 text-sm">
-                    {service.duration} min
-                  </span>
-                  <span className="text-cyber text-xl font-bold">
-                    {formatCurrency(service.price)}
-                  </span>
-                </div>
-
-                {/* Features (Expandable) */}
-                <div 
-                  className={`
-                    overflow-hidden transition-all duration-300
-                    ${selectedService === service.id ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}
-                  `}
-                >
-                  <ul className="space-y-2 mb-4">
-                    {service.features.map((feature, idx) => (
-                      <li key={idx} className="flex items-start gap-2 text-sm text-gray-300">
-                        <Check className="text-cyber shrink-0 mt-0.5" size={16} />
-                        <span>{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* CTA */}
-                <Link
-                  to={APP_ROUTES.BOOKING}
-                  className="w-full text-center text-cyber text-sm font-semibold py-2 border border-cyber/30 rounded-lg hover:bg-cyber/10 transition-colors block"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  {selectedService === service.id ? 'Book This Service' : 'View Details'}
-                </Link>
-
-              </div>
-            </article>
+              </article>
+            </Link>
           ))}
-
-        </div>
-
-        {/* Bottom CTA */}
-        <div className="text-center">
-          <Button 
-            as="link"
-            to={APP_ROUTES.BOOKING}
-            size="lg"
-            variant="primary"
-          >
-            Book Your Service
-          </Button>
-          <p className="text-gray-500 text-sm mt-4">
-            Walk-ins welcome, but appointments recommended
-          </p>
         </div>
 
       </div>
