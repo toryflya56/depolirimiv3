@@ -2,7 +2,10 @@ import React, { Component, ErrorInfo, ReactNode } from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 
-// INTERFACE: Explicit typing for strict Type safety
+// ==========================================
+// 1. TYPE DEFINITIONS
+// ==========================================
+
 interface ErrorBoundaryProps {
   children: ReactNode;
 }
@@ -12,14 +15,13 @@ interface ErrorBoundaryState {
   error: Error | null;
 }
 
+// ==========================================
+// 2. GLOBAL ERROR BOUNDARY (Resilience Layer)
+// ==========================================
+
 /**
- * ENTERPRISE GRADE ERROR BOUNDARY
- * --------------------------------
- * 1. RESILIENCE: Catches JS errors anywhere in the child component tree.
- * 2. OBSERVABILITY: Integration point for loggers (Sentry/Datadog).
- * 3. DEFENSE IN DEPTH: Uses inline styles to ensure the error UI renders 
- *    even if the CSS bundle fails to load/parse.
- * 4. ACCESSIBILITY: Uses semantic roles for screen readers.
+ * Catches JavaScript errors anywhere in the child component tree,
+ * logs those errors, and displays a fallback UI.
  */
 class GlobalErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   constructor(props: ErrorBoundaryProps) {
@@ -33,21 +35,23 @@ class GlobalErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySta
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
-    // [ENTERPRISE MONITORING]
-    // In production, this forwards the crash report to your observability platform.
-    console.error(' [CRITICAL] Application Crash Detected:', error, errorInfo);
+    // [ENTERPRISE LOGGING]
+    // In production, send this to Sentry/Datadog/NewRelic
+    console.error('[CRITICAL SYSTEM FAILURE]', error, errorInfo);
   }
 
-  handleReload = (): void => {
-    // Hard reload to clear any corrupted memory state
+  private handleReload = (): void => {
+    // Force a hard reload to clear corrupted memory states
     window.location.reload();
   };
 
   render(): ReactNode {
     if (this.state.hasError) {
+      // Inline styles used intentionally to ensure visibility 
+      // even if external CSS fails to load.
       return (
         <div 
-          role="alert" 
+          role="alert"
           style={{
             height: '100vh',
             width: '100vw',
@@ -55,10 +59,10 @@ class GlobalErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySta
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            backgroundColor: '#02040a', // Matches deep-950 theme
+            backgroundColor: '#02040a', // Theme: deep-950
             color: '#ffffff',
-            fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-            padding: '20px',
+            fontFamily: 'system-ui, -apple-system, sans-serif',
+            padding: '2rem',
             textAlign: 'center',
             position: 'fixed',
             top: 0,
@@ -66,55 +70,38 @@ class GlobalErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySta
             zIndex: 9999
           }}
         >
-          <div style={{ maxWidth: '480px' }}>
+          <div style={{ maxWidth: '500px' }}>
             <h1 style={{ 
-              color: '#00E0FF', // Matches cyber accent
-              fontSize: '2rem', 
+              color: '#00E0FF', // Theme: cyber
               marginBottom: '1rem',
-              fontWeight: '700',
-              letterSpacing: '-0.02em'
+              fontSize: '2rem',
+              fontWeight: 'bold' 
             }}>
-              System Malfunction
+              System Unavailable
             </h1>
             <p style={{ 
               color: '#94a3b8', 
-              marginBottom: '2rem', 
-              lineHeight: '1.6',
-              fontSize: '1rem'
+              marginBottom: '2rem',
+              lineHeight: '1.5' 
             }}>
-              We encountered an unexpected critical error. Our digital styling team has been automatically notified.
+              A critical error has occurred. Our engineering team has been notified.
             </p>
             
-            <div style={{ 
-              marginBottom: '2rem', 
-              padding: '12px', 
-              background: 'rgba(255, 0, 0, 0.1)', 
-              border: '1px solid rgba(255, 0, 0, 0.2)', 
-              borderRadius: '4px',
-              color: '#ff6b6b',
-              fontSize: '0.875rem',
-              fontFamily: 'monospace'
-            }}>
-              Error: {this.state.error?.message || 'Unknown Exception'}
-            </div>
-
             <button
               onClick={this.handleReload}
               style={{
                 backgroundColor: '#00E0FF',
-                color: '#000000',
+                color: '#02040a',
                 border: 'none',
-                padding: '14px 28px',
-                borderRadius: '6px',
-                fontSize: '1rem',
-                fontWeight: '700',
+                padding: '12px 24px',
+                borderRadius: '4px',
+                fontWeight: 'bold',
                 cursor: 'pointer',
                 textTransform: 'uppercase',
-                letterSpacing: '1px',
-                boxShadow: '0 0 20px rgba(0, 224, 255, 0.3)'
+                letterSpacing: '1px'
               }}
             >
-              Reboot System
+              Reboot Application
             </button>
           </div>
         </div>
@@ -125,19 +112,18 @@ class GlobalErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySta
   }
 }
 
-// --- APP BOOTSTRAPPING ---
+// ==========================================
+// 3. APPLICATION BOOTSTRAP
+// ==========================================
 
 const rootElement = document.getElementById('root');
 
 if (!rootElement) {
-  // Fail fast if the DOM is corrupt
-  throw new Error("FATAL: Could not find root element to mount application.");
+  throw new Error("FATAL: Root element 'root' not found in document.");
 }
 
 const root = ReactDOM.createRoot(rootElement);
 
-// StrictMode is enabled for Development auditing (detects unsafe lifecycles)
-// GlobalErrorBoundary wraps the entire app to catch crashes
 root.render(
   <React.StrictMode>
     <GlobalErrorBoundary>
