@@ -1,0 +1,149 @@
+# ==========================================
+# DEPENDENCIES
+# ==========================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+.pnpm-store/
+.yarn/
+.yarn-integrity
+
+# ==========================================
+# BUILD OUTPUTS
+# ==========================================
+dist/
+dist-ssr/
+build/
+out/
+*.local
+
+# ==========================================
+# ENVIRONMENT VARIABLES
+# ==========================================
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env*.local
+
+# ==========================================
+# VERCEL
+# ==========================================
+.vercel
+.vercel.json
+
+# ==========================================
+# VITE
+# ==========================================
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
+
+# ==========================================
+# LOGS
+# ==========================================
+logs/
+*.log
+npm-debug.log*
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# ==========================================
+# EDITOR DIRECTORIES & FILES
+# ==========================================
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/tasks.json
+
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.project
+.classpath
+.settings/
+
+# ==========================================
+# TESTING
+# ==========================================
+coverage/
+*.lcov
+.nyc_output/
+.jest-cache/
+.vitest/
+
+# ==========================================
+# TYPESCRIPT
+# ==========================================
+*.tsbuildinfo
+tsconfig.tsbuildinfo
+
+# ==========================================
+# STORYBOOK
+# ==========================================
+storybook-static/
+
+# ==========================================
+# MISC
+# ==========================================
+.cache/
+.temp/
+.tmp/
+temp/
+tmp/
+*.cache
+
+# OS Generated
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# ==========================================
+# SECURITY
+# ==========================================
+# Never commit sensitive data
+*.pem
+*.key
+*.cert
+*.crt
+*.p12
+.ssh/
+secrets/
+credentials/
+
+# ==========================================
+# PRODUCTION SOURCE MAPS (Optional)
+# ==========================================
+# Uncomment if you don't want to deploy sourcemaps
+# *.map
+
+# ==========================================
+# PACKAGE MANAGER LOCKS (Choose One)
+# ==========================================
+# If using npm, keep package-lock.json
+# If using yarn, keep yarn.lock
+# If using pnpm, keep pnpm-lock.yaml
+
+# Uncomment the ones you DON'T use:
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
