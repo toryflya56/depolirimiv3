@@ -1,51 +1,45 @@
+
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import { fileURLToPath } from 'url';
 import path from 'path';
+
+// Get the directory name using import.meta.url, the modern ESM way
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  // ==========================================
+  // =========================================
   // PLUGINS
-  // ==========================================
+  // =========================================
   plugins: [
     react()
   ],
 
-  // ==========================================
+  // =========================================
   // PATH ALIASES (matches tsconfig.json)
-  // ==========================================
+  // =========================================
   resolve: {
     alias: {
+      // This single alias is the source of truth, matching tsconfig.json
       '@': path.resolve(__dirname, './src'),
-      '@components': path.resolve(__dirname, './src/components'),
-      '@features': path.resolve(__dirname, './src/features'),
-      '@lib': path.resolve(__dirname, './src/lib'),
-      '@pages': path.resolve(__dirname, './src/pages')
     }
   },
 
-  // ==========================================
+  // =========================================
   // DEVELOPMENT SERVER
-  // ==========================================
+  // =========================================
   server: {
     port: 3000,
-    strictPort: false, // Try next port if 3000 is taken
-    host: true, // Listen on all addresses (0.0.0.0)
-    open: true, // Auto-open browser
+    strictPort: false,
+    host: true,
+    open: true,
     cors: true,
-    // Proxy API requests (if needed)
-    // proxy: {
-    //   '/api': {
-    //     target: 'http://localhost:8000',
-    //     changeOrigin: true,
-    //     rewrite: (path) => path.replace(/^\/api/, '')
-    //   }
-    // }
   },
 
-  // ==========================================
+  // =========================================
   // PREVIEW SERVER (for testing production builds)
-  // ==========================================
+  // =========================================
   preview: {
     port: 4173,
     strictPort: false,
@@ -53,52 +47,41 @@ export default defineConfig({
     open: true
   },
 
-  // ==========================================
+  // =========================================
   // BUILD CONFIGURATION
-  // ==========================================
+  // =========================================
   build: {
-    // Output directory
     outDir: 'dist',
-    
-    // Generate sourcemaps for debugging (disable in production for security)
-    sourcemap: process.env.NODE_ENV !== 'production',
-    
-    // Minification
-    minify: 'esbuild', // Faster than terser
-    
-    // Target browsers (supports ES2020+)
-    target: 'es2020',
-    
-    // CSS code splitting
+    sourcemap: true, // Enable sourcemaps for debugging production issues
+    minify: 'esbuild',
+    target: 'modules', // Target modern browsers supporting ES modules
     cssCodeSplit: true,
-    
-    // Chunk size warnings
-    chunkSizeWarningLimit: 1000, // KB
-    
-    // Rollup options for advanced optimization
+    chunkSizeWarningLimit: 1000,
     rollupOptions: {
       output: {
-        // JS chunk naming
+        // Organize assets into subfolders
         chunkFileNames: 'assets/js/[name]-[hash].js',
-        entryFileNames: 'assets/js/[name]-[hash].js'
+        entryFileNames: 'assets/js/[name]-[hash].js',
+        assetFileNames: ({ name }) => {
+          if (/\.(gif|jpe?g|png|svg|webp)$/.test(name ?? '')) {
+            return 'assets/images/[name]-[hash][extname]';
+          }
+          if (/\.css$/.test(name ?? '')) {
+            return 'assets/css/[name]-[hash][extname]';
+          }
+          return 'assets/[name]-[hash][extname]';
+        },
       }
     },
-    
-    // Asset handling
-    assetsInlineLimit: 4096, // 4KB - inline smaller assets as base64
-    
-    // Clear output directory before build
+    assetsInlineLimit: 4096,
     emptyOutDir: true,
-    
-    // Report compressed size (disable for faster builds)
     reportCompressedSize: true
   },
 
-  // ==========================================
+  // =========================================
   // PERFORMANCE OPTIMIZATIONS
-  // ==========================================
+  // =========================================
   optimizeDeps: {
-    // Pre-bundle dependencies for faster dev server
     include: [
       'react',
       'react-dom',
@@ -107,35 +90,28 @@ export default defineConfig({
       'clsx',
       'tailwind-merge'
     ],
-    // Force re-optimization on changes
-    force: false
   },
 
-  // ==========================================
+  // =========================================
   // ENVIRONMENT VARIABLES
-  // ==========================================
-  envPrefix: 'VITE_', // Only expose vars starting with VITE_
-  
-  // Define global constants
+  // =========================================
+  envPrefix: 'VITE_',
   define: {
     __APP_VERSION__: JSON.stringify(process.env.npm_package_version),
     __BUILD_TIME__: JSON.stringify(new Date().toISOString())
   },
 
-  // ==========================================
+  // =========================================
   // CSS CONFIGURATION
-  // ==========================================
+  // =========================================
   css: {
-    devSourcemap: true, // Enable CSS sourcemaps in dev
-    postcss: './postcss.config.js' // PostCSS config file
+    devSourcemap: true,
+    postcss: './postcss.config.js'
   },
-
-  // ==========================================
-  // SECURITY
-  // ==========================================
-  // Prevent directory traversal
-  publicDir: 'public',
   
-  // MIME type validation
+  // =========================================
+  // SECURITY
+  // =========================================
+  publicDir: 'public',
   assetsInclude: ['**/*.png', '**/*.jpg', '**/*.jpeg', '**/*.gif', '**/*.svg', '**/*.webp']
 });
