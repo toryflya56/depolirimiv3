@@ -29,9 +29,9 @@ export const Header: React.FC = () => {
 
   // Navigation Links Data (Centralized for easy updates)
   const navLinks = [
-    { name: 'Home', path: APP_ROUTES.home },
-    { name: 'Services', path: APP_ROUTES.services },
-    { name: 'Contact', path: APP_ROUTES.contact },
+    { name: 'Home', path: APP_ROUTES.HOME },
+    { name: 'Services', path: APP_ROUTES.SERVICES },
+    { name: 'Contact', path: APP_ROUTES.CONTACT },
   ];
 
   return (
@@ -47,7 +47,7 @@ export const Header: React.FC = () => {
         
         {/* BRAND LOGO */}
         <Link 
-          to={APP_ROUTES.home} 
+          to={APP_ROUTES.HOME} 
           className="flex items-center gap-2 group"
           aria-label="Lirimi Studio Home"
         >
@@ -75,7 +75,7 @@ export const Header: React.FC = () => {
           
           <Button 
             as="link"
-            to={APP_ROUTES.booking} 
+            to={APP_ROUTES.BOOKING} 
             size="sm" 
             variant={isScrolled ? 'primary' : 'outline'}
           >
@@ -114,7 +114,7 @@ export const Header: React.FC = () => {
             </a>
           ))}
           <div className="pt-4 border-t border-white/10 mt-2">
-            <Button as="link" to={APP_ROUTES.booking} className="w-full justify-center">
+            <Button as="link" to={APP_ROUTES.BOOKING} className="w-full justify-center">
               Book Appointment
             </Button>
           </div>

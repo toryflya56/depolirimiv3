@@ -15,7 +15,7 @@ export const Footer: React.FC = () => {
           
           {/* COLUMN 1: Brand & Bio */}
           <div className="space-y-6">
-            <Link to={APP_ROUTES.home} className="flex items-center gap-2 group">
+            <Link to={APP_ROUTES.HOME} className="flex items-center gap-2 group">
               <div className="w-8 h-8 bg-cyber/10 rounded-md flex items-center justify-center border border-cyber/20">
                 <Scissors className="text-cyber" size={16} />
               </div>
@@ -63,10 +63,10 @@ export const Footer: React.FC = () => {
           <div>
             <h4 className="text-white font-bold tracking-wide mb-6">Quick Links</h4>
             <nav className="flex flex-col space-y-3">
-              <Link to={APP_ROUTES.home} className="text-gray-400 hover:text-cyber transition-colors text-sm w-fit">Home</Link>
-              <a href={APP_ROUTES.services} className="text-gray-400 hover:text-cyber transition-colors text-sm w-fit">Services</a>
-              <Link to={APP_ROUTES.booking} className="text-gray-400 hover:text-cyber transition-colors text-sm w-fit">Book Appointment</Link>
-              <a href={APP_ROUTES.contact} className="text-gray-400 hover:text-cyber transition-colors text-sm w-fit">Contact Us</a>
+              <Link to={APP_ROUTES.HOME} className="text-gray-400 hover:text-cyber transition-colors text-sm w-fit">Home</Link>
+              <a href={APP_ROUTES.SERVICES} className="text-gray-400 hover:text-cyber transition-colors text-sm w-fit">Services</a>
+              <Link to={APP_ROUTES.BOOKING} className="text-gray-400 hover:text-cyber transition-colors text-sm w-fit">Book Appointment</Link>
+              <a href={APP_ROUTES.CONTACT} className="text-gray-400 hover:text-cyber transition-colors text-sm w-fit">Contact Us</a>
             </nav>
           </div>
 

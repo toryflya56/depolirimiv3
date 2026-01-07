@@ -79,7 +79,7 @@ export const Hero: React.FC = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
             <Button 
               as="link"
-              to={APP_ROUTES.booking} 
+              to={APP_ROUTES.BOOKING} 
               size="lg"
               variant="primary"
               icon={<Scissors size={20} />}

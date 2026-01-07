@@ -3,6 +3,7 @@ import { Scissors, Sparkles, Brush, Crown, Check } from 'lucide-react';
 import { Button } from '../../../components/ui/Button';
 import { APP_ROUTES } from '../../../lib/constants';
 import { formatCurrency } from '../../../lib/utils';
+import { Link } from 'react-router-dom';
 
 // ==========================================
 // TYPE DEFINITIONS
@@ -208,15 +209,13 @@ export const ServicesSection: React.FC = () => {
                 </div>
 
                 {/* CTA */}
-                <button
-                  className="w-full text-center text-cyber text-sm font-semibold py-2 border border-cyber/30 rounded-lg hover:bg-cyber/10 transition-colors"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    window.location.hash = APP_ROUTES.booking;
-                  }}
+                <Link
+                  to={APP_ROUTES.BOOKING}
+                  className="w-full text-center text-cyber text-sm font-semibold py-2 border border-cyber/30 rounded-lg hover:bg-cyber/10 transition-colors block"
+                  onClick={(e) => e.stopPropagation()}
                 >
                   {selectedService === service.id ? 'Book This Service' : 'View Details'}
-                </button>
+                </Link>
 
               </div>
             </article>
@@ -228,7 +227,7 @@ export const ServicesSection: React.FC = () => {
         <div className="text-center">
           <Button 
             as="link"
-            to={APP_ROUTES.booking}
+            to={APP_ROUTES.BOOKING}
             size="lg"
             variant="primary"
           >
