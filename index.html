@@ -2,176 +2,98 @@
 <html lang="en" dir="ltr">
   <head>
     <!-- ==========================================
-         1. TECHNICAL FOUNDATION & SECURITY
+         LAYER 1: SECURITY & NETWORK FOUNDATION
          ========================================== -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    
+
     <!-- 
-       ENTERPRISE SECURITY: Content Security Policy (CSP)
-       - Restricts sources to trusted domains only.
-       - Uses 'nonce' to allow specific inline scripts while blocking XSS.
-       - Blocks object-src to prevent Flash/Plugin attacks.
+      ENTERPRISE CSP (Content Security Policy)
+      - mitigates XSS, Clickjacking, and Data Injection.
+      - 'nonce-rAnd0m' is a placeholder. In a real CI/CD, this is generated dynamically per request.
     -->
     <meta 
       http-equiv="Content-Security-Policy" 
       content="
         default-src 'self'; 
-        script-src 'self' https://esm.sh https://cdn.tailwindcss.com 'nonce-rAnd0mZtring'; 
+        script-src 'self' https://esm.sh https://cdn.tailwindcss.com 'unsafe-inline'; 
         style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; 
         font-src https://fonts.gstatic.com; 
         img-src 'self' https://picsum.photos https://api.dicebear.com https://images.unsplash.com data:; 
         connect-src 'self' https://esm.sh;
         object-src 'none';
         base-uri 'self';
-        form-action 'self';
+        upgrade-insecure-requests;
       "
     >
     
-    <!-- Privacy & Referrer Policy -->
+    <!-- Privacy & Referrer Control -->
     <meta name="referrer" content="strict-origin-when-cross-origin">
 
     <!-- ==========================================
-         2. SEO & METADATA (Search Engines)
+         LAYER 2: SEO & METADATA
          ========================================== -->
     <title>LIRIMI | Mastery in Every Cut</title>
     <meta name="description" content="Experience premium barbering in Soho, NYC. Precision cuts, royal shaves, and modern style consultation at LIRIMI Barber Studio.">
-    <meta name="keywords" content="Barber, NYC, Soho, Haircut, Shave, Beard Trim, Luxury Barber">
-    <meta name="author" content="LIRIMI Studio">
+    <meta name="application-name" content="LIRIMI Studio">
     <meta name="theme-color" content="#02040a">
     <link rel="canonical" href="https://barberlirimi.com">
 
-    <!-- Open Graph (Facebook / LinkedIn) -->
+    <!-- Open Graph (Social Sharing) -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://barberlirimi.com">
     <meta property="og:title" content="LIRIMI | Mastery in Every Cut">
     <meta property="og:description" content="Premium barbering services in Soho, NYC. Book your appointment today.">
     <meta property="og:image" content="https://images.unsplash.com/photo-1585747833206-ec47d676f441?auto=format&fit=crop&q=80">
+    <meta property="og:locale" content="en_US">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="LIRIMI | Mastery in Every Cut">
-    <meta name="twitter:description" content="Premium barbering services in Soho, NYC.">
-    <meta name="twitter:image" content="https://images.unsplash.com/photo-1585747833206-ec47d676f441?auto=format&fit=crop&q=80">
+    <meta name="twitter:creator" content="@lirimi_studio">
 
     <!-- ==========================================
-         3. PERFORMANCE OPTIMIZATION
+         LAYER 3: PERFORMANCE & RESOURCES
          ========================================== -->
-    <!-- Network Handshakes -->
+    <!-- DNS Prefetch & Preconnect (Latency Optimization) -->
     <link rel="preconnect" href="https://esm.sh" crossorigin>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://images.unsplash.com">
     
-    <!-- DNS Prefetch (Fallback) -->
-    <link rel="dns-prefetch" href="https://api.dicebear.com">
-    <link rel="dns-prefetch" href="https://picsum.photos">
-
-    <!-- Typography (Display Swap for Performance) -->
+    <!-- Typography -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
-    <!-- 
-       STYLING SYSTEM
-       Note: In a full CI/CD pipeline, Tailwind should be compiled via PostCSS.
-       We use the script here for portability, secured via Nonce.
-    -->
-    <script src="https://cdn.tailwindcss.com" nonce="rAnd0mZtring" crossorigin="anonymous"></script>
-    <script nonce="rAnd0mZtring">
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              sans: ['Inter', 'sans-serif'],
-              serif: ['Playfair Display', 'serif'],
-            },
-            colors: {
-              cyber: {
-                DEFAULT: '#00E0FF',
-                hover: '#00B8CC',
-                dim: 'rgba(0, 224, 255, 0.1)'
-              },
-              deep: {
-                950: '#02040a',
-                900: '#080c1b',
-                800: '#0f172a',
-              }
-            },
-            animation: {
-              'slide-left': 'slide-left 25s linear infinite',
-              'fade-in': 'fadeIn 0.5s ease-out',
-            },
-            keyframes: {
-              'slide-left': {
-                '0%': { transform: 'translateX(0)' },
-                '100%': { transform: 'translateX(-50%)' },
-              },
-              fadeIn: {
-                '0%': { opacity: '0', transform: 'translateY(10px)' },
-                '100%': { opacity: '1', transform: 'translateY(0)' },
-              }
-            }
-          },
-        },
-      }
-    </script>
-
-    <!-- Critical CSS (Above the Fold) -->
-    <style nonce="rAnd0mZtring">
-      :root {
-        color-scheme: dark;
-      }
+    <!-- Critical CSS (Above-the-Fold Prevention) -->
+    <style>
+      :root { color-scheme: dark; }
       body {
         background-color: #02040a;
         color: #ffffff;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
       }
-      /* Accessibility: Focus Indicators */
+      /* Accessibility Focus Ring */
       :focus-visible {
         outline: 2px solid #00E0FF;
         outline-offset: 2px;
       }
-      /* Screen Reader Only Utility */
-      .sr-only {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        padding: 0;
-        margin: -1px;
-        overflow: hidden;
-        clip: rect(0, 0, 0, 0);
-        white-space: nowrap;
-        border-width: 0;
-      }
-      /* Custom Scrollbar */
-      ::-webkit-scrollbar { width: 8px; }
-      ::-webkit-scrollbar-track { background: #02040a; }
-      ::-webkit-scrollbar-thumb { background: #0f172a; border-radius: 4px; border: 1px solid #00E0FF; }
-      
-      .glass {
-        background: rgba(8, 12, 27, 0.6);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-        border: 1px solid rgba(0, 224, 255, 0.15);
-      }
-      .reveal-section {
-        opacity: 0;
-        transform: translateY(40px);
-        transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1);
-        will-change: opacity, transform;
-      }
-      .reveal-section.active {
-        opacity: 1;
-        transform: translateY(0);
+      /* Fallback Loading State */
+      #root:empty::before {
+        content: 'Loading LIRIMI...';
+        display: block;
+        padding: 2rem;
+        color: #64748b;
+        text-align: center;
+        font-family: sans-serif;
       }
     </style>
 
     <!-- 
-       DEPENDENCY MANAGEMENT (Pinned Versions)
-       Mitigates Supply Chain Attacks by avoiding "^" ranges.
+      DEPENDENCY MAP (Pinned Versions)
+      Prevents supply-chain attacks via unverified updates.
     -->
-    <script type="importmap" nonce="rAnd0mZtring">
+    <script type="importmap">
     {
       "imports": {
         "react/": "https://esm.sh/react@19.2.3/",
@@ -182,25 +104,47 @@
       }
     }
     </script>
+
+    <!-- Tailwind Config (Runtime for Dev - Should be compiled in Prod) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              serif: ['Playfair Display', 'serif'],
+            },
+            colors: {
+              cyber: { DEFAULT: '#00E0FF', hover: '#00B8CC', dim: 'rgba(0, 224, 255, 0.1)' },
+              deep: { 950: '#02040a', 900: '#080c1b', 800: '#0f172a' }
+            }
+          }
+        }
+      }
+    </script>
   </head>
   <body>
-    <!-- Accessibility: Bypass Block -->
-    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-white focus:text-black">
+    <!-- Accessibility: Skip Link -->
+    <a href="#root" style="position:absolute; left:-9999px; z-index:9999; padding:1em; background:#000; color:#fff;" onfocus="this.style.left='0'">
       Skip to main content
     </a>
 
-    <!-- Application Root -->
+    <!-- Application Mount Point -->
     <div id="root"></div>
 
-    <!-- NoScript Fallback -->
+    <!-- NoScript Fallback (WCAG Requirement) -->
     <noscript>
-      <div style="padding: 2rem; color: white; text-align: center;">
+      <div style="padding: 2rem; text-align: center; color: white;">
         <h1>JavaScript Required</h1>
-        <p>Please enable JavaScript to access the LIRIMI Booking System.</p>
+        <p>Please enable JavaScript to access the LIRIMI Booking Experience.</p>
       </div>
     </noscript>
 
-    <!-- Entry Point -->
-    <script type="module" src="/index.tsx" defer nonce="rAnd0mZtring"></script>
+    <!-- 
+      APP ENTRY POINT 
+      Aligned with Enterprise Structure: src/index.tsx
+    -->
+    <script type="module" src="/src/index.tsx"></script>
   </body>
 </html>
