@@ -1,6 +1,6 @@
 import React from 'react';
 import { Service } from '../../../types';
-import { formatPrice, cn } from '../../../lib/utils';
+import { formatCurrency, cn } from '../../../lib/utils';
 import { Button } from '../../../components/ui/Button';
 import { Calendar } from 'lucide-react';
 
@@ -32,7 +32,7 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({ service, className }) 
           </h3>
           <div className="flex flex-col items-end">
             <span className="text-xl font-serif text-cyber font-bold drop-shadow-[0_0_5px_rgba(0,224,255,0.5)]">
-              {formatPrice(service.price)}
+              {formatCurrency(service.price)}
             </span>
             <span className="text-xs text-gray-500 font-medium tracking-wider uppercase mt-1">
               {service.durationMin} Min
