@@ -6,13 +6,6 @@ import { HomePage } from './pages/HomePage';
 import { BookingPage } from './pages/BookingPage';
 import { APP_ROUTES } from './lib/constants';
 
-// ==========================================
-// 1. UTILITY: SCROLL RESTORATION
-// ==========================================
-/**
- * Automatically scrolls to top of page on route change.
- * Essential for SPA (Single Page Application) UX.
- */
 const ScrollToTop = () => {
   const { pathname } = useLocation();
 
@@ -20,20 +13,13 @@ const ScrollToTop = () => {
     window.scrollTo({
       top: 0,
       left: 0,
-      behavior: 'instant' // Instant jump is better for full page loads
+      behavior: 'instant'
     });
   }, [pathname]);
 
   return null;
 };
 
-// ==========================================
-// 2. LAYOUT WRAPPER
-// ==========================================
-/**
- * Wraps all pages with the persistent Header and Footer.
- * <Outlet /> is where the Page content will be injected.
- */
 const MainLayout = () => {
   return (
     <div className="flex flex-col min-h-screen bg-deep-950 text-white font-sans selection:bg-cyber selection:text-deep-950">
@@ -45,10 +31,6 @@ const MainLayout = () => {
     </div>
   );
 };
-
-// ==========================================
-// 3. APP ROUTER CONFIGURATION
-// ==========================================
 
 const App: React.FC = () => {
   return (
