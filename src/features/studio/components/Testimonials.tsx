@@ -34,7 +34,7 @@ const TESTIMONIALS: Testimonial[] = [
     id: '2',
     name: 'David Chen',
     role: 'Creative Director',
-    content: 'I've been to countless barbers across Manhattan, but LIRIMI stands alone. The precision of the cut, the quality of products, and the genuine care from the staff create an experience worth every penny. My go-to for over a year now.',
+    content: "I've been to countless barbers across Manhattan, but LIRIMI stands alone. The precision of the cut, the quality of products, and the genuine care from the staff create an experience worth every penny. My go-to for over a year now.",
     rating: 5,
     avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=David',
     date: '2024-12-28'
@@ -43,7 +43,7 @@ const TESTIMONIALS: Testimonial[] = [
     id: '3',
     name: 'James Rodriguez',
     role: 'Fashion Photographer',
-    content: 'The Executive Package is pure indulgence. From the moment you walk in, you're treated to a level of service that rivals the finest spas. The hot towel shave alone is worth the visit. This is grooming elevated to art.',
+    content: "The Executive Package is pure indulgence. From the moment you walk in, you're treated to a level of service that rivals the finest spas. The hot towel shave alone is worth the visit. This is grooming elevated to art.",
     rating: 5,
     avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=James',
     date: '2024-12-15'
@@ -61,7 +61,7 @@ const TESTIMONIALS: Testimonial[] = [
     id: '5',
     name: 'Michael Foster',
     role: 'Investment Banker',
-    content: 'In a city full of options, LIRIMI has earned my loyalty. The signature cut is perfection every time, and the barbers actually listen to what you want. It's rare to find this combination of skill, consistency, and hospitality.',
+    content: "In a city full of options, LIRIMI has earned my loyalty. The signature cut is perfection every time, and the barbers actually listen to what you want. It's rare to find this combination of skill, consistency, and hospitality.",
     rating: 5,
     avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Michael',
     date: '2024-11-30'
@@ -105,6 +105,10 @@ export const Testimonials: React.FC = () => {
   };
 
   const currentTestimonial = TESTIMONIALS[currentIndex];
+
+  if (!currentTestimonial) {
+    return null; // Or a loading/error state
+  }
 
   return (
     <section className="py-24 bg-deep-950 relative overflow-hidden">

@@ -17,8 +17,8 @@ interface Service {
 
 interface BookingData {
   serviceId: string | null;
-  date: string;
-  time: string;
+  date?: string;
+  time?: string;
   customerName: string;
   customerEmail: string;
   customerPhone: string;
@@ -46,7 +46,8 @@ const generateAvailableDates = (): string[] => {
   for (let i = 1; i <= 14; i++) {
     const date = new Date(today);
     date.setDate(today.getDate() + i);
-    dates.push(date.toISOString().split('T')[0]);
+    const dateStr = date.toISOString().split('T')[0];
+    dates.push(dateStr);
   }
   
   return dates;
@@ -56,8 +57,8 @@ const generateAvailableDates = (): string[] => {
 const generateTimeSlots = (): string[] => {
   const slots: string[] = [];
   for (let hour = 10; hour <= 19; hour++) {
-    for (let minute of [0, 30]) {
-      if (hour === 19 && minute === 30) break; // Stop at 7:00 PM
+    for (const minute of [0, 30]) {
+      if (hour === 19 && minute === 30) break;
       const time = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
       slots.push(time);
     }
@@ -76,8 +77,6 @@ export const BookingWizard: React.FC = () => {
   const [currentStep, setCurrentStep] = useState<WizardStep>(1);
   const [bookingData, setBookingData] = useState<BookingData>({
     serviceId: null,
-    date: '',
-    time: '',
     customerName: '',
     customerEmail: '',
     customerPhone: '',
@@ -144,7 +143,6 @@ export const BookingWizard: React.FC = () => {
     setIsSubmitting(true);
 
     try {
-      // ENTERPRISE TODO: Replace with actual API call
       await new Promise(resolve => setTimeout(resolve, 2000));
 
       console.log('Booking submitted:', {
@@ -170,7 +168,10 @@ export const BookingWizard: React.FC = () => {
 
   const selectedService = SERVICES.find(s => s.id === bookingData.serviceId);
 
-  const formatDate = (dateString: string): string => {
+  const formatDate = (dateString?: string): string => {
+    if (!dateString) {
+      return '';
+    }
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', { 
       weekday: 'long', 
@@ -179,11 +180,17 @@ export const BookingWizard: React.FC = () => {
     });
   };
 
-  const formatTime = (timeString: string): string => {
+  const formatTime = (timeString?: string): string => {
+    if (!timeString) {
+      return '';
+    }
     const [hours, minutes] = timeString.split(':');
-    const hour = parseInt(hours);
+    const hour = parseInt(hours, 10);
+    if (isNaN(hour)) {
+        return '';
+    }
     const ampm = hour >= 12 ? 'PM' : 'AM';
-    const displayHour = hour > 12 ? hour - 12 : hour;
+    const displayHour = hour > 12 ? hour - 12 : hour === 0 ? 12 : hour;
     return `${displayHour}:${minutes} ${ampm}`;
   };
 
@@ -260,7 +267,7 @@ export const BookingWizard: React.FC = () => {
               <h3 className="text-2xl font-serif font-bold text-white mb-2">
                 Choose Your Service
               </h3>
-              <p className="text-gray-400">Select the experience you'd like</p>
+              <p className="text-gray-400">Select the experience you would like</p>
             </div>
 
             <div className="grid md:grid-cols-2 gap-4">
@@ -342,7 +349,7 @@ export const BookingWizard: React.FC = () => {
             {/* Time Picker */}
             <div>
               <label className="block text-white font-semibold mb-4">Select Time</label>
-              <div className="grid grid-cols-4 md:grid-cols-6 gap-2 max-h-64 overflow-y-auto custom-scrollbar">
+              <div className="grid grid-cols-4 md:grid-cols-6 gap-2 max-h-64 overflow-y-auto">
                 {TIME_SLOTS.map((time) => (
                   <button
                     key={time}
@@ -375,7 +382,7 @@ export const BookingWizard: React.FC = () => {
               <h3 className="text-2xl font-serif font-bold text-white mb-2">
                 Your Information
               </h3>
-              <p className="text-gray-400">We'll use this to confirm your appointment</p>
+              <p className="text-gray-400">We will use this to confirm your appointment</p>
             </div>
 
             <div>
@@ -475,7 +482,7 @@ export const BookingWizard: React.FC = () => {
                 Booking Confirmed!
               </h3>
               <p className="text-gray-400 text-lg">
-                We've sent a confirmation email to {bookingData.customerEmail}
+                We have sent a confirmation email to {bookingData.customerEmail}
               </p>
             </div>
 

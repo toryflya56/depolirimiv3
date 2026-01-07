@@ -227,6 +227,7 @@ export const ServicesSection: React.FC = () => {
         {/* Bottom CTA */}
         <div className="text-center">
           <Button 
+            as="link"
             to={APP_ROUTES.booking}
             size="lg"
             variant="primary"

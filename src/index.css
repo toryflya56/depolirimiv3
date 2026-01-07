@@ -1,0 +1,19 @@
+:root { color-scheme: dark; }
+body {
+  background-color: #02040a;
+  color: #ffffff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+:focus-visible {
+  outline: 2px solid #00E0FF;
+  outline-offset: 2px;
+}
+#root:empty::before {
+  content: 'Loading LIRIMI...';
+  display: block;
+  padding: 2rem;
+  color: #64748b;
+  text-align: center;
+  font-family: sans-serif;
+}

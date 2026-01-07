@@ -64,30 +64,7 @@
     <!-- Typography -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
-    <!-- Critical CSS (Above-the-Fold Prevention) -->
-    <style>
-      :root { color-scheme: dark; }
-      body {
-        background-color: #02040a;
-        color: #ffffff;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-      }
-      /* Accessibility Focus Ring */
-      :focus-visible {
-        outline: 2px solid #00E0FF;
-        outline-offset: 2px;
-      }
-      /* Fallback Loading State */
-      #root:empty::before {
-        content: 'Loading LIRIMI...';
-        display: block;
-        padding: 2rem;
-        color: #64748b;
-        text-align: center;
-        font-family: sans-serif;
-      }
-    </style>
+    <link rel="stylesheet" href="/src/index.css">
 
     <!-- 
       DEPENDENCY MAP (Pinned Versions)
@@ -131,7 +108,7 @@
     </a>
 
     <!-- Application Mount Point -->
-    <div id="root"></div>
+<div id="root"></div>
 
     <!-- NoScript Fallback (WCAG Requirement) -->
     <noscript>
@@ -143,8 +120,8 @@
 
     <!-- 
       APP ENTRY POINT 
-      Aligned with Enterprise Structure: src/index.tsx
+      Aligned with Enterprise Structure: index.tsx
     -->
-    <script type="module" src="/src/index.tsx"></script>
+    <script type="module" src="./index.tsx"></script>
   </body>
 </html>

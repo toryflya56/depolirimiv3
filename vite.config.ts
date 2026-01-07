@@ -8,20 +8,7 @@ export default defineConfig({
   // PLUGINS
   // ==========================================
   plugins: [
-    react({
-      // Fast Refresh for React components
-      fastRefresh: true,
-      // Babel options for JSX optimization
-      babel: {
-        plugins: [
-          // Remove console.log in production
-          process.env.NODE_ENV === 'production' && [
-            'transform-remove-console',
-            { exclude: ['error', 'warn'] }
-          ]
-        ].filter(Boolean)
-      }
-    })
+    react()
   ],
 
   // ==========================================
@@ -91,29 +78,6 @@ export default defineConfig({
     // Rollup options for advanced optimization
     rollupOptions: {
       output: {
-        // Manual chunk splitting for better caching
-        manualChunks: {
-          // Vendor chunk (React + Router)
-          vendor: ['react', 'react-dom', 'react-router-dom'],
-          // Icons chunk (lucide-react)
-          icons: ['lucide-react']
-        },
-        
-        // Asset naming patterns
-        assetFileNames: (assetInfo) => {
-          const info = assetInfo.name.split('.');
-          let extType = info[info.length - 1];
-          
-          // Organize assets by type
-          if (/png|jpe?g|svg|gif|tiff|bmp|ico/i.test(extType)) {
-            extType = 'images';
-          } else if (/woff|woff2|eot|ttf|otf/i.test(extType)) {
-            extType = 'fonts';
-          }
-          
-          return `assets/${extType}/[name]-[hash][extname]`;
-        },
-        
         // JS chunk naming
         chunkFileNames: 'assets/js/[name]-[hash].js',
         entryFileNames: 'assets/js/[name]-[hash].js'
@@ -175,40 +139,3 @@ export default defineConfig({
   // MIME type validation
   assetsInclude: ['**/*.png', '**/*.jpg', '**/*.jpeg', '**/*.gif', '**/*.svg', '**/*.webp']
 });
-```
-
----
-
-## **✅ Enterprise Standards Compliance:**
-
-### **Performance Optimization**
-- ✅ **Code splitting**: Separate vendor/icons chunks (better caching)
-- ✅ **Tree shaking**: Dead code elimination via ESBuild
-- ✅ **Asset optimization**: Inline small files, hash for cache busting
-- ✅ **CSS code splitting**: Loads only needed styles
-
-### **Security**
-- ✅ **Sourcemaps disabled in production** (prevents code exposure)
-- ✅ **Environment variable prefixing** (`VITE_` only)
-- ✅ **MIME type validation** on assets
-- ✅ **Console removal in production** (keeps error/warn)
-
-### **Developer Experience**
-- ✅ **Fast HMR**: React Fast Refresh for instant updates
-- ✅ **Auto-open browser** on dev server start
-- ✅ **Path aliases**: Clean imports (@components/...)
-- ✅ **Port fallback**: Tries next port if 3000 is occupied
-
-### **Build Output Structure**
-```
-dist/
-├── index.html
-├── assets/
-│   ├── js/
-│   │   ├── vendor-[hash].js      # React, Router (cached long-term)
-│   │   ├── icons-[hash].js        # Lucide icons
-│   │   └── index-[hash].js        # Your app code
-│   ├── css/
-│   │   └── index-[hash].css
-│   └── images/
-│       └── [name]-[hash].png

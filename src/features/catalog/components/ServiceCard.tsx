@@ -32,7 +32,7 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({ service, className }) 
           </h3>
           <div className="flex flex-col items-end">
             <span className="text-xl font-serif text-cyber font-bold drop-shadow-[0_0_5px_rgba(0,224,255,0.5)]">
-              {formatPrice(service.price, service.currency)}
+              {formatPrice(service.price)}
             </span>
             <span className="text-xs text-gray-500 font-medium tracking-wider uppercase mt-1">
               {service.durationMin} Min
@@ -67,6 +67,7 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({ service, className }) 
         </p>
         
         <Button 
+          as="link" 
           to="/booking" 
           variant="outline" 
           className="w-full group-hover:bg-cyber group-hover:text-deep-950 border-white/10 group-hover:border-cyber"

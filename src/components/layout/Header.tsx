@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Scissors, Menu, X } from 'lucide-react';
 import { Button } from '../ui/Button';
-import { APP_ROUTES, COMPANY_INFO } from '../../lib/constants';
+import { APP_ROUTES } from '../../lib/constants';
 import { cn } from '../../lib/utils';
 
 export const Header: React.FC = () => {
@@ -74,6 +74,7 @@ export const Header: React.FC = () => {
           <div className="h-6 w-px bg-white/10 mx-2" /> {/* Divider */}
           
           <Button 
+            as="link"
             to={APP_ROUTES.booking} 
             size="sm" 
             variant={isScrolled ? 'primary' : 'outline'}
@@ -113,7 +114,7 @@ export const Header: React.FC = () => {
             </a>
           ))}
           <div className="pt-4 border-t border-white/10 mt-2">
-            <Button to={APP_ROUTES.booking} className="w-full justify-center">
+            <Button as="link" to={APP_ROUTES.booking} className="w-full justify-center">
               Book Appointment
             </Button>
           </div>

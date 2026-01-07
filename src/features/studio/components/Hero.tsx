@@ -78,6 +78,7 @@ export const Hero: React.FC = () => {
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
             <Button 
+              as="link"
               to={APP_ROUTES.booking} 
               size="lg"
               variant="primary"

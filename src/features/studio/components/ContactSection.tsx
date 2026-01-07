@@ -191,7 +191,7 @@ export const ContactSection: React.FC = () => {
                     {COMPANY_INFO.location.street}<br />
                     {COMPANY_INFO.location.district}, {COMPANY_INFO.location.city}, {COMPANY_INFO.location.state}
                   </address>
-                  
+                  <a
                     href={COMPANY_INFO.location.googleMapsUrl}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -211,7 +211,7 @@ export const ContactSection: React.FC = () => {
                 </div>
                 <div>
                   <h3 className="text-white font-bold text-lg mb-2">Call Us</h3>
-                  
+                  <a
                     href={`tel:${COMPANY_INFO.contact.phone}`}
                     className="text-gray-400 hover:text-cyber transition-colors text-lg"
                   >
@@ -232,7 +232,7 @@ export const ContactSection: React.FC = () => {
                 </div>
                 <div>
                   <h3 className="text-white font-bold text-lg mb-2">Email Us</h3>
-                  
+                  <a
                     href={`mailto:${COMPANY_INFO.contact.email}`}
                     className="text-gray-400 hover:text-cyber transition-colors break-all"
                   >

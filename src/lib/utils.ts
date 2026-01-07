@@ -89,7 +89,7 @@ export function sanitizeHTML(str: string): string {
     "'": '&#x27;',
     '/': '&#x2F;',
   };
-  return str.replace(/[&<>"'/]/g, (char) => map[char]);
+  return str.replace(/[&<>"'/]/g, (char) => map[char]!);
 }
 
 /**
@@ -106,7 +106,7 @@ export function debounce<T extends (...args: any[]) => any>(
   func: T,
   wait: number
 ): (...args: Parameters<T>) => void {
-  let timeout: NodeJS.Timeout | null = null;
+  let timeout: ReturnType<typeof setTimeout> | null = null;
   
   return function executedFunction(...args: Parameters<T>) {
     const later = () => {
@@ -130,3 +130,5 @@ export function debounce<T extends (...args: any[]) => any>(
 export function generateId(prefix: string = 'id'): string {
   return `${prefix}-${Math.random().toString(36).substr(2, 9)}`;
 }
+
+export const formatPrice = formatCurrency;
