@@ -8,6 +8,8 @@
 
 html {
   background-color: #02040a;
+  /* Disables horizontal scrolling */
+  overflow-x: hidden;
 }
 
 html,
@@ -20,6 +22,10 @@ body {
   color: #ffffff;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* Ensures the body can't scroll horizontally either */
+  overflow-x: hidden;
+  /* A good practice for positioning context */
+  position: relative;
 }
 
 :focus-visible {
