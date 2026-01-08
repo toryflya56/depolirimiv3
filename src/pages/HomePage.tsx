@@ -8,11 +8,16 @@ import { ContactSection } from '../features/studio/components/ContactSection';
 export const HomePage: React.FC = () => {
   return (
     <div className="max-w-md mx-auto">
-      <Hero />
-      <ServicesSection />
-      <TrustedBrands />
-      <Testimonials />
-      <ContactSection />
+      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:p-4 focus:bg-cyber focus:text-deep-950">
+        Skip to main content
+      </a>
+      <main id="main-content">
+        <Hero />
+        <ServicesSection />
+        <TrustedBrands />
+        <Testimonials />
+        <ContactSection />
+      </main>
     </div>
   );
 };

@@ -49,7 +49,7 @@ export const Header: React.FC = () => {
               <Menu size={24} />
             </button>
             
-            <Link to={APP_ROUTES.HOME} className="flex items-center gap-1.5 justify-self-center">
+            <Link to={APP_ROUTES.HOME} className="flex items-center gap-1.5 justify-self-center" aria-label='LIRIMI Barber Shop Home'>
               <Scissors className="text-cyber" size={18} />
               <span className="text-lg font-serif font-bold text-white tracking-wider">
                 LIRIMI
@@ -59,6 +59,7 @@ export const Header: React.FC = () => {
             <button 
               className="p-2 text-white justify-self-end" 
               onClick={() => setIsBookingSummaryOpen(true)} // Open the booking summary
+              aria-label='Open booking summary'
             >
               <ShoppingBag size={24} />
             </button>
@@ -89,6 +90,7 @@ export const Header: React.FC = () => {
               <button 
                 className="text-white p-2 hover:bg-white/10 rounded-full transition-colors"
                 onClick={() => setIsBookingSummaryOpen(true)} // Open the booking summary
+                aria-label='Open booking summary'
               >
                 <ShoppingBag size={20} />
               </button>
@@ -120,7 +122,7 @@ export const Header: React.FC = () => {
       >
         <div className="flex flex-col h-full">
           <div className="flex items-center justify-between px-6 py-4 border-b border-white/10">
-            <Link to={APP_ROUTES.HOME} className="flex items-center gap-2" onClick={() => setIsMobileMenuOpen(false)}>
+            <Link to={APP_ROUTES.HOME} className="flex items-center gap-2" onClick={() => setIsMobileMenuOpen(false)} aria-label='LIRIMI Barber Shop Home'>
               <Scissors className="text-cyber" size={20} />
               <span className="text-xl font-serif font-bold text-white tracking-wider">
                 LIRIMI
