@@ -4,13 +4,17 @@ import { Scissors, Menu, X, ShoppingBag } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { APP_ROUTES } from '../../lib/constants';
 import { cn } from '../../lib/utils';
+import { BookingSummary } from './BookingSummary'; // Import the new BookingSummary component
 
 export const Header: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isBookingSummaryOpen, setIsBookingSummaryOpen] = useState(false); // Add state for the new sidebar
   const location = useLocation();
 
   useEffect(() => {
+    // Close both sidebars on route change
     setIsMobileMenuOpen(false);
+    setIsBookingSummaryOpen(false);
   }, [location]);
 
   const navLinks = [
@@ -26,7 +30,7 @@ export const Header: React.FC = () => {
       ========================================== */}
       <header
         className={cn(
-          "fixed top-4 z-30 left-4 right-4", // z-index is 30 to be below the sidebar overlay
+          "fixed top-4 z-30 left-4 right-4",
           "max-w-md mx-auto",
           "border border-white/10 rounded-2xl",
           "bg-deep-950/80 backdrop-blur-lg",
@@ -39,7 +43,7 @@ export const Header: React.FC = () => {
           <div className="grid grid-cols-3 items-center w-full md:hidden">
             <button
               className="p-2 text-white justify-self-start"
-              onClick={() => setIsMobileMenuOpen(true)} // Always open, never toggle X
+              onClick={() => setIsMobileMenuOpen(true)}
               aria-label="Toggle Navigation Menu"
             >
               <Menu size={24} />
@@ -52,7 +56,10 @@ export const Header: React.FC = () => {
               </span>
             </Link>
 
-            <button className="p-2 text-white justify-self-end">
+            <button 
+              className="p-2 text-white justify-self-end" 
+              onClick={() => setIsBookingSummaryOpen(true)} // Open the booking summary
+            >
               <ShoppingBag size={24} />
             </button>
           </div>
@@ -79,7 +86,10 @@ export const Header: React.FC = () => {
               <Button as="link" to={APP_ROUTES.BOOKING} size="sm" variant="outline">
                 Book Now
               </Button>
-              <button className="text-white p-2 hover:bg-white/10 rounded-full transition-colors">
+              <button 
+                className="text-white p-2 hover:bg-white/10 rounded-full transition-colors"
+                onClick={() => setIsBookingSummaryOpen(true)} // Open the booking summary
+              >
                 <ShoppingBag size={20} />
               </button>
             </nav>
@@ -88,10 +98,10 @@ export const Header: React.FC = () => {
       </header>
 
       {/* ==========================================
-          MOBILE SIDEBAR 
+          MOBILE NAV SIDEBAR (Left)
       ========================================== */}
       
-      {/* --- Overlay --- */}
+      {/* Overlay */}
       <div
         className={cn(
           "fixed inset-0 z-40 bg-deep-950/60 backdrop-blur-sm transition-opacity duration-300 md:hidden",
@@ -101,7 +111,6 @@ export const Header: React.FC = () => {
         aria-hidden="true"
       />
 
-      {/* --- Sidebar Content --- */}
       <aside
         className={cn(
           "fixed top-0 left-0 z-50 h-full w-72 bg-deep-900 border-r border-cyber/20",
@@ -110,7 +119,6 @@ export const Header: React.FC = () => {
         )}
       >
         <div className="flex flex-col h-full">
-          {/* Sidebar Header */}
           <div className="flex items-center justify-between px-6 py-4 border-b border-white/10">
             <Link to={APP_ROUTES.HOME} className="flex items-center gap-2" onClick={() => setIsMobileMenuOpen(false)}>
               <Scissors className="text-cyber" size={20} />
@@ -127,7 +135,6 @@ export const Header: React.FC = () => {
             </button>
           </div>
 
-          {/* Navigation */}
           <nav className="flex-grow px-6 py-8 flex flex-col gap-4">
             {navLinks.map((link) => (
               <a
@@ -141,7 +148,6 @@ export const Header: React.FC = () => {
             ))}
           </nav>
 
-          {/* Sidebar Footer */}
           <div className="px-6 py-6 border-t border-white/10">
             <Button as="link" to={APP_ROUTES.BOOKING} className="w-full justify-center" variant="primary">
               Book Appointment
@@ -149,6 +155,14 @@ export const Header: React.FC = () => {
           </div>
         </div>
       </aside>
+
+      {/* ==========================================
+          BOOKING SUMMARY SIDEBAR (Right)
+      ========================================== */}
+      <BookingSummary 
+        isOpen={isBookingSummaryOpen} 
+        onClose={() => setIsBookingSummaryOpen(false)} 
+      />
     </>
   );
 };
