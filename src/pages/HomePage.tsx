@@ -1,5 +1,5 @@
 import React from 'react';
-import { HeroLanding } from '../features/studio/components/HeroLanding';
+import HeroLanding from '../features/studio/components/HeroLanding';
 import { TrustedBrands } from '../features/studio/components/TrustedBrands';
 import { ServicesSection } from '../features/catalog/components/ServicesSection';
 import { Testimonials } from '../features/studio/components/Testimonials';
