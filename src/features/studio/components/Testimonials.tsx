@@ -47,7 +47,7 @@ const TESTIMONIALS: Testimonial[] = [
 
 const TestimonialCard: React.FC<{ testimonial: Testimonial }> = ({ testimonial }) => {
   return (
-    <div className="flex-shrink-0 w-[320px] bg-deep-900/50 backdrop-blur-sm border border-white/10 rounded-2xl p-6 space-y-4">
+    <div className="flex-shrink-0 w-[320px] bg-white/5 backdrop-blur-lg border border-cyber/20 rounded-2xl p-6 shadow-lg space-y-4">
       <div className="flex items-center space-x-1">
         {Array.from({ length: 5 }).map((_, i) => (
           <Star 
@@ -75,18 +75,23 @@ const TestimonialCard: React.FC<{ testimonial: Testimonial }> = ({ testimonial }
 
 export const Testimonials: React.FC = () => {
   return (
-    <section className="container mx-auto px-4 py-16">
-        <h2 className="text-4xl md:text-5xl font-serif font-bold text-white mb-12 text-center">
-          Don't just take our word for it.
-        </h2>
+    <section className="py-16 md:py-24">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-serif text-white mb-4">
+            Don't just take our word for it.
+          </h2>
+          <div className="h-1 w-24 bg-cyber mx-auto rounded-full" />
+        </div>
         
-        <div className="flex space-x-6 overflow-x-auto pb-8 scrollbar-thin scrollbar-thumb-cyber/50 scrollbar-track-deep-900/50 -mx-4 px-4">
+        <div className="flex space-x-8 overflow-x-auto pb-8 scrollbar-thin scrollbar-thumb-cyber/50 scrollbar-track-deep-900/50 -mx-4 px-4">
           {TESTIMONIALS.map((testimonial) => (
             <TestimonialCard key={testimonial.id} testimonial={testimonial} />
           ))}
           {/* Add a spacer at the end for better scroll feel */}
           <div className="flex-shrink-0 w-1"></div>
         </div>
+      </div>
     </section>
   );
 };

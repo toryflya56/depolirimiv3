@@ -41,20 +41,28 @@ export const ContactSection: React.FC = () => {
   };
 
   return (
-    <section id="contact" className="container mx-auto px-4 py-16 scroll-mt-20">
-        <div className="bg-deep-950/50 backdrop-blur-sm border border-white/10 rounded-3xl p-8 lg:p-12">
+    <section id="contact" className="py-16 md:py-24 scroll-mt-20">
+      <div className="container mx-auto px-4">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-serif text-white mb-4">
+            Get in Touch
+          </h2>
+          <div className="h-1 w-24 bg-cyber mx-auto rounded-full" />
+        </div>
+
+        <div className="bg-white/5 backdrop-blur-lg border border-cyber/20 rounded-3xl p-8 lg:p-12 shadow-lg">
           <div className="grid lg:grid-cols-2 gap-12">
 
             {/* LEFT: Visit the Studio */}
             <div className="space-y-8">
-              <h2 className="text-3xl font-serif font-bold text-white text-center">Visit the Studio</h2>
+              <h3 className="text-3xl font-serif font-bold text-white text-center">Visit the Studio</h3>
               
               <InfoRow icon={<MapPin size={20} className="text-cyber" />} label="Address" value={`${COMPANY_INFO.location.street}, ${COMPANY_INFO.location.city}, ${COMPANY_INFO.location.state} ${COMPANY_INFO.location.zip}`} />
               <InfoRow icon={<Phone size={20} className="text-cyber" />} label="Phone" value={COMPANY_INFO.contact.phone} href={`tel:${COMPANY_INFO.contact.phone}`} />
               <InfoRow icon={<Mail size={20} className="text-cyber" />} label="Email" value={COMPANY_INFO.contact.email} href={`mailto:${COMPANY_INFO.contact.email}`} />
 
               <div>
-                <h3 className="text-lg font-semibold text-white mb-4 text-center">OPENING HOURS</h3>
+                <h4 className="text-xl font-semibold text-white mb-4 text-center">OPENING HOURS</h4>
                 <ul className="space-y-2 text-sm max-w-sm mx-auto">
                   {BUSINESS_HOURS.map(item => (
                     <li key={item.day} className="flex justify-between border-b border-white/10 pb-2 last:border-none">
@@ -67,8 +75,8 @@ export const ContactSection: React.FC = () => {
             </div>
 
             {/* RIGHT: Join the Club */}
-            <div className="bg-deep-900/40 border border-white/10 rounded-2xl p-8 flex flex-col justify-center text-center items-center">
-              <h2 className="text-3xl font-serif font-bold text-white mb-4">Join the Club</h2>
+            <div className="bg-black/20 border border-white/10 rounded-2xl p-8 flex flex-col justify-center text-center items-center">
+              <h3 className="text-3xl font-serif font-bold text-white mb-4">Join the Club</h3>
               <p className="text-gray-400 mb-6 max-w-xs">
                 Subscribe for exclusive offers and priority booking slots.
               </p>
@@ -105,6 +113,7 @@ export const ContactSection: React.FC = () => {
 
           </div>
         </div>
+      </div>
     </section>
   );
 };
