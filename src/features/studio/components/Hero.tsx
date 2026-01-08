@@ -7,7 +7,7 @@ import { CalendarDays, ArrowRight } from 'lucide-react';
 export const Hero: React.FC = () => {
   return (
     <div 
-      className="relative text-white text-center py-16 px-4 flex items-center justify-center min-h-[calc(100vh-120px)]"
+      className="relative text-white text-center py-16 px-4 flex items-center justify-center min-h-[calc(100vh-200px)]"
       style={{
         backgroundImage: `url('https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')`,
         backgroundSize: 'cover',
