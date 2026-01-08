@@ -34,17 +34,15 @@ const MainLayout = () => {
 
 const App: React.FC = () => {
   return (
-    <div className="max-w-md mx-auto bg-deep-950">
-      <BrowserRouter>
-        <ScrollToTop />
-        <Routes>
-          <Route path={APP_ROUTES.HOME} element={<MainLayout />}>
-            <Route index element={<HomePage />} />
-            <Route path={APP_ROUTES.BOOKING} element={<BookingPage />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </div>
+    <BrowserRouter>
+      <ScrollToTop />
+      <Routes>
+        <Route path={APP_ROUTES.HOME} element={<MainLayout />}>
+          <Route index element={<HomePage />} />
+          <Route path={APP_ROUTES.BOOKING} element={<BookingPage />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 };
 

@@ -5,16 +5,16 @@ import { APP_ROUTES } from '../../../lib/constants';
 
 export const Hero: React.FC = () => {
   return (
-    <div className="relative text-white text-center py-20 px-4 flex items-center justify-center min-h-[calc(100vh-80px)]">
+    <div className="relative text-white text-center py-16 px-4 flex items-center justify-center min-h-[calc(100vh-120px)]">
       <div
-        className="absolute inset-0 bg-cover bg-center" // Background image can be added here
+        className="absolute inset-0 bg-cover bg-center"
       />
       <div
-        className="absolute inset-0 bg-gradient-to-b from-deep-950/80 to-deep-950" // Gradient overlay
+        className="absolute inset-0 bg-gradient-to-b from-deep-950/80 to-deep-950"
       />
 
       {/* Main Content Card */}
-      <div className="relative w-full max-w-sm p-6 space-y-4 rounded-3xl bg-black/20 border border-white/10 shadow-2xl backdrop-blur-lg">
+      <div className="relative w-full max-w-sm p-6 space-y-4 rounded-2xl bg-black/20 border border-white/10 shadow-2xl backdrop-blur-lg">
         
         {/* EST. 2024 Badge */}
         <div className="flex justify-center">
@@ -24,7 +24,7 @@ export const Hero: React.FC = () => {
         </div>
 
         {/* Main Headline */}
-        <h1 className="font-serif text-4xl sm:text-5xl font-bold leading-tight text-glow">
+        <h1 className="font-serif text-4xl font-bold leading-tight text-glow">
           Mastery in <span className="text-cyber">Every</span> Cut
         </h1>
 

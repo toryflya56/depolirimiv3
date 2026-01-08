@@ -23,10 +23,11 @@ export const Header: React.FC = () => {
     <>
       <header
         className={cn(
-          "fixed left-2 right-2 top-4 z-50",       // Inset from sides
-          "border border-white/10 rounded-full",      
-          "bg-deep-950/80 backdrop-blur-lg",         
-          "py-2"                                    // Vertical padding
+          "fixed top-4 z-50 w-full max-w-md",
+          "left-1/2 -translate-x-1/2",
+          "border border-white/10 rounded-full",
+          "bg-deep-950/80 backdrop-blur-lg",
+          "py-2"
         )}
       >
         <div className="mx-auto px-4 flex items-center justify-between">
