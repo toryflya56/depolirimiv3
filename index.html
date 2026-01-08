@@ -60,7 +60,6 @@
     <!-- =========================================
          LAYER 3: PERFORMANCE & RESOURCES
          ========================================== -->
-    <link rel="preload" href="/hero-bg.jpg" as="image">
     <!-- DNS Prefetch & Preconnect (Latency Optimization) -->
     <link rel="preconnect" href="https://esm.sh" crossorigin>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -69,7 +68,7 @@
     
     <!-- Typography -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./src/index.css">
+    <link rel="stylesheet" href="/app/index.css" type="text/css">
   </head>
   <body>
     <!-- Accessibility: Skip Link -->
@@ -87,6 +86,6 @@
         <p>Please enable JavaScript to access the LIRIMI Booking Experience.</p>
       </div>
     </noscript>
-    <script type="module" src="./src/index.tsx"></script>
+    <script type="module" src="/app/index.tsx"></script>
   </body>
 </html>

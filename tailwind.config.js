@@ -6,7 +6,7 @@ export default {
   // Tailwind scans these files to generate only used classes
   content: [
     './index.html',
-    './src/**/*.{js,ts,jsx,tsx}',
+    './app/**/*.{js,ts,jsx,tsx}', // Corrected path
   ],
 
   // ==========================================

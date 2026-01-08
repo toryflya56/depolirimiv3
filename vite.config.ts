@@ -22,7 +22,7 @@ export default defineConfig({
   resolve: {
     alias: {
       // This single alias is the source of truth, matching tsconfig.json
-      '@': path.resolve(__dirname, './src'),
+      '@': path.resolve(__dirname, './app'),
     }
   },
 
@@ -115,6 +115,6 @@ export default defineConfig({
   // =========================================
   // SECURITY
   // =========================================
-  publicDir: 'public',
+  publicDir: false,
   assetsInclude: ['**/*.png', '**/*.jpg', '**/*.jpeg', '**/*.gif', '**/*.svg', '**/*.webp']
 });
