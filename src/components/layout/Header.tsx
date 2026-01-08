@@ -23,33 +23,33 @@ export const Header: React.FC = () => {
     <>
       <header
         className={cn(
-          "fixed left-2 right-2 top-4 z-50",       // Reduced side insets for more space
+          "fixed left-2 right-2 top-4 z-50",       // Inset from sides
           "border border-white/10 rounded-full",      
           "bg-deep-950/80 backdrop-blur-lg",         
-          "py-2"                                    // Adjusted padding
+          "py-2"                                    // Vertical padding
         )}
       >
         <div className="mx-auto px-4 flex items-center justify-between">
 
-          {/* Mobile Header Layout: Use a robust 3-column grid */}
+          {/* Mobile Header Layout: 3-column grid for robust alignment */}
           <div className="grid grid-cols-3 items-center w-full md:hidden">
             <button
               className="p-2 text-white justify-self-start" // Align left
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label="Toggle Navigation Menu"
             >
-              {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
             
-            <Link to={APP_ROUTES.HOME} className="flex items-center gap-2 justify-self-center"> {/* Align center */}
-              <Scissors className="text-cyber" size={20} />
-              <span className="text-xl font-serif font-bold text-white tracking-wider">
+            <Link to={APP_ROUTES.HOME} className="flex items-center gap-1.5 justify-self-center"> {/* Align center */}
+              <Scissors className="text-cyber" size={18} />
+              <span className="text-lg font-serif font-bold text-white tracking-wider">
                 LIRIMI
               </span>
             </Link>
 
             <button className="p-2 text-white justify-self-end"> {/* Align right */}
-              <ShoppingBag size={28} />
+              <ShoppingBag size={24} />
             </button>
           </div>
 
@@ -86,7 +86,7 @@ export const Header: React.FC = () => {
       {/* Mobile Menu Dropdown */}
       <div
         className={cn(
-          "fixed top-[80px] left-0 right-0 bg-deep-900/95 backdrop-blur-xl border-b border-cyber/20 overflow-hidden transition-all duration-300 md:hidden",
+          "fixed top-[72px] left-0 right-0 bg-deep-900/95 backdrop-blur-xl border-b border-cyber/20 overflow-hidden transition-all duration-300 md:hidden",
           isMobileMenuOpen ? "max-h-[400px] py-6" : "max-h-0 py-0"
         )}
       >

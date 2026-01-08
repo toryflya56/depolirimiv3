@@ -24,9 +24,9 @@ const MainLayout = () => {
   return (
     <div className="flex flex-col min-h-screen bg-deep-950 text-white font-sans selection:bg-cyber selection:text-deep-950">
       <Header />
-      <div className="flex-grow">
+      <main className="flex-grow">
         <Outlet />
-      </div>
+      </main>
       <Footer />
     </div>
   );
@@ -34,15 +34,17 @@ const MainLayout = () => {
 
 const App: React.FC = () => {
   return (
-    <BrowserRouter>
-      <ScrollToTop />
-      <Routes>
-        <Route path={APP_ROUTES.HOME} element={<MainLayout />}>
-          <Route index element={<HomePage />} />
-          <Route path={APP_ROUTES.BOOKING} element={<BookingPage />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <div className="max-w-md mx-auto bg-deep-950">
+      <BrowserRouter>
+        <ScrollToTop />
+        <Routes>
+          <Route path={APP_ROUTES.HOME} element={<MainLayout />}>
+            <Route index element={<HomePage />} />
+            <Route path={APP_ROUTES.BOOKING} element={<BookingPage />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </div>
   );
 };
 
