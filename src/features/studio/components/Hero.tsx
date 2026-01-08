@@ -11,7 +11,7 @@ export const Hero: React.FC = () => {
         className="absolute inset-0 bg-cover bg-center"
       />
       <div
-        className="absolute inset-0 bg-transparent"
+        className="absolute inset-0 bg-gradient-to-b from-deep-950/80 to-deep-950"
       />
 
       {/* Main Content Card */}
