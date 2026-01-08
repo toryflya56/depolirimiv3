@@ -81,7 +81,7 @@ export const Testimonials: React.FC = () => {
           Don't just take our word for it.
         </h2>
         
-        <div className="flex space-x-6 overflow-x-auto pb-8 -mx-4 px-4 scrollbar-thin scrollbar-thumb-cyber/50 scrollbar-track-deep-900/50">
+        <div className="flex space-x-6 overflow-x-auto pb-8 scrollbar-thin scrollbar-thumb-cyber/50 scrollbar-track-deep-900/50">
           {TESTIMONIALS.map((testimonial) => (
             <TestimonialCard key={testimonial.id} testimonial={testimonial} />
           ))}
