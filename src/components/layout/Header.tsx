@@ -31,20 +31,21 @@ export const Header: React.FC = () => {
         <div className="container mx-auto px-4 flex items-center justify-between">
 
           {/* Mobile Header Layout */}
-          <div className="flex md:hidden items-center justify-between w-full">
+          <div className="grid md:hidden grid-cols-3 items-center w-full">
             <button
-              className="p-2 text-white"
+              className="p-2 text-white justify-self-start"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label="Toggle Navigation Menu"
             >
               {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
-            <Link to={APP_ROUTES.HOME} className="absolute left-1/2 -translate-x-1/2">
+            <Link to={APP_ROUTES.HOME} className="flex items-center gap-2 justify-self-center">
+              <Scissors className="text-cyber" size={22} />
               <span className="text-2xl font-serif font-bold text-white tracking-wider">
                 LIRIMI
               </span>
             </Link>
-            <button className="p-2 text-white">
+            <button className="p-2 text-white justify-self-end">
               <ShoppingBag size={28} />
             </button>
           </div>
@@ -82,7 +83,7 @@ export const Header: React.FC = () => {
       {/* Mobile Menu Dropdown */}
       <div
         className={cn(
-          "fixed top-[60px] left-0 right-0 bg-deep-900/95 backdrop-blur-xl border-b border-cyber/20 overflow-hidden transition-all duration-300 md:hidden",
+          "fixed top-[70px] left-0 right-0 bg-deep-900/95 backdrop-blur-xl border-b border-cyber/20 overflow-hidden transition-all duration-300 md:hidden",
           isMobileMenuOpen ? "max-h-[400px] py-6" : "max-h-0 py-0"
         )}
       >
