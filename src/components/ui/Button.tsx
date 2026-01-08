@@ -32,7 +32,7 @@ interface ButtonAsButton extends BaseButtonProps {
 interface ButtonAsLink extends BaseButtonProps {
   as: 'link';
   to: string;
-  onClick?: never;
+  onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void; // Allow onClick for links
   type?: never;
 }
 
@@ -88,7 +88,6 @@ export const Button: React.FC<ButtonProps> = ({
   ...props
 }) => {
   
-  // Base styles (common to all variants)
   const baseStyles = cn(
     'inline-flex items-center justify-center gap-2',
     'font-semibold tracking-wide uppercase',
@@ -102,7 +101,6 @@ export const Button: React.FC<ButtonProps> = ({
     className
   );
 
-  // Loading spinner component
   const LoadingSpinner = () => (
     <svg
       className="animate-spin h-5 w-5"
@@ -111,14 +109,7 @@ export const Button: React.FC<ButtonProps> = ({
       viewBox="0 0 24 24"
       aria-hidden="true"
     >
-      <circle
-        className="opacity-25"
-        cx="12"
-        cy="12"
-        r="10"
-        stroke="currentColor"
-        strokeWidth="4"
-      />
+      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
       <path
         className="opacity-75"
         fill="currentColor"
@@ -137,23 +128,33 @@ export const Button: React.FC<ButtonProps> = ({
   );
 
   if (props.as === 'link') {
+    const { to, onClick } = props as ButtonAsLink;
     return (
       <Link
-        to={props.to}
+        to={to}
         className={baseStyles}
         aria-disabled={disabled || loading}
         tabIndex={disabled || loading ? -1 : undefined}
-        onClick={(e) => (disabled || loading) && e.preventDefault()}
+        onClick={(e) => {
+          if (disabled || loading) {
+            e.preventDefault();
+            return;
+          }
+          if (onClick) {
+            onClick(e);
+          }
+        }}
       >
         {content}
       </Link>
     );
   }
 
+  const { onClick, type } = props as ButtonAsButton;
   return (
     <button
-      type={props.type || 'button'}
-      onClick={props.onClick}
+      type={type || 'button'}
+      onClick={onClick}
       disabled={disabled || loading}
       className={baseStyles}
       aria-busy={loading}
