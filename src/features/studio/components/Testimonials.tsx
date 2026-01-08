@@ -23,7 +23,7 @@ const TESTIMONIALS: Testimonial[] = [
     id: '2',
     name: 'David C.',
     membership: 'FREQUENT CLIENT',
-    content: 'The AI color match was perfect. The crop I needed was done well and I've been getting compliments.',
+    content: "The AI color match was perfect. The crop I needed was done well and I've been getting compliments.",
     rating: 5,
     avatarSeed: 'David',
   },

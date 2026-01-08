@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { MapPin, Phone, Mail, ArrowRight } from 'lucide-react';
 import { Button } from '../../../components/ui/Button';
-import { COMPANY_INFO, BUSINESS_HOURS } from '../../../lib/constants';
+import { COMPANY_INFO, BUSINESS_HOURS, APP_ROUTES } from '../../../lib/constants';
 import { isValidEmail } from '../../../lib/utils';
 
 const InfoRow: React.FC<{ icon: React.ReactNode; label: string; value: string; href?: string }> = 
@@ -35,7 +35,7 @@ export const ContactSection: React.FC = () => {
       setStatus('error');
       return;
     }
-    setStatus('loading';
+    setStatus('loading');
     // TODO: Integrate with a real newsletter service
     await new Promise(res => setTimeout(res, 1000));
     setStatus('success');
