@@ -9,8 +9,8 @@ export const HomePage: React.FC = () => {
   return (
     <div className="max-w-md mx-auto">
       <Hero />
-      <TrustedBrands />
       <ServicesSection />
+      <TrustedBrands />
       <Testimonials />
       <ContactSection />
     </div>
