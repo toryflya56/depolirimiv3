@@ -1,19 +1,12 @@
 import React, { useState } from 'react';
 import { Calendar, Clock, User, CheckCircle, ArrowRight, ArrowLeft } from 'lucide-react';
 import { Button } from '../../../components/ui/Button';
-import { formatCurrency, isValidEmail, isValidPhone, sanitizeHTML } from '../../../lib/utils';
+import { formatCurrency, isValidEmail, isValidPhone } from '../../../lib/utils';
 import { cn } from '../../../lib/utils';
 
 // ==========================================
 // TYPE DEFINITIONS
 // ==========================================
-
-interface Service {
-  id: string;
-  name: string;
-  duration: number;
-  price: number;
-}
 
 interface BookingData {
   serviceId: string | null;
@@ -26,48 +19,6 @@ interface BookingData {
 }
 
 type WizardStep = 1 | 2 | 3 | 4;
-
-// ==========================================
-// MOCK DATA
-// ==========================================
-
-const SERVICES: Service[] = [
-  { id: 'signature-cut', name: 'Signature Cut', duration: 45, price: 65 },
-  { id: 'royal-shave', name: 'Royal Shave', duration: 40, price: 55 },
-  { id: 'beard-sculpting', name: 'Beard Sculpting', duration: 30, price: 40 },
-  { id: 'executive-package', name: 'Executive Package', duration: 90, price: 140 }
-];
-
-// Generate next 14 days of available dates
-const generateAvailableDates = (): string[] => {
-  const dates: string[] = [];
-  const today = new Date();
-  
-  for (let i = 1; i <= 14; i++) {
-    const date = new Date(today);
-    date.setDate(today.getDate() + i);
-    const dateStr = date.toISOString().split('T')[0];
-    dates.push(dateStr);
-  }
-  
-  return dates;
-};
-
-// Generate time slots (10 AM - 7 PM, 30-min intervals)
-const generateTimeSlots = (): string[] => {
-  const slots: string[] = [];
-  for (let hour = 10; hour <= 19; hour++) {
-    for (const minute of [0, 30]) {
-      if (hour === 19 && minute === 30) break;
-      const time = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
-      slots.push(time);
-    }
-  }
-  return slots;
-};
-
-const AVAILABLE_DATES = generateAvailableDates();
-const TIME_SLOTS = generateTimeSlots();
 
 // ==========================================
 // COMPONENT
@@ -145,13 +96,7 @@ export const BookingWizard: React.FC = () => {
     try {
       await new Promise(resolve => setTimeout(resolve, 2000));
 
-      console.log('Booking submitted:', {
-        ...bookingData,
-        customerName: sanitizeHTML(bookingData.customerName),
-        customerEmail: sanitizeHTML(bookingData.customerEmail),
-        customerPhone: sanitizeHTML(bookingData.customerPhone),
-        notes: sanitizeHTML(bookingData.notes)
-      });
+      console.log('Booking submitted:', bookingData);
 
       setCurrentStep(4);
     } catch (error) {
@@ -160,38 +105,6 @@ export const BookingWizard: React.FC = () => {
     } finally {
       setIsSubmitting(false);
     }
-  };
-
-  // ==========================================
-  // HELPERS
-  // ==========================================
-
-  const selectedService = SERVICES.find(s => s.id === bookingData.serviceId);
-
-  const formatDate = (dateString?: string): string => {
-    if (!dateString) {
-      return '';
-    }
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { 
-      weekday: 'long', 
-      month: 'long', 
-      day: 'numeric' 
-    });
-  };
-
-  const formatTime = (timeString?: string): string => {
-    if (!timeString) {
-      return '';
-    }
-    const [hours, minutes] = timeString.split(':');
-    const hour = parseInt(hours, 10);
-    if (isNaN(hour)) {
-        return '';
-    }
-    const ampm = hour >= 12 ? 'PM' : 'AM';
-    const displayHour = hour > 12 ? hour - 12 : hour === 0 ? 12 : hour;
-    return `${displayHour}:${minutes} ${ampm}`;
   };
 
   // ==========================================
@@ -271,29 +184,27 @@ export const BookingWizard: React.FC = () => {
             </div>
 
             <div className="grid md:grid-cols-2 gap-4">
-              {SERVICES.map((service) => (
-                <button
-                  key={service.id}
+              <button
+                  key="signature-cut"
                   onClick={() => {
-                    setBookingData(prev => ({ ...prev, serviceId: service.id }));
+                    setBookingData(prev => ({ ...prev, serviceId: "signature-cut" }));
                     setErrors({});
                   }}
                   className={cn(
                     'text-left p-6 rounded-xl border-2 transition-all hover:scale-105',
-                    bookingData.serviceId === service.id
+                    bookingData.serviceId === "signature-cut"
                       ? 'border-cyber bg-cyber/10'
                       : 'border-white/10 hover:border-white/30'
                   )}
                 >
-                  <h4 className="text-white font-bold text-lg mb-2">{service.name}</h4>
+                  <h4 className="text-white font-bold text-lg mb-2">Signature Cut</h4>
                   <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-400">{service.duration} minutes</span>
+                    <span className="text-gray-400">45 minutes</span>
                     <span className="text-cyber text-xl font-bold">
-                      {formatCurrency(service.price)}
+                      {formatCurrency(65)}
                     </span>
                   </div>
                 </button>
-              ))}
             </div>
 
             {errors.service && (
@@ -315,32 +226,12 @@ export const BookingWizard: React.FC = () => {
             {/* Date Picker */}
             <div>
               <label className="block text-white font-semibold mb-4">Select Date</label>
-              <div className="grid grid-cols-7 gap-2">
-                {AVAILABLE_DATES.map((date) => {
-                  const dateObj = new Date(date);
-                  const dayName = dateObj.toLocaleDateString('en-US', { weekday: 'short' });
-                  const dayNum = dateObj.getDate();
-                  
-                  return (
-                    <button
-                      key={date}
-                      onClick={() => {
-                        setBookingData(prev => ({ ...prev, date }));
-                        setErrors(prev => ({ ...prev, date: '' }));
-                      }}
-                      className={cn(
-                        'p-3 rounded-lg border transition-all hover:scale-105',
-                        bookingData.date === date
-                          ? 'border-cyber bg-cyber/10 text-cyber'
-                          : 'border-white/10 text-gray-400 hover:border-white/30'
-                      )}
-                    >
-                      <div className="text-xs">{dayName}</div>
-                      <div className="text-lg font-bold">{dayNum}</div>
-                    </button>
-                  );
-                })}
-              </div>
+              <input
+                type="date"
+                value={bookingData.date || ''}
+                onChange={(e) => setBookingData(prev => ({ ...prev, date: e.target.value }))}
+                className="w-full px-4 py-3 bg-deep-900 border rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-cyber"
+              />
               {errors.date && (
                 <p className="text-red-400 text-sm mt-2">{errors.date}</p>
               )}
@@ -349,25 +240,12 @@ export const BookingWizard: React.FC = () => {
             {/* Time Picker */}
             <div>
               <label className="block text-white font-semibold mb-4">Select Time</label>
-              <div className="grid grid-cols-4 md:grid-cols-6 gap-2 max-h-64 overflow-y-auto">
-                {TIME_SLOTS.map((time) => (
-                  <button
-                    key={time}
-                    onClick={() => {
-                      setBookingData(prev => ({ ...prev, time }));
-                      setErrors(prev => ({ ...prev, time: '' }));
-                    }}
-                    className={cn(
-                      'p-3 rounded-lg border text-sm font-semibold transition-all hover:scale-105',
-                      bookingData.time === time
-                        ? 'border-cyber bg-cyber/10 text-cyber'
-                        : 'border-white/10 text-gray-400 hover:border-white/30'
-                    )}
-                  >
-                    {formatTime(time)}
-                  </button>
-                ))}
-              </div>
+              <input
+                type="time"
+                value={bookingData.time || ''}
+                onChange={(e) => setBookingData(prev => ({ ...prev, time: e.target.value }))}
+                className="w-full px-4 py-3 bg-deep-900 border rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-cyber"
+              />
               {errors.time && (
                 <p className="text-red-400 text-sm mt-2">{errors.time}</p>
               )}
@@ -489,20 +367,20 @@ export const BookingWizard: React.FC = () => {
             <div className="bg-deep-900/50 border border-white/10 rounded-2xl p-8 text-left space-y-4">
               <div className="flex justify-between border-b border-white/10 pb-4">
                 <span className="text-gray-400">Service:</span>
-                <span className="text-white font-bold">{selectedService?.name}</span>
+                <span className="text-white font-bold">Signature Cut</span>
               </div>
               <div className="flex justify-between border-b border-white/10 pb-4">
                 <span className="text-gray-400">Date:</span>
-                <span className="text-white font-bold">{formatDate(bookingData.date)}</span>
+                <span className="text-white font-bold">{bookingData.date && new Date(bookingData.date).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}</span>
               </div>
               <div className="flex justify-between border-b border-white/10 pb-4">
                 <span className="text-gray-400">Time:</span>
-                <span className="text-white font-bold">{formatTime(bookingData.time)}</span>
+                <span className="text-white font-bold">{bookingData.time && new Date(`1970-01-01T${bookingData.time}`).toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-400">Price:</span>
                 <span className="text-cyber text-2xl font-bold">
-                  {formatCurrency(selectedService?.price || 0)}
+                  {formatCurrency(65)}
                 </span>
               </div>
             </div>

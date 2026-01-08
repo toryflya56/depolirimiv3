@@ -1,8 +1,6 @@
 export const APP_ROUTES = {
   HOME: '/',
   BOOKING: 'booking',
-  SERVICES: '/#services',
-  CONTACT: '/#contact'
 } as const;
 
 export const COMPANY_INFO = {
@@ -25,10 +23,3 @@ export const COMPANY_INFO = {
     facebook: "https://facebook.com",
   }
 };
-
-export const BUSINESS_HOURS = [
-  { day: 'TUE–FRI', hours: '10AM–8PM' },
-  { day: 'SAT', hours: '9AM–6PM' },
-  { day: 'SUN', hours: '11AM–5PM' },
-  { day: 'MON', hours: 'Closed' },
-];

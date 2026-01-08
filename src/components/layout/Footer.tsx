@@ -3,12 +3,6 @@ import { Link } from 'react-router-dom';
 import { Instagram, Twitter, Facebook, Scissors } from 'lucide-react';
 import { COMPANY_INFO, APP_ROUTES } from '../../lib/constants';
 
-const FooterLink: React.FC<{ to: string, children: React.ReactNode }> = ({ to, children }) => (
-  <Link to={to} className="text-sm text-gray-400 hover:text-white transition-colors">
-    {children}
-  </Link>
-);
-
 export const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
 
@@ -22,24 +16,16 @@ export const Footer: React.FC = () => {
     {
       title: 'About',
       links: [
-        { text: 'Our Story', to: APP_ROUTES.HOME },
-        { text: 'The Barbers', to: APP_ROUTES.HOME },
-        { text: 'Careers', to: APP_ROUTES.HOME },
-      ]
-    },
-    {
-      title: 'Services',
-      links: [
-        { text: 'Haircuts & Fades', to: APP_ROUTES.SERVICES },
-        { text: 'Classic Shaves', to: APP_ROUTES.SERVICES },
-        { text: 'Color & Styling', to: APP_ROUTES.SERVICES },
+        { text: 'Our Story', to: "/about" },
+        { text: 'The Barbers', to: "/barbers" },
+        { text: 'Careers', to: "/careers" },
       ]
     },
     {
       title: 'Legal',
       links: [
-        { text: 'Privacy Policy', to: APP_ROUTES.HOME },
-        { text: 'Terms of Service', to: APP_ROUTES.HOME },
+        { text: 'Privacy Policy', to: "/privacy" },
+        { text: 'Terms of Service', to: "/terms" },
       ]
     }
   ];
@@ -64,8 +50,9 @@ export const Footer: React.FC = () => {
               <h4 className="font-semibold text-white tracking-wide mb-4 uppercase text-sm">{section.title}</h4>
               <div className="flex flex-col space-y-3">
                 {section.links.map((link) => (
-                  <FooterLink key={link.text} to={link.to}>{link.text}</FooterLink>
-                ))}n              </div>
+                  <Link key={link.text} to={link.to} className="text-sm text-gray-400 hover:text-white transition-colors">{link.text}</Link>
+                ))}
+              </div>
             </div>
           ))}
         </nav>

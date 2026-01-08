@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button } from '../../../components/ui/Button';
 import { APP_ROUTES } from '../../../lib/constants';
-import { CalendarDays, ArrowRight } from 'lucide-react';
+import { CalendarDays } from 'lucide-react';
 
 interface HeroBannerProps {
   badge: string;
@@ -11,16 +11,6 @@ interface HeroBannerProps {
 }
 
 const HeroBanner: React.FC<HeroBannerProps> = ({ badge, title, subtitle, backgroundImage }) => {
-  const [isBooking, setIsBooking] = useState(false);
-
-  const handleBookingClick = () => {
-    setIsBooking(true);
-    // Simulate a network request
-    setTimeout(() => {
-      // After the action, you might navigate or reset state
-      setIsBooking(false);
-    }, 2000); // Example delay
-  };
 
   return (
     <div 
@@ -55,22 +45,9 @@ const HeroBanner: React.FC<HeroBannerProps> = ({ badge, title, subtitle, backgro
             variant="primary" 
             size="lg" // Use 'lg' for a larger primary button
             className="w-full sm:w-auto"
-            onClick={handleBookingClick}
-            loading={isBooking}
             icon={<CalendarDays size={20} />}
           >
             Book Appointment
-          </Button>
-          <Button 
-            as="link" 
-            to={APP_ROUTES.SERVICES} 
-            variant="outline" // Ghost/outline style for secondary action
-            size="md"
-            className="w-full sm:w-auto"
-            iconPosition="right"
-            icon={<ArrowRight size={16} />}
-          >
-            View Services
           </Button>
         </div>
       </div>
