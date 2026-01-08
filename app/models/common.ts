@@ -91,3 +91,14 @@ export interface TimeSlot {
   time: string; // e.g., '09:00'
   isAvailable: boolean;
 }
+
+/**
+ * Represents a testimonial from a customer.
+ */
+export interface Testimonial {
+    id: string;
+    customerName: string;
+    customerAvatarUrl: string;
+    quote: string;
+    rating: number; // Rating from 1 to 5
+}

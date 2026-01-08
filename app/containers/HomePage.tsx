@@ -1,5 +1,5 @@
 import React from 'react';
-import HeroLanding from '@/components/studio/HeroLanding';
+import { HeroBanner } from '@/components/ui/HeroBanner';
 
 const HomePage: React.FC = () => {
   return (
@@ -8,7 +8,11 @@ const HomePage: React.FC = () => {
         Skip to main content
       </a>
       <main id="main-content">
-        <HeroLanding />
+        <HeroBanner 
+        title="Welcome to Lirimi's Barber Studio"
+        subtitle="Experience the art of traditional and modern barbering."
+        imageUrl="/images/studio/barber-chair.jpeg"
+      />
       </main>
     </div>
   );
