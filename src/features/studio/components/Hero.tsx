@@ -39,12 +39,18 @@ export const Hero: React.FC = () => {
         </p>
 
         {/* Action Buttons */}
-        <div className="pt-4 space-y-3">
-          <Button as="link" to={APP_ROUTES.BOOKING} size="md" className="w-full flex items-center justify-center gap-2">
-            <CalendarDays className="h-4 w-4" />
+        <div className="pt-4 space-y-4">
+          <Button 
+            as="link" 
+            to={APP_ROUTES.BOOKING} 
+            size="md" 
+            className="w-full" 
+            icon={<CalendarDays className="h-4 w-4" />}
+            iconPosition="right"
+          >
             Book Appointment
           </Button>
-          <Link to={APP_ROUTES.SERVICES} className="inline-flex items-center gap-2 text-xs font-semibold tracking-wider text-gray-300 hover:text-cyber transition-colors uppercase">
+          <Link to={APP_ROUTES.SERVICES} className="inline-flex items-center gap-2 text-sm font-semibold tracking-wider text-gray-300 hover:text-cyber transition-colors uppercase">
             View Services
             <ArrowRight className="h-4 w-4" />
           </Link>
