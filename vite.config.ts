@@ -69,6 +69,9 @@ export default defineConfig({
           if (/\.css$/.test(name ?? '')) {
             return 'assets/css/[name]-[hash][extname]';
           }
+          if (/\.(woff|woff2|eot|ttf|otf)$/.test(name ?? '')) {
+            return 'assets/fonts/[name]-[hash][extname]';
+          }
           return 'assets/[name]-[hash][extname]';
         },
       }
