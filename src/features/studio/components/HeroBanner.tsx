@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { useState } from 'react';
 import { Button } from '../../../components/ui/Button';
 import { APP_ROUTES } from '../../../lib/constants';
 import { CalendarDays, ArrowRight } from 'lucide-react';
@@ -11,6 +11,17 @@ interface HeroBannerProps {
 }
 
 const HeroBanner: React.FC<HeroBannerProps> = ({ badge, title, subtitle, backgroundImage }) => {
+  const [isBooking, setIsBooking] = useState(false);
+
+  const handleBookingClick = () => {
+    setIsBooking(true);
+    // Simulate a network request
+    setTimeout(() => {
+      // After the action, you might navigate or reset state
+      setIsBooking(false);
+    }, 2000); // Example delay
+  };
+
   return (
     <div 
       className="relative text-white text-center py-16 px-4 flex items-center justify-center min-h-[calc(100vh-150px)]"
@@ -37,14 +48,29 @@ const HeroBanner: React.FC<HeroBannerProps> = ({ badge, title, subtitle, backgro
           {subtitle}
         </p>
 
-        <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-          <Button as="link" to={APP_ROUTES.BOOKING} variant="primary" className="w-full sm:w-auto">
-            <CalendarDays size={18} className="mr-2" />
+        <div className="flex flex-col gap-3 justify-center pt-4 sm:flex-row sm:items-center sm:gap-4">
+          <Button 
+            as="link" 
+            to={APP_ROUTES.BOOKING} 
+            variant="primary" 
+            size="lg" // Use 'lg' for a larger primary button
+            className="w-full sm:w-auto"
+            onClick={handleBookingClick}
+            loading={isBooking}
+            icon={<CalendarDays size={20} />}
+          >
             Book Appointment
           </Button>
-          <Button as="link" to={APP_ROUTES.SERVICES} variant="ghost" className="w-full sm:w-auto text-white">
+          <Button 
+            as="link" 
+            to={APP_ROUTES.SERVICES} 
+            variant="outline" // Ghost/outline style for secondary action
+            size="md"
+            className="w-full sm:w-auto"
+            iconPosition="right"
+            icon={<ArrowRight size={16} />}
+          >
             View Services
-            <ArrowRight size={16} className="ml-2" />
           </Button>
         </div>
       </div>

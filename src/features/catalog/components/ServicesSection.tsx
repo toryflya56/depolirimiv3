@@ -13,7 +13,7 @@ const SERVICES: Service[] = [
     price: 55,
     currency: 'USD',
     durationMin: 45,
-    image: 'https://images.pexels.com/photos/3998419/pexels-photo-3998419.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    image: '/executive-cut.jpg',
   },
   {
     id: 'royal-shave',
@@ -22,7 +22,7 @@ const SERVICES: Service[] = [
     price: 45,
     currency: 'USD',
     durationMin: 30,
-    image: 'https://images.pexels.com/photos/3998419/pexels-photo-3998419.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    image: '/royal-shave.jpg',
   },
   {
     id: 'beard-sculpting',
@@ -31,7 +31,7 @@ const SERVICES: Service[] = [
     price: 35,
     currency: 'USD',
     durationMin: 25,
-    image: 'https://images.pexels.com/photos/3998419/pexels-photo-3998419.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    image: '/beard-sculpting.jpg',
   },
 ];
 
