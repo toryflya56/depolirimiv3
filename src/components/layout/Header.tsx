@@ -23,8 +23,8 @@ export const Header: React.FC = () => {
     <>
       <header
         className={cn(
-          "fixed top-4 z-50 w-full max-w-md",
-          "left-1/2 -translate-x-1/2",
+          "fixed top-4 z-50 left-4 right-4", // Inset from sides
+          "max-w-md mx-auto", // Centered and max-width
           "border border-white/10 rounded-full",
           "bg-deep-950/80 backdrop-blur-lg",
           "py-2"
