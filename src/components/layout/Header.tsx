@@ -21,10 +21,13 @@ export const Header: React.FC = () => {
 
   return (
     <>
+      {/* ==========================================
+          HEADER
+      ========================================== */}
       <header
         className={cn(
-          "fixed top-4 z-50 left-4 right-4", // Inset from sides
-          "max-w-md mx-auto", // Centered and max-width
+          "fixed top-4 z-30 left-4 right-4", // z-index is 30 to be below the sidebar overlay
+          "max-w-md mx-auto",
           "border border-white/10 rounded-2xl",
           "bg-deep-950/80 backdrop-blur-lg",
           "py-2"
@@ -32,29 +35,29 @@ export const Header: React.FC = () => {
       >
         <div className="mx-auto px-4 flex items-center justify-between">
 
-          {/* Mobile Header Layout: 3-column grid for robust alignment */}
+          {/* --- Mobile Header --- */}
           <div className="grid grid-cols-3 items-center w-full md:hidden">
             <button
-              className="p-2 text-white justify-self-start" // Align left
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="p-2 text-white justify-self-start"
+              onClick={() => setIsMobileMenuOpen(true)} // Always open, never toggle X
               aria-label="Toggle Navigation Menu"
             >
-              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              <Menu size={24} />
             </button>
             
-            <Link to={APP_ROUTES.HOME} className="flex items-center gap-1.5 justify-self-center"> {/* Align center */}
+            <Link to={APP_ROUTES.HOME} className="flex items-center gap-1.5 justify-self-center">
               <Scissors className="text-cyber" size={18} />
               <span className="text-lg font-serif font-bold text-white tracking-wider">
                 LIRIMI
               </span>
             </Link>
 
-            <button className="p-2 text-white justify-self-end"> {/* Align right */}
+            <button className="p-2 text-white justify-self-end">
               <ShoppingBag size={24} />
             </button>
           </div>
 
-          {/* Desktop Header Layout */}
+          {/* --- Desktop Header --- */}
           <div className="hidden md:flex items-center justify-between w-full">
             <Link
               to={APP_ROUTES.HOME}
@@ -84,31 +87,68 @@ export const Header: React.FC = () => {
         </div>
       </header>
 
-      {/* Mobile Menu Dropdown */}
+      {/* ==========================================
+          MOBILE SIDEBAR 
+      ========================================== */}
+      
+      {/* --- Overlay --- */}
       <div
         className={cn(
-          "fixed top-[72px] left-0 right-0 bg-deep-900/95 backdrop-blur-xl border-b border-cyber/20 overflow-hidden transition-all duration-300 md:hidden",
-          isMobileMenuOpen ? "max-h-[400px] py-6" : "max-h-0 py-0"
+          "fixed inset-0 z-40 bg-deep-950/60 backdrop-blur-sm transition-opacity duration-300 md:hidden",
+          isMobileMenuOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+        )}
+        onClick={() => setIsMobileMenuOpen(false)}
+        aria-hidden="true"
+      />
+
+      {/* --- Sidebar Content --- */}
+      <aside
+        className={cn(
+          "fixed top-0 left-0 z-50 h-full w-72 bg-deep-900 border-r border-cyber/20",
+          "transform transition-transform duration-300 ease-in-out md:hidden",
+          isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
         )}
       >
-        <nav className="container mx-auto px-4 flex flex-col gap-4">
-          {navLinks.map((link) => (
-            <a
-              key={link.name}
-              href={link.path}
-              className="text-lg font-medium text-gray-200 hover:text-cyber py-2 border-l-2 border-transparent hover:border-cyber pl-4 transition-all"
+        <div className="flex flex-col h-full">
+          {/* Sidebar Header */}
+          <div className="flex items-center justify-between px-6 py-4 border-b border-white/10">
+            <Link to={APP_ROUTES.HOME} className="flex items-center gap-2" onClick={() => setIsMobileMenuOpen(false)}>
+              <Scissors className="text-cyber" size={20} />
+              <span className="text-xl font-serif font-bold text-white tracking-wider">
+                LIRIMI
+              </span>
+            </Link>
+            <button
+              className="p-2 text-white"
               onClick={() => setIsMobileMenuOpen(false)}
+              aria-label="Close Navigation Menu"
             >
-              {link.name}
-            </a>
-          ))}
-          <div className="pt-4 border-t border-white/10 mt-2">
+              <X size={24} />
+            </button>
+          </div>
+
+          {/* Navigation */}
+          <nav className="flex-grow px-6 py-8 flex flex-col gap-4">
+            {navLinks.map((link) => (
+              <a
+                key={link.name}
+                href={link.path}
+                className="text-lg font-medium text-gray-300 hover:text-cyber py-2 border-l-2 border-transparent hover:border-cyber pl-4 transition-all duration-200"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                {link.name}
+              </a>
+            ))}
+          </nav>
+
+          {/* Sidebar Footer */}
+          <div className="px-6 py-6 border-t border-white/10">
             <Button as="link" to={APP_ROUTES.BOOKING} className="w-full justify-center" variant="primary">
               Book Appointment
             </Button>
           </div>
-        </nav>
-      </div>
+        </div>
+      </aside>
     </>
   );
 };
