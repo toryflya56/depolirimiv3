@@ -75,21 +75,18 @@ const TestimonialCard: React.FC<{ testimonial: Testimonial }> = ({ testimonial }
 
 export const Testimonials: React.FC = () => {
   return (
-    <section className="py-20 bg-deep-950">
-      <div className="container mx-auto px-4">
-        <h2 className="text-4xl md:text-5xl font-serif font-bold text-white mb-12">
+    <section className="container mx-auto px-4 py-16">
+        <h2 className="text-4xl md:text-5xl font-serif font-bold text-white mb-12 text-center">
           Don't just take our word for it.
         </h2>
         
-        <div className="flex space-x-6 overflow-x-auto pb-8 scrollbar-thin scrollbar-thumb-cyber/50 scrollbar-track-deep-900/50">
+        <div className="flex space-x-6 overflow-x-auto pb-8 scrollbar-thin scrollbar-thumb-cyber/50 scrollbar-track-deep-900/50 -mx-4 px-4">
           {TESTIMONIALS.map((testimonial) => (
             <TestimonialCard key={testimonial.id} testimonial={testimonial} />
           ))}
           {/* Add a spacer at the end for better scroll feel */}
           <div className="flex-shrink-0 w-1"></div>
         </div>
-
-      </div>
     </section>
   );
 };

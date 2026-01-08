@@ -25,7 +25,7 @@ export const Header: React.FC = () => {
         className={cn(
           "fixed top-4 z-50 left-4 right-4", // Inset from sides
           "max-w-md mx-auto", // Centered and max-width
-          "border border-white/10 rounded-full",
+          "border border-white/10 rounded-2xl",
           "bg-deep-950/80 backdrop-blur-lg",
           "py-2"
         )}

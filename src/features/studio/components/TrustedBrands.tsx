@@ -4,9 +4,7 @@ const PARTNERS = ['REUZEL', 'UPPERCUT', 'LAYRITE', 'SUAVECITO'];
 
 export const TrustedBrands: React.FC = () => {
   return (
-    <section className="py-20 bg-deep-950">
-      <div className="container mx-auto px-4">
-        
+    <section className="container mx-auto px-4 py-16">
         <div className="text-center mb-10">
           <h2 className="text-sm font-semibold text-gray-500 uppercase tracking-widest">
             Trusted Products & Partners
@@ -22,8 +20,6 @@ export const TrustedBrands: React.FC = () => {
             </div>
           ))}
         </div>
-
-      </div>
     </section>
   );
 };
