@@ -30,14 +30,12 @@ export const Header: React.FC = () => {
       ========================================== */}
       <header
         className={cn(
-          "fixed top-4 z-30 left-4 right-4",
-          "max-w-md mx-auto",
-          "border border-white/10 rounded-2xl",
-          "bg-deep-950/80 backdrop-blur-lg",
-          "py-2"
+          "absolute top-0 z-30 left-0 right-0",
+          "max-w-7xl mx-auto",
+          "py-4 md:py-6"
         )}
       >
-        <div className="mx-auto px-4 flex items-center justify-between">
+        <div className="mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
 
           {/* --- Mobile Header --- */}
           <div className="grid grid-cols-3 items-center w-full md:hidden">
