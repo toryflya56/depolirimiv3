@@ -30,12 +30,12 @@ export const Hero: React.FC = () => {
 
         {/* Main Headline */}
         <h1 className="font-serif text-4xl font-bold leading-tight text-glow">
-          Mastery in <span className="text-cyber">Every</span> Cut
+          Where <span className="text-cyber">Style</span> is Forged.
         </h1>
 
         {/* Sub-headline */}
         <p className="text-sm text-gray-300 leading-relaxed max-w-xs mx-auto">
-          Experience the fusion of classic barbering and modern aesthetics. We don’t just cut hair; we sculpt your confidence.
+          We unite timeless techniques with visionary style. This isn't just a haircut—it's the signature of your confidence.
         </p>
 
         {/* Action Buttons */}
