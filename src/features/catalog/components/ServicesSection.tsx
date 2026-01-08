@@ -17,21 +17,21 @@ const SERVICES: Service[] = [
     name: 'The Executive Cut',
     description: 'Precision scissor cut tailored to your head shape, finished with a hot towel styling.',
     price: 55,
-    imageUrl: 'https://images.unsplash.com/photo-1512499133331-526485bce6c5?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    imageUrl: 'https://images.unsplash.com/photo-1599351431202-15b220857329?auto=format&fit=crop&q=80',
   },
   {
     id: 'royal-shave',
     name: 'Royal Shave',
     description: 'Traditional straight razor shave with pre-shave oil, hot foam, and cold towel finish.',
     price: 45,
-    imageUrl: 'https://images.unsplash.com/photo-1588812269279-a73a9f39b693?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    imageUrl: 'https://images.unsplash.com/photo-1621607512214-6f3594193d6a?auto=format&fit=crop&q=80',
   },
   {
     id: 'beard-sculpting',
     name: 'Beard Sculpting',
     description: 'Detailed beard trimming and shaping, including line-up and conditioning treatment.',
     price: 35,
-    imageUrl: 'https://images.unsplash.com/photo-1622288390697-5a1099b2d1ed?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    imageUrl: 'https://images.unsplash.com/photo-1617850849224-34c4a552def6?auto=format&fit=crop&q=80',
   },
 ];
 

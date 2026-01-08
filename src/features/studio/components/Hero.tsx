@@ -9,7 +9,6 @@ export const Hero: React.FC = () => {
     <div className="relative text-white text-center py-16 px-4 flex items-center justify-center min-h-[calc(100vh-120px)]">
       <div
         className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: "url('https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')" }}
       />
       <div
         className="absolute inset-0 bg-gradient-to-b from-deep-950/80 to-deep-950"
