@@ -35,7 +35,7 @@ const HeroBanner: React.FC<HeroBannerProps> = ({ badge, title, subtitle, backgro
 
       <div className="relative w-full max-w-sm p-6 space-y-4 rounded-2xl bg-black/20 border border-white/10 shadow-2xl backdrop-blur-lg">
         <div className="flex justify-center">
-          <div className="inline-block px-3 py-1 text-[10px] font-semibold tracking-widest text-cyber border border-cyber/50 rounded-xl bg-cyber/10">
+          <div className="inline-block px-3 py-1 text-xs font-semibold tracking-widest text-cyber border border-cyber/50 rounded-full bg-cyber/10">
             {badge}
           </div>
         </div>

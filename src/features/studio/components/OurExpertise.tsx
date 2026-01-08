@@ -24,16 +24,16 @@ const AnimatedExpertiseItem: React.FC<{ item: typeof EXPERTISE_ITEMS[0]; index: 
   const itemDelay = 200; // ms
 
   return (
-    <div ref={setNode} className="relative py-12" style={{ marginBottom: '450px' }}>
+    <div ref={setNode} className="relative py-12">
       <div className="text-center max-w-2xl mx-auto flex flex-col items-center">
         <div 
           className={`fade-in-up ${isVisible ? 'visible' : ''}`}
           style={{ transitionDelay: `${itemDelay}ms` }}
         >
-          <div className="relative w-[70px] h-[70px] flex items-center justify-center mb-8">
+          <div className="relative w-16 h-16 flex items-center justify-center mb-8">
             <div className={`absolute inset-0 rounded-full bg-cyber/10 scale-0 transition-transform duration-700 ${isVisible ? 'scale-100' : ''}`} style={{ transitionDelay: `${itemDelay}ms` }}></div>
             <div 
-              className={`absolute inset-0 rounded-full border border-cyber/50 scale-0 transition-transform duration-700 ${isVisible ? 'scale-100' : ''}`}
+              className={`absolute inset-0 rounded-full border-2 border-cyber/50 scale-0 transition-transform duration-700 ${isVisible ? 'scale-100' : ''}`}
               style={{ transitionDelay: `${itemDelay + 100}ms` }}
             ></div>
             <span 
@@ -59,13 +59,13 @@ const AnimatedExpertiseItem: React.FC<{ item: typeof EXPERTISE_ITEMS[0]; index: 
         </h3>
         <p 
           className={`text-lg text-white/70 leading-relaxed fade-in-up ${isVisible ? 'visible' : ''}`}
-          style={{ lineHeight: 1.8, transitionDelay: `${itemDelay + 400}ms`, maxWidth: '560px' }}
+          style={{ lineHeight: 1.8, transitionDelay: `${itemDelay + 400}ms` }}
         >
           {item.description}
         </p>
       </div>
       {index < EXPERTISE_ITEMS.length - 1 && (
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 h-px w-[160px] bg-cyber/40">
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 h-px w-1/3 bg-white/10">
             <div className={`h-full bg-cyber/40 draw-line-divider ${isVisible ? 'visible' : ''}`} style={{ transitionDelay: `${itemDelay + 600}ms` }} />
         </div>
       )}

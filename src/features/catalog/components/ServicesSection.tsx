@@ -50,7 +50,7 @@ export const ServicesSection: React.FC = () => {
           <div className={`h-0.5 mx-auto bg-cyber rounded-full draw-line-h ${isVisible ? 'visible' : ''}`} style={{ transitionDelay: '200ms' }} />
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
           {SERVICES.map((service, index) => (
             <div
               key={service.id}

@@ -43,8 +43,8 @@ type ButtonProps = ButtonAsButton | ButtonAsLink;
 
 const variantStyles: Record<ButtonVariant, string> = {
   primary:
-    'bg-cyber text-deep-950 font-bold shadow-[0_0_20px_rgba(0,212,255,0.4)] ' +
-    'hover:bg-cyan-300 hover:shadow-[0_0_30px_rgba(0,212,255,0.5)] ' +
+    'bg-cyber text-deep-950 font-bold shadow-lg shadow-cyber/20 ' +
+    'hover:bg-cyan-300 hover:shadow-xl hover:shadow-cyber/30 ' +
     'active:scale-95 disabled:bg-gray-600 disabled:text-gray-400 disabled:shadow-none',
   
   secondary: 
@@ -52,7 +52,7 @@ const variantStyles: Record<ButtonVariant, string> = {
     'active:scale-95 disabled:bg-gray-800 disabled:text-gray-500',
   
   outline: 
-    'bg-transparent text-white border-2 border-cyber/30 ' +
+    'bg-transparent text-white border-2 border-white/20 ' +
     'hover:bg-cyber/10 hover:border-cyber hover:text-cyber ' +
     'active:scale-95 disabled:border-gray-600 disabled:text-gray-600',
   
