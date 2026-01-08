@@ -6,7 +6,7 @@ import { CalendarDays, ArrowRight } from 'lucide-react';
 
 export const Hero: React.FC = () => {
   return (
-    <div className='bg-deep-950'>
+    <main className='bg-deep-950'>
       <div 
         className="relative text-white text-center py-16 px-4 flex items-center justify-center min-h-[calc(100vh-150px)]"
         style={{
@@ -58,6 +58,6 @@ export const Hero: React.FC = () => {
           </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 };
