@@ -1,13 +1,8 @@
 export const APP_ROUTES = {
   HOME: '/',
   BOOKING: '/booking',
-  ABOUT: '/about',
   SERVICES: '/services',
   BARBERS: '/barbers',
-  CAREERS: '/careers',
-  PRIVACY: '/privacy',
-  TERMS: '/terms',
-  CONTACT: '/contact',
 } as const;
 
 export const COMPANY_INFO = {

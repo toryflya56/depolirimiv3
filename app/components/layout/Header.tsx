@@ -1,7 +1,6 @@
-import type React from 'react';
-import { Logo } from '@/components/ui/Logo';
-import { Button } from '@/components/ui/Button';
-import { APP_ROUTES } from '@/lib/constants';
+import React from 'react';
+import { Logo } from '../ui/Logo';
+import { Button } from '../ui/Button';
 import { Menu, ShoppingBag } from 'lucide-react';
 
 export const Header: React.FC = () => {

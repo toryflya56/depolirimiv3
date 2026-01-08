@@ -7,3 +7,24 @@
   background-size: cover;
   background-position: center;
 }
+
+/* Accessibility: Skip Link */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  z-index: 9999;
+  padding: 1em;
+  background-color: #000;
+  color: #fff;
+}
+
+.skip-link:focus {
+  left: 0;
+}
+
+/* NoScript Fallback */
+.noscript-fallback {
+  padding: 2rem;
+  text-align: center;
+  color: white;
+}

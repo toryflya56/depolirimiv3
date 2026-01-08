@@ -1,6 +1,6 @@
-import type React from 'react';
-import { Logo } from '@/components/ui/Logo';
-import { APP_ROUTES } from '@/lib/constants';
+import React from 'react';
+import { Logo } from '../ui/Logo';
+import { APP_ROUTES, COMPANY_INFO } from '../../lib/constants';
 
 export const Footer: React.FC = () => {
   return (
@@ -10,7 +10,7 @@ export const Footer: React.FC = () => {
           <div>
             <Logo />
             <p className='text-gray-400 mt-4 max-w-xs mx-auto md:mx-0'>
-              The premier barber studio for modern and classic hairstyling.
+              {COMPANY_INFO.tagline}
             </p>
           </div>
           <div>
@@ -27,11 +27,6 @@ export const Footer: React.FC = () => {
                 </a>
               </li>
               <li>
-                <a href={APP_ROUTES.ABOUT} className='text-gray-400 hover:text-cyber'>
-                  About Us
-                </a>
-              </li>
-              <li>
                 <a href={APP_ROUTES.BOOKING} className='text-gray-400 hover:text-cyber'>
                   Book Now
                 </a>
@@ -40,13 +35,13 @@ export const Footer: React.FC = () => {
           </div>
           <div>
             <h3 className='font-bold text-white text-lg mb-4'>Contact Us</h3>
-            <p className='text-gray-400'>123 Barber Street, Styleburg, ST 12345</p>
-            <p className='text-gray-400'>contact@lirimi.com</p>
-            <p className='text-gray-400'>(123) 456-7890</p>
+            <p className='text-gray-400'>{`${COMPANY_INFO.location.street}, ${COMPANY_INFO.location.city}, ${COMPANY_INFO.location.state} ${COMPANY_INFO.location.zip}`}</p>
+            <p className='text-gray-400'>{COMPANY_INFO.contact.email}</p>
+            <p className='text-gray-400'>{COMPANY_INFO.contact.phone}</p>
           </div>
         </div>
         <div className='mt-8 pt-8 border-t border-deep-700 text-center text-gray-500'>
-          <p>&copy; {new Date().getFullYear()} Lirimi Barber Studio. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} {COMPANY_INFO.name}. All rights reserved.</p>
         </div>
       </div>
     </footer>

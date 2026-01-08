@@ -37,23 +37,24 @@
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "LocalBusiness",
-      "name": "LIRIMI",
-      "description": "LIRIMI Barbershop offers premium grooming services in Soho, NYC. We blend timeless techniques with modern styles to give you the perfect look.",
-      "foundingDate": "2024",
-      "serviceType": "HairSalon"
-    }
-    </script>
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      "itemListElement": [{
-        "@type": "ListItem",
-        "position": 1,
-        "name": "Home",
-        "item": "https://barberlirimi.com"
-      }]
+      "@graph": [
+        {
+          "@type": "LocalBusiness",
+          "name": "LIRIMI",
+          "description": "LIRIMI Barbershop offers premium grooming services in Soho, NYC. We blend timeless techniques with modern styles to give you the perfect look.",
+          "foundingDate": "2024",
+          "serviceType": "HairSalon"
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [{
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://barberlirimi.com"
+          }]
+        }
+      ]
     }
     </script>
 
@@ -72,7 +73,7 @@
   </head>
   <body>
     <!-- Accessibility: Skip Link -->
-    <a href="#root" style="position:absolute; left:-9999px; z-index:9999; padding:1em; background:#000; color:#fff;" onfocus="this.style.left='0'">
+    <a href="#root" class="skip-link">
       Skip to main content
     </a>
 
@@ -81,7 +82,7 @@
 
     <!-- NoScript Fallback (WCAG Requirement) -->
     <noscript>
-      <div style="padding: 2rem; text-align: center; color: white;">
+      <div class="noscript-fallback">
         <h1>JavaScript Required</h1>
         <p>Please enable JavaScript to access the LIRIMI Booking Experience.</p>
       </div>
