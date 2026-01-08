@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-
 // ==========================================
 // GENERIC & UTILITY TYPES
 // ==========================================
@@ -26,7 +24,6 @@ export type PartialBy<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
  * Represents the possible states of any asynchronous data fetching operation.
  */
 export type FetchStatus = 'idle' | 'loading' | 'succeeded' | 'failed';
-
 
 // ==========================================
 // APPLICATION-SPECIFIC MODELS
@@ -78,7 +75,7 @@ export interface Booking {
   service: Service | null;
   barber: Barber | null;
   startTime: string | null; // ISO 8601 format, null during creation
-  endTime: string | null;   // ISO 8601 format, null during creation
+  endTime: string | null; // ISO 8601 format, null during creation
   status: 'pending' | 'confirmed' | 'cancelled' | 'completed';
   notes?: string;
   createdAt: string; // ISO 8601 format
@@ -96,9 +93,9 @@ export interface TimeSlot {
  * Represents a testimonial from a customer.
  */
 export interface Testimonial {
-    id: string;
-    customerName: string;
-    customerAvatarUrl: string;
-    quote: string;
-    rating: number; // Rating from 1 to 5
+  id: string;
+  customerName: string;
+  customerAvatarUrl: string;
+  quote: string;
+  rating: number; // Rating from 1 to 5
 }

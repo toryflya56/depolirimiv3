@@ -1,4 +1,4 @@
-import { TeamSection } from "@/components/studio/TeamSection";
+import { TeamSection } from '@/components/studio/TeamSection';
 
 const BarbersPage = () => {
   return (

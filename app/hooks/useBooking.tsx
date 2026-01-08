@@ -1,5 +1,6 @@
-import React, { createContext, useContext, useState, useMemo } from 'react';
-import { Service, Barber } from '@/models/common';
+import type React from 'react';
+import { createContext, useContext, useState, useMemo } from 'react';
+import { type Service, type Barber } from '@/models/common';
 
 interface BookingState {
   service: Service | null;
@@ -18,30 +19,29 @@ interface BookingContextType {
 const BookingContext = createContext<BookingContextType | undefined>(undefined);
 
 export const BookingProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [booking, setBooking] = useState<BookingState>({ 
-    service: null, 
-    barber: null, 
-    dateTime: null 
+  const [booking, setBooking] = useState<BookingState>({
+    service: null,
+    barber: null,
+    dateTime: null,
   });
 
-  const setService = (service: Service | null) => setBooking(prev => ({ ...prev, service }));
-  const setBarber = (barber: Barber | null) => setBooking(prev => ({ ...prev, barber }));
-  const setDateTime = (dateTime: Date | null) => setBooking(prev => ({ ...prev, dateTime }));
+  const setService = (service: Service | null) => setBooking((prev) => ({ ...prev, service }));
+  const setBarber = (barber: Barber | null) => setBooking((prev) => ({ ...prev, barber }));
+  const setDateTime = (dateTime: Date | null) => setBooking((prev) => ({ ...prev, dateTime }));
   const resetBooking = () => setBooking({ service: null, barber: null, dateTime: null });
 
-  const contextValue = useMemo(() => ({
-    booking,
-    setService,
-    setBarber,
-    setDateTime,
-    resetBooking,
-  }), [booking]);
-
-  return (
-    <BookingContext.Provider value={contextValue}>
-      {children}
-    </BookingContext.Provider>
+  const contextValue = useMemo(
+    () => ({
+      booking,
+      setService,
+      setBarber,
+      setDateTime,
+      resetBooking,
+    }),
+    [booking]
   );
+
+  return <BookingContext.Provider value={contextValue}>{children}</BookingContext.Provider>;
 };
 
 export const useBooking = () => {

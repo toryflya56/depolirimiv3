@@ -1,13 +1,18 @@
-import React from 'react';
+import type React from 'react';
 
 interface SectionHeadingProps {
-    title: string;
-    subtitle: string;
-    align?: 'left' | 'center';
-    isAlternativeColor?: boolean;
+  title: string;
+  subtitle: string;
+  align?: 'left' | 'center';
+  isAlternativeColor?: boolean;
 }
 
-export const SectionHeading: React.FC<SectionHeadingProps> = ({ title, subtitle, align = 'center', isAlternativeColor = false }) => {
+export const SectionHeading: React.FC<SectionHeadingProps> = ({
+  title,
+  subtitle,
+  align = 'center',
+  isAlternativeColor = false,
+}) => {
   const titleColor = isAlternativeColor ? 'text-gray-800 dark:text-white' : 'text-white';
   const subtitleColor = isAlternativeColor ? 'text-gray-600 dark:text-gray-300' : 'text-gray-400';
 

@@ -7,8 +7,8 @@ interface BookingStepperProps {
 export const BookingStepper: React.FC<BookingStepperProps> = ({ children }) => {
   const [currentStep, setCurrentStep] = useState(0);
 
-  const nextStep = () => setCurrentStep(prev => Math.min(prev + 1, children.length - 1));
-  const prevStep = () => setCurrentStep(prev => Math.max(prev - 1, 0));
+  const nextStep = () => setCurrentStep((prev) => Math.min(prev + 1, children.length - 1));
+  const prevStep = () => setCurrentStep((prev) => Math.max(prev - 1, 0));
 
   const activeComponent = React.cloneElement(children[currentStep], {
     nextStep,

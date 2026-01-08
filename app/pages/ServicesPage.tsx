@@ -1,4 +1,4 @@
-import { ServicesSection } from "@/components/studio/ServicesSection";
+import { ServicesSection } from '@/components/studio/ServicesSection';
 
 const ServicesPage = () => {
   return (

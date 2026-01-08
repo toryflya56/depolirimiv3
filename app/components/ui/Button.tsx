@@ -1,10 +1,11 @@
-import React from 'react';
+import type React from 'react';
 import { Link } from 'react-router-dom';
 
 const variants = {
   primary: 'bg-cyber text-deep-900 hover:bg-cyber/90',
   secondary: 'bg-deep-700 text-white hover:bg-deep-600',
   ghost: 'bg-transparent text-cyber hover:bg-cyber/10',
+  icon: 'bg-transparent text-white hover:text-cyber',
 };
 
 const sizes = {
@@ -14,24 +15,36 @@ const sizes = {
 };
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  as?: 'button' | 'link';
+  as?: 'button' | 'link' | 'icon';
   to?: string;
   variant?: keyof typeof variants;
   size?: keyof typeof sizes;
   children: React.ReactNode;
 }
 
-export const Button: React.FC<ButtonProps> = ({ 
-    as = 'button', 
-    to, 
-    variant = 'primary', 
-    size = 'md', 
-    children, 
-    className = '', 
-    ...props 
+export const Button: React.FC<ButtonProps> = ({
+  as = 'button',
+  to,
+  variant = 'primary',
+  size = 'md',
+  children,
+  className = '',
+  ...props
 }) => {
-  const baseClasses = 'inline-flex items-center justify-center rounded-md font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-cyber focus:ring-offset-2 focus:ring-offset-deep-900 disabled:opacity-50 disabled:pointer-events-none';
-  const combinedClasses = `${baseClasses} ${variants[variant]} ${sizes[size]} ${className}`;
+  const baseClasses =
+    'inline-flex items-center justify-center rounded-md font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-cyber focus:ring-offset-2 focus:ring-offset-deep-900 disabled:opacity-50 disabled:pointer-events-none';
+
+  const getVariantClasses = () => {
+    if (as === 'icon') return variants.icon;
+    return variants[variant];
+  };
+
+  const getSizeClasses = () => {
+    if (as === 'icon') return 'p-2';
+    return sizes[size];
+  };
+
+  const combinedClasses = `${baseClasses} ${getVariantClasses()} ${getSizeClasses()} ${className}`;
 
   if (as === 'link') {
     if (!to) {

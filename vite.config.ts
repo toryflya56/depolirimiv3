@@ -1,4 +1,3 @@
-
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { fileURLToPath } from 'url';
@@ -12,9 +11,7 @@ export default defineConfig({
   // =========================================
   // PLUGINS
   // =========================================
-  plugins: [
-    react()
-  ],
+  plugins: [react()],
 
   // =========================================
   // PATH ALIASES (matches tsconfig.json)
@@ -23,7 +20,7 @@ export default defineConfig({
     alias: {
       // This single alias is the source of truth, matching tsconfig.json
       '@': path.resolve(__dirname, './app'),
-    }
+    },
   },
 
   // =========================================
@@ -44,7 +41,7 @@ export default defineConfig({
     port: 4173,
     strictPort: false,
     host: true,
-    open: true
+    open: true,
   },
 
   // =========================================
@@ -74,25 +71,18 @@ export default defineConfig({
           }
           return 'assets/[name]-[hash][extname]';
         },
-      }
+      },
     },
     assetsInlineLimit: 4096,
     emptyOutDir: true,
-    reportCompressedSize: true
+    reportCompressedSize: true,
   },
 
   // =========================================
   // PERFORMANCE OPTIMIZATIONS
   // =========================================
   optimizeDeps: {
-    include: [
-      'react',
-      'react-dom',
-      'react-router-dom',
-      'lucide-react',
-      'clsx',
-      'tailwind-merge'
-    ],
+    include: ['react', 'react-dom', 'react-router-dom', 'lucide-react', 'clsx', 'tailwind-merge'],
   },
 
   // =========================================
@@ -101,7 +91,7 @@ export default defineConfig({
   envPrefix: 'VITE_',
   define: {
     __APP_VERSION__: JSON.stringify(process.env.npm_package_version),
-    __BUILD_TIME__: JSON.stringify(new Date().toISOString())
+    __BUILD_TIME__: JSON.stringify(new Date().toISOString()),
   },
 
   // =========================================
@@ -109,12 +99,12 @@ export default defineConfig({
   // =========================================
   css: {
     devSourcemap: true,
-    postcss: './postcss.config.js'
+    postcss: './postcss.config.js',
   },
-  
+
   // =========================================
   // SECURITY
   // =========================================
   publicDir: false,
-  assetsInclude: ['**/*.png', '**/*.jpg', '**/*.jpeg', '**/*.gif', '**/*.svg', '**/*.webp']
+  assetsInclude: ['**/*.png', '**/*.jpg', '**/*.jpeg', '**/*.gif', '**/*.svg', '**/*.webp'],
 });
