@@ -7,6 +7,13 @@ import { CalendarDays, ArrowRight } from 'lucide-react';
 export const Hero: React.FC = () => {
   return (
     <div className="relative text-white text-center py-16 px-4 flex items-center justify-center min-h-[calc(100vh-120px)]">
+      <div
+        className="absolute inset-0 bg-cover bg-center"
+      />
+      <div
+        className="absolute inset-0 bg-gradient-to-b from-deep-950/80 to-deep-950"
+      />
+
       {/* Main Content Card */}
       <div className="relative w-full max-w-sm p-6 space-y-4 rounded-2xl bg-black/20 border border-white/10 shadow-2xl backdrop-blur-lg">
         
