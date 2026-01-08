@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { cn } from '../../lib/utils';
@@ -8,7 +7,7 @@ import { cn } from '../../lib/utils';
 // ==========================================
 
 type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger';
-type ButtonSize = 'sm' | 'md' | 'lg' | 'xl';
+type ButtonSize = 'sm' | 'md' | 'lg';
 
 interface BaseButtonProps {
   children: React.ReactNode;
@@ -32,7 +31,7 @@ interface ButtonAsButton extends BaseButtonProps {
 interface ButtonAsLink extends BaseButtonProps {
   as: 'link';
   to: string;
-  onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void; // Allow onClick for links
+  onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
   type?: never;
 }
 
@@ -43,16 +42,18 @@ type ButtonProps = ButtonAsButton | ButtonAsLink;
 // ==========================================
 
 const variantStyles: Record<ButtonVariant, string> = {
-  primary: 
-    'bg-cyber text-deep-950 hover:bg-cyber-hover shadow-lg shadow-cyber/20 ' +
+  primary:
+    'bg-cyber text-deep-950 font-bold shadow-lg shadow-cyber/20 ' +
+    'hover:bg-cyan-300 hover:shadow-xl hover:shadow-cyber/30 ' +
     'active:scale-95 disabled:bg-gray-600 disabled:text-gray-400 disabled:shadow-none',
   
   secondary: 
-    'bg-deep-800 text-white hover:bg-deep-900 border border-white/10 ' +
+    'bg-deep-800 text-white hover:bg-deep-700 border border-white/10 ' +
     'active:scale-95 disabled:bg-gray-800 disabled:text-gray-500',
   
   outline: 
-    'bg-transparent text-white border-2 border-white/20 hover:bg-white/10 hover:border-white/40 ' +
+    'bg-transparent text-white border-2 border-white/20 ' +
+    'hover:bg-cyber/10 hover:border-cyber hover:text-cyber ' +
     'active:scale-95 disabled:border-gray-600 disabled:text-gray-600',
   
   ghost: 
@@ -65,10 +66,9 @@ const variantStyles: Record<ButtonVariant, string> = {
 };
 
 const sizeStyles: Record<ButtonSize, string> = {
-  sm: 'px-4 py-2 text-sm',
+  sm: 'px-5 py-2.5 text-sm',
   md: 'px-6 py-3 text-base',
-  lg: 'px-8 py-4 text-lg',
-  xl: 'px-10 py-5 text-xl',
+  lg: 'px-8 py-3.5 text-lg',
 };
 
 // ==========================================
@@ -89,11 +89,12 @@ export const Button: React.FC<ButtonProps> = ({
 }) => {
   
   const baseStyles = cn(
-    'inline-flex items-center justify-center gap-2',
-    'font-semibold tracking-wide uppercase',
-    'rounded-lg transition-all duration-200 ease-out',
+    'inline-flex items-center justify-center gap-2.5',
+    'font-semibold tracking-wider',
+    'rounded-md',
+    'transition-all duration-300 ease-in-out',
     'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyber focus-visible:ring-offset-2 focus-visible:ring-offset-deep-950',
-    'disabled:cursor-not-allowed disabled:opacity-50',
+    'disabled:cursor-not-allowed disabled:opacity-60',
     variantStyles[variant],
     sizeStyles[size],
     fullWidth && 'w-full',
@@ -122,7 +123,7 @@ export const Button: React.FC<ButtonProps> = ({
     <>
       {loading && <LoadingSpinner />}
       {!loading && icon && iconPosition === 'left' && icon}
-      <span className={cn(loading && 'opacity-0')}>{children}</span>
+      <span className={cn('truncate', loading && 'opacity-0')}>{children}</span>
       {!loading && icon && iconPosition === 'right' && icon}
     </>
   );

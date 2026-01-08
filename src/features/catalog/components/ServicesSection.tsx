@@ -1,10 +1,11 @@
 import React from 'react';
-import { ServiceCard } from './ServiceCard'; // Use the ServiceCard component
+import { ServiceCard } from './ServiceCard';
 import { Link } from 'react-router-dom';
 import { APP_ROUTES } from '../../../lib/constants';
-import { Service } from '../../../types'; // Use the shared Service type
+import { Service } from '../../../types';
+import { useIntersectionObserver } from '../../../hooks/useIntersectionObserver';
+import '../../studio/components/animations.css';
 
-// Update the data structure to match the Service type
 const SERVICES: Service[] = [
   {
     id: 'executive-cut',
@@ -36,21 +37,30 @@ const SERVICES: Service[] = [
 ];
 
 export const ServicesSection: React.FC = () => {
+  const [setNode, entry] = useIntersectionObserver({ threshold: 0.1, triggerOnce: true });
+  const isVisible = entry?.isIntersecting;
+
   return (
-    <section id="services" className="-mt-20 pt-20 pb-20 bg-deep-950 scroll-mt-16">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-serif font-bold text-white mb-4">
-            Our Expertise
+    <section id="services" className="bg-deep-950 text-white py-32 sm:py-40 scroll-mt-16">
+      <div className="container mx-auto px-6 md:px-12">
+        <div ref={setNode} className="text-center mb-24">
+          <h2 className={`text-5xl md:text-6xl font-serif text-white mb-4 fade-in-up ${isVisible ? 'visible' : ''}`}>
+            Signature Services
           </h2>
+          <div className={`h-0.5 mx-auto bg-cyber rounded-full draw-line-h ${isVisible ? 'visible' : ''}`} style={{ transitionDelay: '200ms' }} />
         </div>
 
-        {/* Use a grid to display the ServiceCard components */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {SERVICES.map((service) => (
-            <Link to={`${APP_ROUTES.BOOKING}?service=${service.id}`} key={service.id} className="block group">
-              <ServiceCard service={service} />
-            </Link>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
+          {SERVICES.map((service, index) => (
+            <div
+              key={service.id}
+              className={`fade-in-up ${isVisible ? 'visible' : ''}`}
+              style={{ transitionDelay: `${index * 150 + 400}ms` }}
+            >
+              <Link to={`${APP_ROUTES.BOOKING}?service=${service.id}`} className="block group">
+                <ServiceCard service={service} />
+              </Link>
+            </div>
           ))}
         </div>
       </div>

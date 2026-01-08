@@ -2,7 +2,7 @@ import React from 'react';
 import { Service } from '../../../types';
 import { formatCurrency, cn } from '../../../lib/utils';
 import { Button } from '../../../components/ui/Button';
-import { Calendar } from 'lucide-react';
+import { Calendar, Clock } from 'lucide-react';
 
 interface ServiceCardProps {
   service: Service;
@@ -11,70 +11,61 @@ interface ServiceCardProps {
 
 export const ServiceCard: React.FC<ServiceCardProps> = ({ service, className }) => {
   return (
-    <div 
+    <div
       className={cn(
-        "group relative flex flex-col justify-between overflow-hidden rounded-3xl",
-        "bg-deep-900/40 border border-white/5 backdrop-blur-sm", // Glassmorphism base
-        "hover:border-cyber/30 hover:shadow-[0_0_30px_rgba(0,224,255,0.1)]", // Hover glow
-        "transition-all duration-500 ease-out",
+        'group relative overflow-hidden rounded-xl',
+        'bg-deep-900 border border-white/10',
+        'transition-all duration-500 ease-in-out',
+        'hover:border-cyber/30 hover:shadow-2xl hover:shadow-cyber/10',
         className
       )}
     >
-      {/* 
-        SECTION 1: Header (Title & Price)
-        - Uses flexbox for alignment
-        - Price uses the shared utility formatter
-      */}
-      <div className="p-6 pb-4 z-10 relative">
-        <div className="flex justify-between items-start gap-4">
-          <h3 className="text-2xl font-bold text-white group-hover:text-cyber transition-colors duration-300 leading-tight">
+      {/* Image and Overlay */}
+      <div className="relative h-72 w-full overflow-hidden">
+        <img
+          src={service.image}
+          alt={`Service: ${service.title}`}
+          loading="lazy"
+          className="h-full w-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-110"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-deep-900 via-deep-900/70 to-transparent" />
+      </div>
+
+      {/* Content Area */}
+      <div className="absolute inset-0 flex flex-col justify-end p-6">
+        
+        {/* Visible Content */}
+        <div>
+          <h3 className="text-3xl font-serif text-white transition-colors duration-300 group-hover:text-cyber">
             {service.title}
           </h3>
-          <div className="flex flex-col items-end">
-            <span className="text-xl font-serif text-cyber font-bold drop-shadow-[0_0_5px_rgba(0,224,255,0.5)]">
+          <p className="text-white/70 mt-2 line-clamp-2 leading-relaxed h-[3.25rem]">
+            {service.description}
+          </p>
+        </div>
+
+        {/* Hover-reveal Content */}
+        <div className="mt-6 opacity-0 transform translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 ease-in-out">
+          <div className="flex items-center justify-between border-t border-white/10 pt-4">
+            <div className="flex items-center space-x-2">
+              <Clock size={16} className="text-cyber" />
+              <span className="text-sm text-white/80 font-medium">{service.durationMin} Min</span>
+            </div>
+            <span className="text-2xl font-serif text-cyber font-bold">
               {formatCurrency(service.price)}
             </span>
-            <span className="text-xs text-gray-500 font-medium tracking-wider uppercase mt-1">
-              {service.durationMin} Min
-            </span>
           </div>
+
+          <Button
+            as="link"
+            to="/booking"
+            variant="primary"
+            className="w-full mt-5"
+            icon={<Calendar size={16} />}
+          >
+            Book Appointment
+          </Button>
         </div>
-      </div>
-
-      {/* 
-        SECTION 2: Visual (Image)
-        - Absolute positioning for the background effect
-        - Scale animation on hover
-      */}
-      <div className="relative h-64 w-full overflow-hidden mt-2">
-        <div className="absolute inset-0 bg-gradient-to-t from-deep-950 via-deep-950/20 to-transparent z-10" />
-        <img 
-          src={service.image} 
-          alt={`Barber service: ${service.title}`}
-          loading="lazy"
-          className="h-full w-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-in-out"
-        />
-      </div>
-
-      {/* 
-        SECTION 3: Details & Action
-        - Description sits on top of the image gradient
-        - Button links to the booking page
-      */}
-      <div className="relative z-20 px-6 pb-6 -mt-12">
-        <p className="text-gray-300 text-sm leading-relaxed mb-6 border-l-2 border-cyber/50 pl-3 line-clamp-3">
-          {service.description}
-        </p>
-        
-        <Button 
-          as="link" 
-          to="/booking" 
-          variant="outline" 
-          className="w-full group-hover:bg-cyber group-hover:text-deep-950 border-white/10 group-hover:border-cyber"
-          icon={<Calendar size={16} />}
-        >
-          Book Appointment
-        </Button>
       </div>
     </div>
   );
