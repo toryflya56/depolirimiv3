@@ -22,7 +22,15 @@ const ScrollToTop = () => {
 
 const MainLayout = () => {
   return (
-    <div className="flex flex-col min-h-screen bg-deep-950 text-white font-sans selection:bg-cyber selection:text-deep-950">
+    <div 
+      className="flex flex-col min-h-screen bg-deep-950 text-white font-sans selection:bg-cyber selection:text-deep-950"
+      style={{ 
+        backgroundImage: "url('https://images.unsplash.com/photo-1544027993-2591a9344ce7?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed',
+      }}
+    >
       <Header />
       <main className="flex-grow">
         <Outlet />
