@@ -23,30 +23,32 @@ export const Header: React.FC = () => {
     <>
       <header
         className={cn(
-          "fixed left-4 right-4 top-4 z-50", // Inset, fixed positioning
-          "border border-white/10 rounded-full",      // Rounded corners and border
-          "bg-deep-950/80 backdrop-blur-lg",         // Background styling
-          "py-3"                                    // Adjusted padding
+          "fixed left-2 right-2 top-4 z-50",       // Reduced side insets for more space
+          "border border-white/10 rounded-full",      
+          "bg-deep-950/80 backdrop-blur-lg",         
+          "py-2"                                    // Adjusted padding
         )}
       >
-        <div className="container mx-auto px-4 flex items-center justify-between">
+        <div className="mx-auto px-4 flex items-center justify-between">
 
-          {/* Mobile Header Layout: Use flexbox with absolute center */}
-          <div className="flex md:hidden items-center justify-between w-full relative h-10">
+          {/* Mobile Header Layout: Use a robust 3-column grid */}
+          <div className="grid grid-cols-3 items-center w-full md:hidden">
             <button
-              className="p-2 text-white"
+              className="p-2 text-white justify-self-start" // Align left
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label="Toggle Navigation Menu"
             >
               {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
-            <Link to={APP_ROUTES.HOME} className="absolute left-1/2 -translate-x-1/2 flex items-center gap-2">
-              <Scissors className="text-cyber" size={22} />
-              <span className="text-2xl font-serif font-bold text-white tracking-wider">
+            
+            <Link to={APP_ROUTES.HOME} className="flex items-center gap-2 justify-self-center"> {/* Align center */}
+              <Scissors className="text-cyber" size={20} />
+              <span className="text-xl font-serif font-bold text-white tracking-wider">
                 LIRIMI
               </span>
             </Link>
-            <button className="p-2 text-white">
+
+            <button className="p-2 text-white justify-self-end"> {/* Align right */}
               <ShoppingBag size={28} />
             </button>
           </div>
@@ -84,7 +86,7 @@ export const Header: React.FC = () => {
       {/* Mobile Menu Dropdown */}
       <div
         className={cn(
-          "fixed top-[88px] left-0 right-0 bg-deep-900/95 backdrop-blur-xl border-b border-cyber/20 overflow-hidden transition-all duration-300 md:hidden",
+          "fixed top-[80px] left-0 right-0 bg-deep-900/95 backdrop-blur-xl border-b border-cyber/20 overflow-hidden transition-all duration-300 md:hidden",
           isMobileMenuOpen ? "max-h-[400px] py-6" : "max-h-0 py-0"
         )}
       >
