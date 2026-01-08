@@ -13,7 +13,7 @@ const SERVICES: Service[] = [
     price: 55,
     currency: 'USD',
     durationMin: 45,
-    image: 'https://images.pexels.com/photos/2061933/pexels-photo-2061933.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    image: 'https://images.pexels.com/photos/3998419/pexels-photo-3998419.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
   },
   {
     id: 'royal-shave',
@@ -31,7 +31,7 @@ const SERVICES: Service[] = [
     price: 35,
     currency: 'USD',
     durationMin: 25,
-    image: 'https://images.pexels.com/photos/7632431/pexels-photo-7632431.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
+    image: 'https://images.pexels.com/photos/3998419/pexels-photo-3998419.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
   },
 ];
 
