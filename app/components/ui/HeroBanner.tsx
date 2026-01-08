@@ -6,13 +6,16 @@ interface HeroBannerProps {
     badge?: string;
     title: React.ReactNode;
     subtitle: string;
+    imageUrl?: string;
 }
 
-export const HeroBanner: React.FC<HeroBannerProps> = ({ badge, title, subtitle }) => {
+export const HeroBanner: React.FC<HeroBannerProps> = ({ badge, title, subtitle, imageUrl }) => {
+  const heroImageUrl = imageUrl || '/images/hero-main.jpg';
+
   return (
     <section 
         className="relative bg-cover bg-center bg-no-repeat min-h-[60vh] md:min-h-[80vh] flex items-center justify-center text-center text-white py-20 md:py-28"
-        style={{backgroundImage: `url('/images/hero-main.jpg')`}}
+        style={{backgroundImage: `url('${heroImageUrl}')`}}
     >
       <div className="absolute inset-0 bg-black/70"></div>
       <div className="relative container mx-auto px-4 z-10 flex flex-col items-center">
