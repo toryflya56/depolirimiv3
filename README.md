@@ -1,430 +1,238 @@
-# 🪒 LIRIMI Barber Studio
 
-> Premium barbering experience in Soho, NYC. Precision cuts, royal shaves, and modern style consultation.
+# LIRIMI Barber Studio
 
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue?logo=typescript)](https://www.typescriptlang.org/)
-[![React](https://img.shields.io/badge/React-18.2-61DAFB?logo=react)](https://reactjs.org/)
-[![Vite](https://img.shields.io/badge/Vite-5.1-646CFF?logo=vite)](https://vitejs.dev/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-38B2AC?logo=tailwind-css)](https://tailwindcss.com/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+Welcome to the LIRIMI Barber Studio web application repository. This project is a modern, responsive, and performant web application for a premium barber studio located in Soho, NYC.
 
----
+## Table of Contents
 
-## 📋 Table of Contents
+- [About the App](#about-the-app)
+- [Tech Stack](#tech-stack)
+- [Project Structure](#project-structure)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+  - [Development](#development)
+  - [Building for Production](#building-for-production)
+- [Configuration](#configuration)
+  - [Vite Configuration](#vite-configuration)
+  - [PostCSS Configuration](#postcss-configuration)
+  - [Tailwind CSS Configuration](#tailwind-css-configuration)
+- [Design System](#design-system)
+  - [Color Palette](#color-palette)
+  - [Typography](#typography)
+  - [Sizing and Spacing](#sizing-and-spacing)
+  - [Animations](#animations)
+  - [Shadows](#shadows)
+  - [Border Radius](#border-radius)
+  - [Custom Plugins](#custom-plugins)
 
-- [Features](#-features)
-- [Tech Stack](#-tech-stack)
-- [Getting Started](#-getting-started)
-- [Project Structure](#-project-structure)
-- [Development](#-development)
-- [Deployment](#-deployment)
-- [Environment Variables](#-environment-variables)
-- [Scripts](#-scripts)
-- [Code Quality](#-code-quality)
-- [Performance](#-performance)
-- [Security](#-security)
-- [Browser Support](#-browser-support)
-- [Contributing](#-contributing)
-- [License](#-license)
+## About the App
 
----
+LIRIMI Barber Studio is a client-facing application that showcases the services of the barber studio and allows users to book appointments. The application features a sleek, modern design with a cyberpunk-inspired color palette.
 
-## ✨ Features
+**Key Features:**
 
-### Core Functionality
-- 🗓️ **Multi-step Booking Wizard** - Intuitive service, date/time, and customer info flow
-- 💈 **Service Catalog** - Signature Cut, Royal Shave, Beard Sculpting, Executive Package
-- 📱 **Responsive Design** - Mobile-first, works on all devices
-- 🎨 **Glassmorphism UI** - Modern frosted glass aesthetic with cyber blue accents
-- ⚡ **Fast Loading** - Optimized bundle size (~65KB gzipped)
-- ♿ **Accessible** - WCAG 2.1 AA compliant
+- **Responsive Design:** The application is fully responsive and optimized for all screen sizes, from mobile to 4K displays.
+- **Lazy Loading:** Pages are lazy-loaded to improve initial load times.
+- **Component-Based Architecture:** The application is built using a component-based architecture, making it easy to maintain and scale.
+- **Booking Wizard:** A multi-step booking wizard guides users through the process of selecting a service, a barber, and a time for their appointment.
 
-### Technical Features
-- 🔒 **Enterprise Security** - CSP headers, XSS prevention, input sanitization
-- 🎯 **Type Safety** - Full TypeScript with strict mode
-- 🚀 **Performance** - Lighthouse score 95+
-- 📊 **SEO Optimized** - Meta tags, semantic HTML, Open Graph
-- 🌐 **PWA Ready** - Service worker capable
-- 🎭 **Animation System** - Scroll-triggered reveals, smooth transitions
+## Tech Stack
 
----
+- **Framework:** [React](https://react.dev/)
+- **Build Tool:** [Vite](https://vitejs.dev/)
+- **Language:** [TypeScript](https://www.typescriptlang.org/)
+- **Styling:** [Tailwind CSS](https://tailwindcss.com/)
+- **Routing:** [React Router](https://reactrouter.com/)
+- **Icons:** [Lucide React](https://lucide.dev/)
 
-## 🛠️ Tech Stack
+## Project Structure
 
-### Frontend Core
-- **React 18.2** - UI library with concurrent features
-- **TypeScript 5.3** - Type-safe JavaScript
-- **React Router 6.22** - Client-side routing (Hash routing for SPA)
-- **Vite 5.1** - Lightning-fast build tool
+The project is organized into the following directories:
 
-### Styling
-- **Tailwind CSS 3.4** - Utility-first CSS framework
-- **PostCSS** - CSS processing with Autoprefixer
-- **Custom Design System** - Cyber blue palette, glassmorphism utilities
+```
+/src
+|-- /assets
+|-- /components
+|   |-- /layout
+|   |-- /ui
+|-- /features
+|   |-- /booking
+|   |-- /studio
+|-- /lib
+|-- /pages
+|-- /types
+```
 
-### Icons & Assets
-- **Lucide React 0.263** - Beautiful SVG icons (tree-shakeable)
-- **Unsplash** - High-quality images via CDN
-- **Google Fonts** - Inter (sans) + Playfair Display (serif)
+- **`assets`**: Static assets such as images and fonts.
+- **`components`**: Reusable UI components.
+  - **`layout`**: Components that define the overall structure of the application (e.g., `Header`, `Footer`).
+  - **`ui`**: Generic, reusable UI components (e.g., `Button`).
+- **`features`**: Components and logic related to specific application features (e.g., `booking`, `studio`).
+- **`lib`**: Utility functions and constants.
+- **`pages`**: Top-level page components.
+- **`types`**: TypeScript type definitions.
 
-### Code Quality
-- **ESLint 8.56** - Linting with React/TypeScript rules
-- **clsx + tailwind-merge** - Conditional class management
-
-### Deployment
-- **Vercel** - Zero-config deployment with edge functions
-
----
-
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
-```bash
-node >= 18.0.0
-npm >= 9.0.0
-```
+
+- [Node.js](https://nodejs.org/en/) (v18.0.0 or higher)
+- [npm](https://www.npmjs.com/) (v9.0.0 or higher)
 
 ### Installation
+
+1. **Clone the repository:**
+
+   ```bash
+   git clone https://github.com/toryflya56/depolirimiv3.git
+   ```
+
+2. **Navigate to the project directory:**
+
+   ```bash
+   cd lirimi-barber-studio
+   ```
+
+3. **Install the dependencies:**
+
+   ```bash
+   npm install
+   ```
+
+### Development
+
+To start the development server, run the following command:
+
 ```bash
-# 1. Clone the repository
-git clone https://github.com/toryflya56/depolirimiv3.git
-cd depolirimiv3
-
-# 2. Install dependencies
-npm install
-
-# 3. Start development server
 npm run dev
 ```
 
-The app will open at `http://localhost:3000`
+This will start the Vite development server at `http://localhost:3000`.
 
----
+### Building for Production
 
-## 📁 Project Structure
-```
-depolirimiv3/
-├── src/
-│   ├── components/          # Reusable UI components
-│   │   ├── layout/          # Header, Footer
-│   │   └── ui/              # Button, Input, etc.
-│   ├── features/            # Feature-based modules
-│   │   ├── booking/         # Booking wizard logic
-│   │   ├── catalog/         # Services display
-│   │   └── studio/          # Hero, testimonials, contact
-│   ├── pages/               # Route pages
-│   │   ├── HomePage.tsx
-│   │   └── BookingPage.tsx
-│   ├── lib/                 # Utilities & constants
-│   │   ├── constants.ts     # App config, routes
-│   │   └── utils.ts         # Helper functions
-│   ├── App.tsx              # Root component with routing
-│   └── index.tsx            # Entry point with ErrorBoundary
-├── public/                  # Static assets
-├── index.html               # HTML template with CSP
-├── package.json             # Dependencies & scripts
-├── tsconfig.json            # TypeScript config
-├── vite.config.ts           # Vite bundler config
-├── vercel.json              # Deployment config
-├── tailwind.config.js       # Tailwind theme
-├── postcss.config.js        # PostCSS plugins
-└── .eslintrc.cjs            # ESLint rules
-```
+To create a production build of the application, run the following command:
 
----
-
-## 💻 Development
-
-### Available Commands
-```bash
-# Start dev server (hot reload)
-npm run dev
-
-# Build for production
-npm run build
-
-# Preview production build
-npm run preview
-
-# Type check (no emit)
-npm run type-check
-
-# Lint code
-npm run lint
-
-# Auto-fix linting issues
-npm run lint:fix
-```
-
-### Development Workflow
-
-1. **Create feature branch**
-```bash
-   git checkout -b feature/new-service
-```
-
-2. **Make changes** (code will auto-reload)
-
-3. **Check types & lint**
-```bash
-   npm run type-check
-   npm run lint
-```
-
-4. **Commit & push**
-```bash
-   git add .
-   git commit -m "feat: add new service"
-   git push origin feature/new-service
-```
-
----
-
-## 🌐 Deployment
-
-### Deploy to Vercel (Recommended)
-
-#### Method 1: GitHub Integration (Automatic)
-1. Push code to GitHub
-2. Import repo at [vercel.com/new](https://vercel.com/new)
-3. Vercel auto-detects Vite framework
-4. Click "Deploy"
-
-#### Method 2: Vercel CLI
-```bash
-# Install Vercel CLI
-npm i -g vercel
-
-# Deploy
-vercel
-
-# Deploy to production
-vercel --prod
-```
-
-### Deploy to Other Platforms
-
-<details>
-<summary><b>Netlify</b></summary>
-```bash
-# netlify.toml
-[build]
-  command = "npm run build"
-  publish = "dist"
-
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
-```
-</details>
-
-<details>
-<summary><b>GitHub Pages</b></summary>
-```bash
-# Install gh-pages
-npm i -D gh-pages
-
-# Add to package.json
-"scripts": {
-  "deploy": "vite build && gh-pages -d dist"
-}
-
-# Deploy
-npm run deploy
-```
-</details>
-
----
-
-## 🔐 Environment Variables
-
-Create `.env` file in project root:
-```bash
-# API Endpoints (if needed)
-VITE_API_URL=https://api.example.com
-
-# Analytics (optional)
-VITE_GA_ID=G-XXXXXXXXXX
-
-# Feature Flags
-VITE_ENABLE_CHAT=false
-```
-
-**⚠️ Important:**
-- Variables must start with `VITE_` to be exposed to client
-- Never commit `.env` file (use `.env.example` instead)
-- Restart dev server after changing env vars
-
----
-
-## 📜 Scripts
-
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start dev server on port 3000 |
-| `npm run build` | Build production bundle to `dist/` |
-| `npm run preview` | Preview production build locally |
-| `npm run lint` | Check for code issues |
-| `npm run lint:fix` | Auto-fix linting errors |
-| `npm run type-check` | Validate TypeScript types |
-
----
-
-## 🎯 Code Quality
-
-### TypeScript Configuration
-- **Strict mode enabled** - Maximum type safety
-- **No unused variables** - Clean codebase
-- **Explicit return types** - Better documentation
-
-### ESLint Rules
-- React Hooks validation (prevents bugs)
-- No console logs in production
-- Import/export consistency
-- Security rules (no eval, no innerHTML)
-
-### Code Style
-- **Single quotes** for strings
-- **Semicolons** required
-- **2 spaces** indentation
-- **120 characters** max line length
-
----
-
-## ⚡ Performance
-
-### Bundle Analysis
 ```bash
 npm run build
-
-# Output:
-dist/assets/vendor-a1b2c3.js    45.2 KB │ gzip: 16.8 KB
-dist/assets/index-d4e5f6.js     18.4 KB │ gzip:  6.2 KB
-dist/assets/index-g7h8i9.css     8.1 KB │ gzip:  2.3 KB
 ```
 
-### Optimization Techniques
-- ✅ Code splitting (vendor/app chunks)
-- ✅ Tree shaking (unused code removed)
-- ✅ Asset optimization (images, fonts)
-- ✅ CSS purging (only used Tailwind classes)
-- ✅ Lazy loading (images below fold)
+This will generate a `dist` directory with the optimized production build.
 
-### Lighthouse Scores (Target)
-- **Performance:** 95+
-- **Accessibility:** 100
-- **Best Practices:** 100
-- **SEO:** 100
+## Configuration
 
----
+### Vite Configuration
 
-## 🔒 Security
+The Vite configuration is located in `vite.config.ts`. It includes settings for:
 
-### Headers (Vercel Config)
-```
-✅ Strict-Transport-Security (HSTS)
-✅ X-Content-Type-Options (nosniff)
-✅ X-Frame-Options (DENY)
-✅ Content-Security-Policy
-✅ Permissions-Policy
-✅ Referrer-Policy
-```
+- **Plugins:** The `@vitejs/plugin-react` plugin is used to enable React support.
+- **Path Aliases:** The `@` alias is configured to point to the `src` directory.
+- **Development Server:** The development server is configured to run on port 3000.
+- **Build:** The build output is configured to be placed in the `dist` directory.
 
-### Input Validation
-- Email format validation (`isValidEmail`)
-- Phone number validation (`isValidPhone`)
-- HTML sanitization (`sanitizeHTML`)
-- XSS prevention (no dangerouslySetInnerHTML)
+### PostCSS Configuration
 
-### Dependency Security
-```bash
-# Audit dependencies
-npm audit
+The PostCSS configuration is located in `postcss.config.js`. It includes the following plugins:
 
-# Fix vulnerabilities
-npm audit fix
-```
+- **`tailwindcss`:** Processes Tailwind CSS directives.
+- **`autoprefixer`:** Adds vendor prefixes for cross-browser compatibility.
+- **`cssnano`:** Minifies the CSS for production builds.
 
----
+### Tailwind CSS Configuration
 
-## 🌍 Browser Support
+The Tailwind CSS configuration is located in `tailwind.config.js`. It includes:
 
-| Browser | Minimum Version |
-|---------|----------------|
-| Chrome | Last 2 versions |
-| Firefox | Last 2 versions |
-| Safari | 14.0+ |
-| Edge | Last 2 versions |
-| iOS Safari | 12.0+ |
+- **Content Paths:** The `content` array specifies the files that Tailwind should scan to generate the necessary CSS.
+- **Dark Mode:** Dark mode is enabled using the `class` strategy.
+- **Theme Customization:** The `theme` object is extended to include custom colors, fonts, spacing, and more.
 
-**Coverage:** >95% of global users
+## Design System
 
----
+The design system is defined in the `tailwind.config.js` file and provides a consistent look and feel across the application.
 
-## 🤝 Contributing
+### Color Palette
 
-Contributions are welcome! Please follow these steps:
+The color palette is designed to be modern and vibrant, with a cyberpunk-inspired theme.
 
-1. **Fork the repository**
-2. **Create feature branch** (`git checkout -b feature/amazing`)
-3. **Commit changes** (`git commit -m 'feat: add amazing feature'`)
-4. **Push to branch** (`git push origin feature/amazing`)
-5. **Open Pull Request**
+#### Primary Color: Cyber Blue
 
-### Commit Convention
-Follow [Conventional Commits](https://www.conventionalcommits.org/):
-- `feat:` New feature
-- `fix:` Bug fix
-- `docs:` Documentation
-- `style:` Code style (no logic change)
-- `refactor:` Code restructure
-- `perf:` Performance improvement
-- `test:` Add/update tests
+- **`cyber-DEFAULT`**: `#00E0FF`
+- **`cyber-50`**: `#E5FBFF`
+- **`cyber-100`**: `#CCF7FF`
+- **`cyber-200`**: `#99EFFF`
+- **`cyber-300`**: `#66E7FF`
+- **`cyber-400`**: `#33DFFF`
+- **`cyber-500`**: `#00E0FF` (Main)
+- **`cyber-600`**: `#00B8CC`
+- **`cyber-700`**: `#008A99`
+- **`cyber-800`**: `#005C66`
+- **`cyber-900`**: `#002E33`
+- **`cyber-950`**: `#001719`
+- **`cyber-dim`**: `rgba(0, 224, 255, 0.1)`
+- **`cyber-glow`**: `rgba(0, 224, 255, 0.5)`
 
----
+#### Background Colors: Deep Blues
 
-## 📄 License
+- **`deep-950`**: `#02040a`
+- **`deep-900`**: `#080c1b`
+- **`deep-800`**: `#0f172a`
+- **`deep-700`**: `#1e293b`
+- **`deep-600`**: `#334155`
 
-This project is licensed under the **MIT License**.
-```
-Copyright (c) 2025 LIRIMI Studio
+### Typography
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction...
-```
+The application uses a combination of sans-serif, serif, and monospace fonts to create a clear and readable hierarchy.
 
-See [LICENSE](LICENSE) file for full text.
+- **Sans-serif:** `Inter`
+- **Serif:** `Playfair Display`
+- **Monospace:** `JetBrains Mono`
 
----
+### Sizing and Spacing
 
-## 📞 Contact
+The spacing and sizing scale is based on a 4px grid. The following custom values are available:
 
-**LIRIMI Barber Studio**
-- 📍 Address: 1284 Glass Street, Soho, NYC
-- 📧 Email: bookings@lirimi.com
-- 📱 Phone: +1 (555) 123-4567
-- 🌐 Website: [lirimi.com](https://lirimi.com)
-- 💬 Instagram: [@lirimi_studio](https://instagram.com/lirimi_studio)
+- **`18`**: `4.5rem` (72px)
+- **`22`**: `5.5rem` (88px)
+- **`26`**: `6.5rem` (104px)
+- **`30`**: `7.5rem` (120px)
+- **`128`**: `32rem` (512px)
+- **`144`**: `36rem` (576px)
 
----
+### Animations
 
-## 🙏 Acknowledgments
+A set of custom animations are available as utility classes:
 
-- [React](https://reactjs.org/) - UI library
-- [Vite](https://vitejs.dev/) - Build tool
-- [Tailwind CSS](https://tailwindcss.com/) - Styling framework
-- [Lucide](https://lucide.dev/) - Icon library
-- [Unsplash](https://unsplash.com/) - Photography
-- [Vercel](https://vercel.com/) - Hosting platform
+- **`fade-in`**: A simple fade-in animation.
+- **`fade-in-up`**: A fade-in animation with an upward translation.
+- **`slide-in`**: A slide-in animation from the left.
+- **`pulse-slow`**: A slow pulse animation.
+- **`bounce-slow`**: A slow bounce animation.
+- **`spin-slow`**: A slow spin animation.
+- **`glow`**: A glowing animation that alternates between two box shadows.
 
----
+### Shadows
 
-<div align="center">
+Custom box shadows are available for creating a glowing effect:
 
-**Built with 💙 by LIRIMI Studio**
+- **`glow-sm`**: `0 0 10px rgba(0, 224, 255, 0.3)`
+- **`glow`**: `0 0 20px rgba(0, 224, 255, 0.5)`
+- **`glow-lg`**: `0 0 40px rgba(0, 224, 255, 0.6)`
+- **`inner-glow`**: `inset 0 0 20px rgba(0, 224, 255, 0.2)`
 
-[⬆ Back to Top](#-lirimi-barber-studio)
+### Border Radius
 
-</div>
+Custom border radius values are available for creating rounded corners:
+
+- **`4xl`**: `2rem` (32px)
+- **`5xl`**: `2.5rem` (40px)
+- **`6xl`**: `3rem` (48px)
+
+### Custom Plugins
+
+A custom Tailwind CSS plugin is used to add the following utility classes:
+
+- **`.glass`**: A glassmorphism effect with a semi-transparent background, backdrop blur, and a subtle border.
+- **`.glass-dark`**: A darker version of the glassmorphism effect.
+- **`.text-glow`**: A glowing effect for text.
+- **`.text-glow-strong`**: A stronger version of the text glow effect.
