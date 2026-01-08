@@ -1,0 +1,55 @@
+import React, { Suspense } from 'react';
+import { Button } from '../../../components/ui/Button';
+import { APP_ROUTES } from '../../../lib/constants';
+import { CalendarDays, ArrowRight } from 'lucide-react';
+
+interface HeroBannerProps {
+  badge: string;
+  title: React.ReactNode;
+  subtitle: string;
+  backgroundImage: string;
+}
+
+const HeroBanner: React.FC<HeroBannerProps> = ({ badge, title, subtitle, backgroundImage }) => {
+  return (
+    <div 
+      className="relative text-white text-center py-16 px-4 flex items-center justify-center min-h-[calc(100vh-150px)]"
+      style={{
+        backgroundImage: `url('${backgroundImage}')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
+    >
+      <div className="absolute inset-0 bg-gradient-to-b from-deep-950/80 to-deep-950" />
+
+      <div className="relative w-full max-w-sm p-6 space-y-4 rounded-2xl bg-black/20 border border-white/10 shadow-2xl backdrop-blur-lg">
+        <div className="flex justify-center">
+          <div className="inline-block px-3 py-1 text-xs font-semibold tracking-widest text-cyber border border-cyber/50 rounded-full bg-cyber/10">
+            {badge}
+          </div>
+        </div>
+
+        <h1 className="font-serif text-4xl sm:text-5xl font-bold leading-tight text-glow" style={{ fontSize: 'clamp(2.25rem, 10vw, 3rem)' }}>
+          {title}
+        </h1>
+
+        <p className="text-gray-300 max-w-xs mx-auto">
+          {subtitle}
+        </p>
+
+        <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+          <Button as="link" to={APP_ROUTES.BOOKING} variant="primary" className="w-full sm:w-auto">
+            <CalendarDays size={18} className="mr-2" />
+            Book Appointment
+          </Button>
+          <Button as="link" to={APP_ROUTES.SERVICES} variant="ghost" className="w-full sm:w-auto text-white">
+            View Services
+            <ArrowRight size={16} className="ml-2" />
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default HeroBanner;
