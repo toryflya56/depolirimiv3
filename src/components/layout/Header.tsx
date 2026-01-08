@@ -50,7 +50,7 @@ export const Header: React.FC = () => {
             </button>
             
             <Link to={APP_ROUTES.HOME} className="flex items-center gap-1.5 justify-self-center" aria-label='LIRIMI Barber Shop Home'>
-              <Scissors className="text-cyber" size={18} alt="Lirimi - Premium Barbershop" />
+              <Scissors className="text-cyber" size={18} />
               <span className="text-lg font-serif font-bold text-white tracking-wider">
                 LIRIMI
               </span>
@@ -72,7 +72,7 @@ export const Header: React.FC = () => {
               className="flex items-center gap-3 group"
               aria-label="Lirimi Studio Home"
             >
-              <Scissors className="text-cyber transform -rotate-45 group-hover:rotate-0 transition-transform duration-500" size={28} alt="Lirimi - Premium Barbershop" />
+              <Scissors className="text-cyber transform -rotate-45 group-hover:rotate-0 transition-transform duration-500" size={28} />
               <span className="text-2xl font-serif font-bold text-white tracking-wider">
                 LIRIMI
               </span>
@@ -123,7 +123,7 @@ export const Header: React.FC = () => {
         <div className="flex flex-col h-full">
           <div className="flex items-center justify-between px-6 py-4 border-b border-white/10">
             <Link to={APP_ROUTES.HOME} className="flex items-center gap-2" onClick={() => setIsMobileMenuOpen(false)} aria-label='LIRIMI Barber Shop Home'>
-              <Scissors className="text-cyber" size={20} alt="Lirimi - Premium Barbershop" />
+              <Scissors className="text-cyber" size={20} />
               <span className="text-xl font-serif font-bold text-white tracking-wider">
                 LIRIMI
               </span>
