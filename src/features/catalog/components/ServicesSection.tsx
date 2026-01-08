@@ -37,7 +37,7 @@ const SERVICES: Service[] = [
 
 export const ServicesSection: React.FC = () => {
   return (
-    <section id="services" className="pt-8 pb-20 bg-deep-950 scroll-mt-16">
+    <section id="services" className="pt-4 pb-20 bg-deep-950 scroll-mt-16">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-serif font-bold text-white mb-4">
