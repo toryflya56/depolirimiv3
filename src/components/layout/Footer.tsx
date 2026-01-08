@@ -46,43 +46,32 @@ export const Footer: React.FC = () => {
 
   return (
     <footer className="bg-deep-950 border-t border-white/10">
-      <div className="container mx-auto px-4 py-16">
-        
-        {/* Top section: Brand + Links */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
-          
-          {/* Branding */}
-          <div className="md:col-span-1">
-             <Link to={APP_ROUTES.HOME} className="flex items-center gap-2 mb-3" aria-label="Lirimi Studio Home">
-              <Scissors className="text-cyber" size={24} />
-              <span className="text-xl font-serif font-bold text-white tracking-wider">LIRIMI</span>
-            </Link>
-            <p className="text-gray-400 text-sm">Sculpting confidence through precision barbering.</p>
-          </div>
+      <div className="container mx-auto px-4 py-16 flex flex-col items-center text-center space-y-12">
 
-          {/* Spacer for alignment on medium screens */}
-          <div className="hidden md:block"></div>
-
-          {/* Links */}
-          <div className="col-span-1 md:col-span-2 grid grid-cols-2 md:grid-cols-3 gap-8">
-            {footerSections.map((section) => (
-              <div key={section.title}>
-                <h4 className="font-semibold text-white tracking-wide mb-4 uppercase text-sm">{section.title}</h4>
-                <nav className="flex flex-col space-y-3">
-                  {section.links.map((link) => (
-                    <FooterLink key={link.text} to={link.to}>{link.text}</FooterLink>
-                  ))}
-                </nav>
-              </div>
-            ))}
-          </div>
+        {/* Brand Section */}
+        <div>
+          <Link to={APP_ROUTES.HOME} className="flex items-center justify-center gap-2 mb-3" aria-label="Lirimi Studio Home">
+            <Scissors className="text-cyber" size={24} />
+            <span className="text-xl font-serif font-bold text-white tracking-wider">LIRIMI</span>
+          </Link>
+          <p className="text-gray-400 text-sm max-w-xs">Sculpting confidence through precision barbering.</p>
         </div>
 
+        {/* Links Section */}
+        <nav className="flex flex-col sm:flex-row sm:justify-center gap-8 sm:gap-16 w-full">
+          {footerSections.map((section) => (
+            <div key={section.title}>
+              <h4 className="font-semibold text-white tracking-wide mb-4 uppercase text-sm">{section.title}</h4>
+              <div className="flex flex-col space-y-3">
+                {section.links.map((link) => (
+                  <FooterLink key={link.text} to={link.to}>{link.text}</FooterLink>
+                ))}n              </div>
+            </div>
+          ))}
+        </nav>
+
         {/* Bottom section: Copyright + Socials */}
-        <div className="pt-8 border-t border-white/10 flex flex-col-reverse gap-6 md:flex-row justify-between items-center">
-          <p className="text-gray-500 text-xs">
-            &copy; {currentYear} Lirimi Barber Studio. All rights reserved.
-          </p>
+        <div className="pt-8 border-t border-white/10 w-full max-w-xs flex flex-col items-center gap-6">
           <div className="flex items-center gap-6">
             {socialLinks.map(({ href, Icon, name }) => (
               <a key={name} href={href} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white" aria-label={name}>
@@ -90,6 +79,9 @@ export const Footer: React.FC = () => {
               </a>
             ))}
           </div>
+          <p className="text-gray-500 text-xs">
+            &copy; {currentYear} Lirimi Barber Studio. All rights reserved.
+          </p>
         </div>
 
       </div>
