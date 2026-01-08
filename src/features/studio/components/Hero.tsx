@@ -30,12 +30,12 @@ export const Hero: React.FC = () => {
           </div>
 
           {/* Main Headline */}
-          <h1 className="font-serif text-4xl font-bold leading-tight text-glow">
+          <h1 className="font-serif text-4xl sm:text-5xl font-bold leading-tight text-glow" style={{ fontSize: 'clamp(2.25rem, 10vw, 3rem)' }}>
             Where <span className="text-cyber">Style</span> is Forged.
           </h1>
 
           {/* Sub-headline */}
-          <p className="text-sm text-gray-300 leading-relaxed max-w-xs mx-auto">
+          <p className="text-sm sm:text-base text-gray-300 leading-relaxed max-w-xs mx-auto">
             We unite timeless techniques with visionary style. This isn't just a haircut—it's the signature of your confidence.
           </p>
 
