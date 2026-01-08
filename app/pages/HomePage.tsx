@@ -1,5 +1,5 @@
 import React from 'react';
-import { HeroLanding } from '@/components/studio/HeroLanding';
+import HeroLanding from '@/components/studio/HeroLanding';
 import { ServicesSection } from '@/components/studio/ServicesSection';
 import { TeamSection } from '@/components/studio/TeamSection';
 import { TestimonialsSection } from '@/components/studio/TestimonialsSection';

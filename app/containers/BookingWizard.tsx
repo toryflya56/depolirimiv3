@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ArrowRight, CheckCircle, Scissors, User, Calendar } from 'lucide-react';
+import { CheckCircle, Scissors, User, Calendar } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { cn } from '@/helpers/utils';
 

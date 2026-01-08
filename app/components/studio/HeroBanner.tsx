@@ -1,7 +1,6 @@
 import React from 'react';
 import { Button } from '@/components/ui/Button';
 import { APP_ROUTES } from '@/lib/constants';
-import { CalendarDays } from 'lucide-react';
 
 interface HeroBannerProps {
   badge: string;
