@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useLocation, Outlet } from 'react-router-dom';
 import { Header } from './components/layout/Header';
 import { Footer } from './components/layout/Footer';
-import { HomePage } from './pages/HomePage';
-import { BookingPage } from './pages/BookingPage';
 import { APP_ROUTES } from './lib/constants';
+
+const HomePage = React.lazy(() => import('./pages/HomePage').then(module => ({ default: module.HomePage })));
+const BookingPage = React.lazy(() => import('./pages/BookingPage').then(module => ({ default: module.BookingPage })));
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -25,7 +26,9 @@ const MainLayout = () => {
     <div className="flex flex-col min-h-screen bg-deep-950 text-white font-sans selection:bg-cyber selection:text-deep-950">
       <Header />
       <main className="flex-grow">
-        <Outlet />
+        <Suspense fallback={<div>Loading...</div>}>
+            <Outlet />
+        </Suspense>
       </main>
       <Footer />
     </div>
